@@ -17,9 +17,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/", home.show);
 
 // 404 handling
-app.use(function(req, res, next) {
-    res.status(404).sendFile('404.ejs', {root: publicPath});
-  });
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('404');
+});
 
 // Listening
 var server = app.listen(3000, () => {
