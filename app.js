@@ -5,6 +5,7 @@ var app = express();
 
 // Import controllers
 var home = require('./controllers/home');
+var test = require('./controllers/test');
 
 // View engine ejs
 app.set("views", path.resolve(__dirname, "views"));
@@ -15,6 +16,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes/Routers
 app.get("/", home.show);
+app.get("/test", test.show);
 
 // 404 handling
 app.use(function (req, res, next) {

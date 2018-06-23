@@ -1,27 +1,28 @@
 {
-  "name": "Y2S1",
+  "name": "dewdough",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "",
+  "main": "app.js",
   "dependencies": {
     "ejs": "^2.6.1",
     "express": "^4.16.3",
     "sequelize": "^4.37.10",
-    "sequelize-transforms": "^2.0.0"
+    "sequelize-transforms": "^2.0.0",
+    "tedious": "^2.6.1"
   },
   "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LZHoe/dewdough.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/LZHoe/dewdough/issues"
   },
-  "homepage": "https://github.com/LZHoe/dewdough#readme",
-  "description": ""
+  "homepage": "https://github.com/LZHoe/dewdough#readme"
 }
