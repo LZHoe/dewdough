@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include partial/head %>
+        <% include partial/header %>
+        <% include partial/header-menu %>
+    </head>
+        <!--================End Menu Area =================-->
+        
+        <!--================Categories Banner Area =================-->
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>shopping cart</h3>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/cart">Shopping Cart</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--================End Categories Banner Area =================-->
+        
+        <!--================Shopping Cart Area =================-->
+        <section class="shopping_cart_area p_100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="cart_items">
+                            <h3>Your Cart Items</h3>
+                            <div class="table-responsive-md">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th scope="row">
+                                                <img src="img/icon/close-icon.png" alt="">
+                                            </th>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img src="img/product/cart-product/cart-3.jpg" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4>Dog Pram</h4>
+                                                        <p style="font-size:12px; margin-bottom:-10px;">Type: Product</p>
+  
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><p class="red">$150</p></td>
+                                            <td>
+                                                <div class="quantity">
+                                                    <h6>Quantity</h6>
+                                                    <div class="custom">
+                                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
+                                                        <input type="text" name="qty" id="sst" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                                                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><p>$150</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">
+                                                <img src="img/icon/close-icon.png" alt="">
+                                            </th>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <img src="img/product/cart-product/cart-4.jpg" alt="">
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <h4>1 day dog stay </h4>
+                                                        <p style="font-size:12px; margin-bottom:-10px;">Type: Service</p>
+                                                        <p style="font-size:12px">Seller: Tim Hardaway</p>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><p class="red">$150</p></td>
+                                            <td>
+                                                <div class="quantity">
+                                                    <h6>Quantity</h6>
+                                                    <div class="custom">
+                                                        <button onclick="var result = document.getElementById('sst2'); var sst2 = result.value; if( !isNaN( sst2 ) &amp;&amp; sst2 > 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon_minus-06"></i></button>
+                                                        <input type="text" name="qty" id="sst2" maxlength="12" value="1" title="Quantity:" class="input-text qty">
+                                                        <button onclick="var result = document.getElementById('sst2'); var sst2 = result.value; if( !isNaN( sst2 )) result.value++;return false;" class="increase items-count" type="button"><i class="icon_plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><p>$250</p></td>
+                                        </tr>
+                                        <tr>
+                                            <th scope="row">
+                                            </th>
+                                        </tr>
+                                        <tr class="last">
+                                            <th scope="row">
+                                                <img src="img/icon/cart-icon.png" alt="">
+                                            </th>
+                                            <td>
+                                                <div class="media">
+                                                    <div class="d-flex">
+                                                        <h5>Coupon code</h5>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <input type="text" placeholder="Apply coupon">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td><p class="red"></p></td>
+                                            <td>
+                                                <h3>update cart</h3>
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="cart_totals_area">
+                            <h4>Cart Totals</h4>
+                            <div class="cart_t_list">
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <h5>Subtotal</h5>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6>$14</h6>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        <h5>Shipping</h5>
+                                    </div>
+                                    <div class="media-body">
+                                        <h6>$5</h6>
+                                    </div>
+                                </div>
+                                <div class="media">
+                                    <div class="d-flex">
+                                        
+                                    </div>
+                                    <div class="media-body"style="margin-bottom:-5px ">
+                                        <br><br><br><br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="total_amount row m0 row_disable">
+                                <div class="float-left">
+                                    Total
+                                </div>
+                                <div class="float-right">
+                                    $400
+                                </div>
+                            </div>
+                        </div>
+                        <form action="/pay" method="post" >
+                        <input type="submit" value="submit" class="btn subs_btn form-control">Proceed to Payment</input>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Shopping Cart Area =================-->
+        
+        <!--================Footer Area =================-->
+        <footer class="footer_area">
+            <div class="container">
+                <div class="footer_widgets">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-6">
+                            <aside class="f_widget f_about_widget">
+                                <img src="img/logo.png" alt="">
+                                <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to enjoy now</p>
+                                <h6>Social:</h6>
+                                <ul>
+                                    <li><a href="#"><i class="social_facebook"></i></a></li>
+                                    <li><a href="#"><i class="social_twitter"></i></a></li>
+                                    <li><a href="#"><i class="social_pinterest"></i></a></li>
+                                    <li><a href="#"><i class="social_instagram"></i></a></li>
+                                    <li><a href="#"><i class="social_youtube"></i></a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_info_widget">
+                                <div class="f_w_title">
+                                    <h3>Information</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">Delivery information</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Returns & Refunds</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_service_widget">
+                                <div class="f_w_title">
+                                    <h3>Customer Service</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">My account</a></li>
+                                    <li><a href="#">Ordr History</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_extra_widget">
+                                <div class="f_w_title">
+                                    <h3>Extras</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">Brands</a></li>
+                                    <li><a href="#">Gift Vouchers</a></li>
+                                    <li><a href="#">Affiliates</a></li>
+                                    <li><a href="#">Specials</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_account_widget">
+                                <div class="f_w_title">
+                                    <h3>My Account</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">My account</a></li>
+                                    <li><a href="#">Ordr History</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_copyright">
+                    <h5>© <script>document.write(new Date().getFullYear());</script> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</h5>
+                </div>
+            </div>
+        </footer>
+        <!--================End Footer Area =================-->
+        
+        
+        
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Rev slider js -->
+        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <!-- Extra plugin css -->
+        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+        <script src="vendors/counterup/jquery.counterup.min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+        
+        <script src="js/theme.js"></script>
+    </body>
+</html>
