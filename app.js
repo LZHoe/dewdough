@@ -16,7 +16,8 @@ paypal.configure({
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var success = require('./controllers/success');
-var cancel = require('./controllers/cancel')
+var cancel = require('./controllers/cancel');
+var paypal = require('./controllers/paypal');
 
 
 // View engine ejs
@@ -29,32 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes/Routers
 app.get("/", home.show);
 app.get("/cart", cart.show);
-
-
-app.get('/success', (req, res) => {
-    const payerId = req.query.PayerID;
-    const paymentId = req.query.paymentId;
-  
-    const execute_payment_json = {
-      "payer_id": payerId,
-      "transactions": [{
-          "amount": {
-              "currency": "USD",
-              "total": "252.00"
-          }
-      }]
-    };
-  
-    paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
-      if (error) {
-          console.log(error.response);
-          throw error;
-      } else {
-          console.log(JSON.stringify(payment));
-          res.render('success');
-      }
-  });
-  });
+app.get('/success', paypal.show);
 
 
 
