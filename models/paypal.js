@@ -2,6 +2,7 @@
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
+var data = require("../controllers/paypal");
 
 
 
@@ -10,21 +11,15 @@ const PAYPAL = sequelize.define('PAYPAL', {
         type: Sequelize.STRING,
         primaryKey: true
     },
-    transactionNo: {
+    paymentmethod: {
         type: Sequelize.STRING,
         allowNull: false,
         defaultValue: '',
         trim: true
     },
-    buyerID: {
-        type: Sequelize.INTEGER,
-        allowNull:false,
-        defaultValue: '',
-        trim:true
-    },
-    sellerID:{
-        type:Sequelize.INTEGER,
-        allowNull:false,
+    paymentdetails: {
+        type: Sequelize.STRING,
+        allowNull:true,
         defaultValue: '',
         trim:true
     },
@@ -34,22 +29,28 @@ const PAYPAL = sequelize.define('PAYPAL', {
         defaultValue: '',
         trim:true
     },
+    // transactionID:{
+    //     type:Sequelize.STRING,
+    //     references: {
+    //         model: 'Transactions',
+    //         key: 'transactionId',
+    //     }
+    // }
 
 }, {
     freezeTableName: true,
 });
 
 // force: true will drop the table if it already exists
-PAYPAL.sync({ force: false, logging: console.log}).then(() => {
+PAYPAL.sync({ force: true, logging: console.log}).then(() => {
     // Table created
     console.log("test table synced");
 
     PAYPAL.upsert({
-        paymentID:1,
-        buyerID:2,
-        sellerID:3,
-        totalamount:4,
-        transactionNo:5,
+        paymentID:2,
+        paymentmethod:"paypal",
+        paymentdetails:"",
+        totalamount:"321312",
     });
 });
 
