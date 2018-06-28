@@ -65,7 +65,27 @@ exports.success = function(req,res) {
           console.log(error.response);
           throw error;
       } else {
+          paymentmethod = payment.payer.payment_method;
+          paymentiddata = payment.id;
           console.log(JSON.stringify(payment));
+          console.log(paymentiddata);
+          console.log(paymentmethod)
+
+          //push to DB
+          var paypaldata = {
+              ID : paymentiddata,
+              paymentmethod : paymentmethod,
+          }
+
+          Paypal.create(paypaldata).then((newpaypaldata,created)=>{
+            if(!newpaypaldata){
+                return res.send(400,{
+                    message:"error"
+                });
+            }
+
+          })
+
           res.render('success');
           }
   });

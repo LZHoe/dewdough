@@ -6,8 +6,8 @@ var paypal = require('paypal-rest-sdk');
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AZSW_6ogC7vKYSqG8ySFg2HWIk-ac-ByTCSHvkHzXZyA67zCW7uAX6hpTbx__8s1PW27taSnzNq4CNEa',
-    'client_secret': 'ENzpKzd4Re1TO5-HP3rYhu4dTpb64eBv-z84JGbMQw0LyaGwHD_z1xJIzPfL1xn7Fif4fegiTrhRRVxz',
+    'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
+    'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
   });
 
 // Import controllers
@@ -29,8 +29,9 @@ app.get("/", home.show);
 app.get("/cart", cart.show);
 
 app.post('/pay', paypal.show);
-  
+
 app.get('/success', paypal.success);
+
   
 app.get('/cancel', (req, res) => {
     res.render('cancel')

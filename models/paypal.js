@@ -6,52 +6,32 @@ var data = require("../controllers/paypal");
 
 
 
-const PAYPAL = sequelize.define('PAYPAL', {
-    paymentID: {
+var PAYPAL = sequelize.define('PAYPAL', {
+    ID: {
         type: Sequelize.STRING,
-        primaryKey: true
+        primaryKey: true,
+        defaultValue:'',
     },
-    paymentmethod: {
+    paymentmethod:{
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: '',
-        trim: true
+        defaultValue:'',
     },
-    paymentdetails: {
+    bankdetail:{
         type: Sequelize.STRING,
-        allowNull:true,
-        defaultValue: '',
-        trim:true
+        defaultValue : '',
     },
-    totalamount:{
-        type:Sequelize.FLOAT,
-        allowNull:false,
-        defaultValue: '',
-        trim:true
-    },
-    // transactionID:{
-    //     type:Sequelize.STRING,
-    //     references: {
-    //         model: 'Transactions',
-    //         key: 'transactionId',
-    //     }
-    // }
+   
 
 }, {
     freezeTableName: true,
 });
 
 // force: true will drop the table if it already exists
-PAYPAL.sync({ force: true, logging: console.log}).then(() => {
+PAYPAL.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("test table synced");
 
-    PAYPAL.upsert({
-        paymentID:2,
-        paymentmethod:"paypal",
-        paymentdetails:"",
-        totalamount:"321312",
-    });
+
 });
 
 module.exports = sequelize.model('PAYPAL', PAYPAL);
