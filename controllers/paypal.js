@@ -67,6 +67,7 @@ exports.success = function(req,res) {
       } else {
           paymentmethod = payment.payer.payment_method;
           paymentiddata = payment.id;
+          payeremail = payment.payer.payer_info.email;
           console.log(JSON.stringify(payment));
           console.log(paymentiddata);
           console.log(paymentmethod)
@@ -75,6 +76,7 @@ exports.success = function(req,res) {
           var paypaldata = {
               ID : paymentiddata,
               paymentmethod : paymentmethod,
+              email : payeremail,
           }
 
           Paypal.create(paypaldata).then((newpaypaldata,created)=>{

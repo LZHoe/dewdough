@@ -20,6 +20,10 @@ var PAYPAL = sequelize.define('PAYPAL', {
         type: Sequelize.STRING,
         defaultValue : '',
     },
+    email:{
+        type: Sequelize.STRING,
+        defaultValue:'',
+    },
    
 
 }, {
@@ -27,7 +31,7 @@ var PAYPAL = sequelize.define('PAYPAL', {
 });
 
 // force: true will drop the table if it already exists
-PAYPAL.sync({ force: false, logging: console.log}).then(() => {
+PAYPAL.sync({ force: true, logging: console.log}).then(() => {
     // Table created
     console.log("test table synced");
 
