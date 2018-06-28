@@ -22,27 +22,17 @@
         ================End Categories Banner Area =================-->
 
         <div class="container">
-            <h4>Transaction..?</h4>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Qty</th>
-                    <th>Offer</th>
-                    <th>Start Date</th>
-                </tr>
+            <h3>View All Transactions</h3>
+            <ul>
                 <% data.forEach(function(data){ %>
-                    <tr>
-                        <td><%= data.transactionId %></td>
-                        <td><%= data.qty %></td>
-                        <td>$<%= data.offer %></td>
-                        <td><%= data.createdAt %></td>
-                    </tr>
+                <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.createdAt %></h6></a></li>
                 <% }); %>
-            </table>
+            </ul>
+
 
             <form action="/transactions" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">New Transaction</h4>
+                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
                 </div>
 
                 <div class="modal-body">
@@ -52,10 +42,17 @@
                         <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="inputoffer">Offer</label>
-                        <input type="text" id="inputoffer" name="offer" class="form-control" placeholder="Enter offer" required="">
+                        <label for="inputoffer">Price</label>
+                        <input type="text" id="inputoffer" name="offer" class="form-control" placeholder="Enter price" required="">
                     </fieldset>
-
+                    <fieldset class="form-group">
+                        <label for="inputlistingid">Listing ID</label>
+                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Test only" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="inputbuyerid">Buyer ID</label>
+                        <input type="text" id="inputbuyerid" name="buyerId" class="form-control" placeholder="From current logged-in user" required="">
+                    </fieldset>
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Create</button>
