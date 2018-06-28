@@ -1,32 +1,33 @@
 {
-  "name": "Y2S1",
+  "name": "dewdough",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "create": "^0.0.2",
+    "ejs": "^2.6.1",
+    "express": "^4.16.3",
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "paypal-rest-sdk": "^1.8.1",
+    "sequelize-cli": "^4.0.0",
+    "sequelize-transforms": "^2.0.0",
+    "sequelize": "^4.37.10"
+  },
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "create": "0.0.2",
-    "ejs": "^2.6.1",
-    "express": "^4.16.3",
-    "mysql": "^2.15.0",
-    "paypal-rest-sdk": "^1.8.1",
-    "sequelize": "^4.37.10",
-    "sequelize-cli": "^4.0.0",
-    "sequelize-transforms": "^2.0.0",
-    "tedious": "^2.6.1"
-  },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LZHoe/dewdough.git"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/LZHoe/dewdough/issues"
   },
-  "homepage": "https://github.com/LZHoe/dewdough#readme",
-  "description": ""
+  "homepage": "https://github.com/LZHoe/dewdough#readme"
 }

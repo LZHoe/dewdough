@@ -16,6 +16,18 @@ var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
 
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+
+// Import controllers
+var home = require('./controllers/home');
+var transaction = require('./controllers/transaction');
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 // View engine ejs
 app.set("views", path.resolve(__dirname, "views"));
@@ -35,6 +47,26 @@ app.get('/success', paypal.success);
   
 app.get('/cancel', (req, res) => {
     res.render('cancel')
+});
+app.get("/transactions", transaction.showAll);
+app.post("/transactions", transaction.create);
+app.get("/transactions/:transaction_id", transaction.showDetails);
+app.post("/transactions/:transaction_id", transaction.testpay);
+
+// 404 handling
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('404', {
+        title: "Error 404"
+    });
 });
 
 
