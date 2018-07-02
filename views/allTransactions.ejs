@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <% include partial/head %>
+    </head>
+    <body>
+        <% include partial/header %>
+        <% include partial/header-menu %>
+        
+        <!--================Categories Banner Area =================
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>error page</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="404.html">Error Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        ================End Categories Banner Area =================-->
+
+        <div class="container">
+            <h3>View All Transactions</h3>
+            <ul>
+                <% data.forEach(function(data){ %>
+                <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.createdAt %></h6></a></li>
+                <% }); %>
+            </ul>
+
+
+            <form action="/transactions" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <fieldset class="form-group">
+                        <label for="inputqty">Quantity</label>
+                        <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="inputoffer">Price</label>
+                        <input type="text" id="inputoffer" name="offer" class="form-control" placeholder="Enter price" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="inputlistingid">Listing ID</label>
+                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Test only" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="inputbuyerid">Buyer ID</label>
+                        <input type="text" id="inputbuyerid" name="buyerId" class="form-control" placeholder="From current logged-in user" required="">
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+        
+        <% include partial/footer %>
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Rev slider js -->
+        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <!-- Extra plugin css -->
+        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+        <script src="vendors/counterup/jquery.counterup.min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+        
+        <script src="js/theme.js"></script>
+    </body>
+</html>
