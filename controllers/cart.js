@@ -1,3 +1,5 @@
 exports.show = (req, res) => {
-    res.render('cart');
+    res.render('cart', {
+        title: "Cart"
+    });
 }

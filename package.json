@@ -1,7 +1,6 @@
 {
   "name": "dewdough",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "cookie-parser": "^1.4.3",
@@ -11,9 +10,10 @@
     "morgan": "^1.9.0",
     "mysql": "^2.15.0",
     "paypal-rest-sdk": "^1.8.1",
+    "sequelize": "^4.37.10",
     "sequelize-cli": "^4.0.0",
     "sequelize-transforms": "^2.0.0",
-    "sequelize": "^4.37.10"
+    "tedious": "^2.6.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -29,5 +29,6 @@
   "bugs": {
     "url": "https://github.com/LZHoe/dewdough/issues"
   },
-  "homepage": "https://github.com/LZHoe/dewdough#readme"
+  "homepage": "https://github.com/LZHoe/dewdough#readme",
+  "description": ""
 }
