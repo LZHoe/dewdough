@@ -42,7 +42,7 @@ app.get("/cart", cart.show);
 
 app.post('/pay', paypal.show);
 
-app.get('/success', paypal.success);
+app.get('/success/:transaction_id', paypal.success);
 
   
 app.get('/cancel', (req, res) => {
