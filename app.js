@@ -40,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/", home.show);
 app.get("/cart", cart.show);
 
-app.post('/pay', paypal.show);
+app.post('/pay/:transaction_id', paypal.show);
 
 app.get('/success/:transaction_id', paypal.success);
 
@@ -53,21 +53,6 @@ app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.testpay);
 
-// 404 handling
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('404', {
-        title: "Error 404"
-    });
-});
 
 
 // Listening
