@@ -53,18 +53,18 @@ exports.show = function(req,res) {
     // Success
 exports.success = function(req,res) {
     var transaction_id = req.params.transaction_id;
-    sequelize.query('SELECT transactionId,offer FROM Transactions WHERE transactionId = ' + transaction_id,{model:Transactions}).then((Transactions)=>{
-        console.log(Transactions);
-        Transactions = Transactions[0];
-        const payerId = req.query.PayerID;
-        const paymentId = req.query.paymentId;
+    sequelize.query('SELECT transactionId,offer FROM Transactions WHERE transactionId = ' + transaction_id,{model:Transactions}).then((instance)=>{
+        instance = instance[0];
+        console.log(instance);
+        var payerId = req.query.PayerID;
+        var paymentId = req.query.paymentId;
       
         const execute_payment_json = {
           "payer_id": payerId,
           "transactions": [{
               "amount": {
                   "currency": "USD",
-                  "total": Transactions.offer,
+                  "total": instance.offer,
               }
           }]
         }
@@ -81,6 +81,7 @@ exports.success = function(req,res) {
               console.log(JSON.stringify(payment));
               console.log(paymentiddata);
               console.log(paymentmethod)
+              console.log(transRef)
     
               //push to DB
               var paypaldata = {
@@ -88,7 +89,7 @@ exports.success = function(req,res) {
                   paymentMethod : paymentmethod,
                   status: 'Delivering',
                   transactionId: transRef
-              }
+              };
     
               Transactions.update(paypaldata, { where: { transactionId: transRef } }).then((updatedRecord) => {
                 if (!updatedRecord || updatedRecord == 0) {
@@ -99,7 +100,6 @@ exports.success = function(req,res) {
             });
             res.render('success',{
                 title:'successdata',
-                data: Transactions[0]
             })
         
         }
