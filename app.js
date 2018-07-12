@@ -10,12 +10,6 @@ paypal.configure({
     'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
   });
 
-// Import controllers
-var home = require('./controllers/home');
-var cart = require('./controllers/cart');
-var cancel = require('./controllers/cancel');
-var paypal = require('./controllers/paypal');
-
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -23,6 +17,10 @@ var cookieParser = require('cookie-parser');
 // Import controllers
 var home = require('./controllers/home');
 var transaction = require('./controllers/transaction');
+var home = require('./controllers/home');
+var cart = require('./controllers/cart');
+var cancel = require('./controllers/cancel');
+var paypal = require('./controllers/paypal');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());

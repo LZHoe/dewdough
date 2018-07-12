@@ -1,9 +1,12 @@
 var Transaction = require('../models/transaction');
+var TransactionLog = require('../models/transactionLog');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 
-// Show
-exports.showAll = function(req,res) {
+///////////////////////////////////////////////////
+//// List all orders/transactions /////////////////
+///////////////////////////////////////////////////
+exports.showAll = function (req, res) {
     // Show transaction data
     sequelize.query('SELECT transactionId, createdAt FROM Transactions', { model: Transaction }).then((Transactions) => {
         res.render('allTransactions', {
@@ -17,7 +20,10 @@ exports.showAll = function(req,res) {
     })
 }
 
-exports.showDetails = function(req,res) {
+///////////////////////////////////////////////////
+//// List details of ONE transaction //////////////
+///////////////////////////////////////////////////
+exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
     sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
@@ -32,9 +38,8 @@ exports.showDetails = function(req,res) {
     })
 }
 
-exports.create = function (req,res) {
-    console.log("Creating new transaction: " + req.body.offer);
-
+exports.create = function (req, res) {
+    // retreive user input
     var transactionData = {
         qty: req.body.qty,
         offer: req.body.offer,
@@ -42,6 +47,7 @@ exports.create = function (req,res) {
         buyerId: req.body.buyerId
     };
 
+    // after retreiving, push into db
     Transaction.create(transactionData).then((newTransaction, created) => {
         if (!newTransaction) {
             return res.send(400, {
@@ -54,7 +60,7 @@ exports.create = function (req,res) {
     });
 }
 
-exports.testpay = function(req,res) {
+exports.testpay = function (req, res) {
     var updateData = {
         status: 'Delivering',
         paymentId: 'some_payment_id',
@@ -72,7 +78,7 @@ exports.testpay = function(req,res) {
 }
 
 // Authorisation middleware
-exports.hasAuthorization = function (req,res,next) {
+exports.hasAuthorization = function (req, res, next) {
     if (req.isAuthenticated())
         return next();
     res.redirect('/login');

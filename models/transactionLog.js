@@ -4,12 +4,22 @@
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
+// var Transaction = require('../models/transaction')
 
-const Transaction = sequelize.define('Transaction', {
-    transactionId: {
+const TransactionLog = sequelize.define('TransactionLog', {
+    logId: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
+        allowNull: false,
         primaryKey: true
+        },
+    transactionId: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+            model: "Transactions",
+            key: "transactionId"
+        }
     },
     qty: {
         type: Sequelize.INTEGER,
@@ -22,24 +32,8 @@ const Transaction = sequelize.define('Transaction', {
     },
     status: {
         type: Sequelize.STRING,
-        defaultValue: "Prepurchase",
+        defaultValue: "Pending",
         allowNull: false
-    },
-    listingId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        // references: {
-        //     model: 'Listings',
-        //     id: 'listingId'
-        // }
-    },
-    buyerId: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        // references: {
-        //     model: 'User',
-        //     id: 'userId'
-        // }
     },
     rating: {
         type: Sequelize.INTEGER,
@@ -60,45 +54,26 @@ const Transaction = sequelize.define('Transaction', {
     bankDetails: {
         type: Sequelize.STRING,
         allowNull: true
+    },
+    action: {
+        type: Sequelize.STRING(10),
+        allowNull: false
     }
 });
 
 // force: true will drop the table if it already exists
-Transaction.sync({ force: false, logging: console.log}).then(() => {
+TransactionLog.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
-    Transaction.upsert({
-        transactionId:1,
-        qty:2,
-        offer:25.50,
-        status: 'Prepurchase',
-        listingId: 1,
-        buyerId: 2
-    });
-    Transaction.upsert({
-        transactionId:2,
-        qty:2,
-        offer:255,
-        status: 'Delivering',
-        listingId: 4,
-        buyerId: 6,
-        rating: 5,
-        paymentId: 'h32r2hho9',
-        paymentMethod: 'paypal',
-        bankDetails: 'something i guess?'
-    });
-    Transaction.upsert({
-        transactionId:3,
-        qty:3,
-        offer:255,
-        status: 'Complete',
-        listingId: 4,
-        buyerId: 3,
-        paymentId: '7i3jyeqhq',
-        paymentMethod: 'paypal',
-        bankDetails: 'something i guess!'
-    });
+    // TransactionLog.upsert({
+    //     transactionId:1,
+    //     qty:2,
+    //     offer:25.50,
+    //     status: 'Pending',
+    //     listingId: 1,
+    //     buyerId: 2
+    // });
 });
 
-module.exports = sequelize.model('Transaction', Transaction);
+module.exports = sequelize.model('TransactionLog', TransactionLog);

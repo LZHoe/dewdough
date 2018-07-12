@@ -1,7 +1,10 @@
 // models/transaction.js
+
+
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
+var TransactionLog = require('../models/transactionLog');
 
 const Transaction = sequelize.define('Transaction', {
     transactionId: {
@@ -20,7 +23,7 @@ const Transaction = sequelize.define('Transaction', {
     },
     status: {
         type: Sequelize.STRING,
-        defaultValue: "Prepurchase",
+        defaultValue: "Pending",
         allowNull: false
     },
     listingId: {
@@ -61,8 +64,41 @@ const Transaction = sequelize.define('Transaction', {
     }
 });
 
+// Enter entry into transaction log table right before any time Transaction table is updated
+Transaction.beforeBulkUpdate((updateData) => {
+    // console.log("//////////////////////////YOU'RE★IN★THE★ZONE//////////////////////////");
+    // console.log("data: " + JSON.stringify(updateData));
+    // console.log("tId: " + updateData.where.transactionId);
+
+    // Retrieve the current(not yet updated) entry of the transaction
+    var tId = updateData.where.transactionId;
+    sequelize.query('SELECT * FROM Transactions WHERE transactionId = ' + tId, { model: Transaction }).then((Transactions) => {
+        var crrTransaction = Transactions[0];
+        
+        var newLog = {
+            transactionId: crrTransaction.transactionId,
+            qty: crrTransaction.qty,
+            offer: crrTransaction.offer,
+            status: crrTransaction.status,
+            rating: crrTransaction.rating,
+            comment: crrTransaction.comment,
+            paymentId: crrTransaction.paymentId,
+            paymentMethod: crrTransaction.paymentMethod,
+            bankDetails: crrTransaction.bankDetails,
+            action: "UPDATED",
+            createdAt: crrTransaction.updatedAt
+        }
+
+        TransactionLog.create(newLog).then((loggedData) => {
+            console.log('New log created: ' + loggedData);
+        })
+        }).catch((err) => {
+            console.log("ERROR: " + err);
+        });
+});
+
 // force: true will drop the table if it already exists
-Transaction.sync({ force: true, logging: console.log}).then(() => {
+Transaction.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
@@ -70,7 +106,7 @@ Transaction.sync({ force: true, logging: console.log}).then(() => {
         transactionId:1,
         qty:2,
         offer:25.50,
-        status: 'Prepurchase',
+        status: 'Pending',
         listingId: 1,
         buyerId: 2
     });
