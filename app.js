@@ -15,6 +15,7 @@ var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
+var checkout = require('./controllers/checkout')
 
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -44,10 +45,14 @@ app.post('/pay/:transaction_id', paypal.show);
 
 app.get('/success/:transaction_id', paypal.success);
 
+app.get('/checkout/', checkout.show);
+app.post('/checkout/:transaction_id', paypal.show)
+
   
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
+
 app.get("/transactions", transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);

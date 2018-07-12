@@ -62,41 +62,10 @@ const Transaction = sequelize.define('Transaction', {
 });
 
 // force: true will drop the table if it already exists
-Transaction.sync({ force: true, logging: console.log}).then(() => {
+Transaction.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
-    Transaction.upsert({
-        transactionId:1,
-        qty:2,
-        offer:25.50,
-        status: 'Prepurchase',
-        listingId: 1,
-        buyerId: 2
-    });
-    Transaction.upsert({
-        transactionId:2,
-        qty:2,
-        offer:255,
-        status: 'Delivering',
-        listingId: 4,
-        buyerId: 6,
-        rating: 5,
-        paymentId: 'h32r2hho9',
-        paymentMethod: 'Paypal',
-        bankDetails: 'something i guess?'
-    });
-    Transaction.upsert({
-        transactionId:3,
-        qty:3,
-        offer:255,
-        status: 'Complete',
-        listingId: 4,
-        buyerId: 3,
-        paymentId: '7i3jyeqhq',
-        paymentMethod: 'Paypal',
-        bankDetails: 'something i guess!'
-    });
 });
 
 module.exports = sequelize.model('Transaction', Transaction);
