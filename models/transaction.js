@@ -37,10 +37,10 @@ const Transaction = sequelize.define('Transaction', {
     buyerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //     model: 'User',
-        //     id: 'userId'
-        // }
+        references: {
+            model: 'Users',
+            id: 'id'
+        }
     },
     rating: {
         type: Sequelize.INTEGER,
@@ -108,31 +108,31 @@ Transaction.sync({ force: false, logging: console.log}).then(() => {
         offer:25.50,
         status: 'Pending',
         listingId: 1,
-        buyerId: 2
+        buyerId: 1
     });
-    Transaction.upsert({
-        transactionId:2,
-        qty:2,
-        offer:255,
-        status: 'Delivering',
-        listingId: 4,
-        buyerId: 6,
-        rating: 5,
-        paymentId: 'h32r2hho9',
-        paymentMethod: 'Paypal',
-        bankDetails: 'something i guess?'
-    });
-    Transaction.upsert({
-        transactionId:3,
-        qty:3,
-        offer:255,
-        status: 'Complete',
-        listingId: 4,
-        buyerId: 3,
-        paymentId: '7i3jyeqhq',
-        paymentMethod: 'Paypal',
-        bankDetails: 'something i guess!'
-    });
+    // Transaction.upsert({
+    //     transactionId:2,
+    //     qty:2,
+    //     offer:255,
+    //     status: 'Delivering',
+    //     listingId: 4,
+    //     buyerId: 6,
+    //     rating: 5,
+    //     paymentId: 'h32r2hho9',
+    //     paymentMethod: 'Paypal',
+    //     bankDetails: 'something i guess?'
+    // });
+    // Transaction.upsert({
+    //     transactionId:3,
+    //     qty:3,
+    //     offer:255,
+    //     status: 'Complete',
+    //     listingId: 4,
+    //     buyerId: 3,
+    //     paymentId: '7i3jyeqhq',
+    //     paymentMethod: 'Paypal',
+    //     bankDetails: 'something i guess!'
+    // });
 });
 
 module.exports = sequelize.model('Transaction', Transaction);

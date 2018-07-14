@@ -62,7 +62,7 @@ const TransactionLog = sequelize.define('TransactionLog', {
 });
 
 // force: true will drop the table if it already exists
-TransactionLog.sync({ force: false, logging: console.log}).then(() => {
+TransactionLog.sync({ force: true, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
