@@ -45,7 +45,7 @@ app.post('/pay/:transaction_id', paypal.show);
 
 app.get('/success/:transaction_id', paypal.success);
 
-app.get('/checkout/', checkout.show);
+app.get('/checkout/:transaction_id', checkout.showDetails);
 app.post('/checkout/:transaction_id', paypal.show)
 
   
