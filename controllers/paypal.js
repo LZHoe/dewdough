@@ -6,7 +6,7 @@ var paypal = require('paypal-rest-sdk');
 // Show
 exports.show = function(req,res) {
     var transaction_id = req.params.transaction_id;
-    sequelize.query('SELECT transactionId,offer FROM Transactions WHERE transactionId = ' + transaction_id,{model:Transactions}).then((Transactions)=>{
+    sequelize.query('SELECT transactionId,offer,qty,listingId FROM Transactions WHERE transactionId = ' + transaction_id,{model:Transactions}).then((Transactions)=>{
         console.log(Transactions);
         Transactions = Transactions[0];
         const create_payment_json = {
@@ -15,21 +15,21 @@ exports.show = function(req,res) {
                 "payment_method": "Paypal"
             },
             "redirect_urls": {
-                "return_url": "http://localhost:3000/success/" + transaction_id, // <--------- change this hard code eventually
+                "return_url": "http://localhost:3000/success/" + transaction_id, 
                 "cancel_url": "http://localhost:3000/cancel"
             },
             "transactions": [{
                 "item_list": {
                     "items": [{
                         "name": "Red Sox Hat",
-                        "sku": "001",
+                        "sku": Transactions.listingId,
                         "price": Transactions.offer,
-                        "currency": "USD",
-                        "quantity": 1
+                        "currency": "SGD",
+                        "quantity": Transactions.qty,
                     }]
                 },
                 "amount": {
-                    "currency": "USD",
+                    "currency": "SGD",
                     "total": Transactions.offer,
                 },
                 "description": "Hat for the best team ever"
@@ -63,7 +63,7 @@ exports.success = function(req,res) {
           "payer_id": payerId,
           "transactions": [{
               "amount": {
-                  "currency": "USD",
+                  "currency": "SGD",
                   "total": instance.offer,
               }
           }]
