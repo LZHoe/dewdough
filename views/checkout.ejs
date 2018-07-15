@@ -31,11 +31,13 @@
                             <div class="row m0">
                                 <div class="col-md-6">
                                     <div class="checkout_method">
-                                        <h3>check as a guest or register</h3>
-                                        <h4>Register with us for future convenience:</h4>
+                                        <h3>Checkout without logging in</h3>
+                                        <h4>Choose Method:</h4>
                                         <form action="/pay/<%= data.transactionId %>" method="post" >
-                                            <input type="submit" value="Proceed With PayPal" value="Buy" class="btn subs_btn form-control"></input>
-                                            </form>
+                                            <input type="submit" style="width:90%" value="Proceed With PayPal" value="Buy" class="btn subs_btn form-control"></input>
+                                            </form><br>
+                                            <input type="submit" style="width:90%" value="Proceed With Card" value="Buy" class="btn subs_btn form-control"></input>
+                                            
                                           <h5>register and save time !</h5>
                                           <h6>Register with us for future convenience:</h6>
                                           <a class="checkout_list" href="#"><i class="arrow_carrot-right"></i> Fast and easy check out</a>
