@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include partial/head %>
+    </head>
+    <body>
+        <% include partial/header %>
+        <% include partial/header-menu %>
+        <div class="container">
+        <h3> My Item Listings </h3>
+        
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 class="text-muted">Product Page</h4>
+            </div>
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-secondary pull-right" data-toggle="modal" data-target="#createProduct">
+                    New Product
+                </button>
+            </div>
+        </div>
+        <form action="/itemlisted" method="post" enctype="multipart/form-data">
+        <div class="modal fade" id="createProduct" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                 
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">New Item Listing</h4>
+                        </div>
+
+                <div class="modal-body">
+                    <fieldset class="form-group">
+                                    <h1>List your Item!</h1>
+                                    <p>Please fill in this form to list your item.</p>
+                        <label for="ItemName">Listing Title</label>
+                        <input type="text" id="ItemName" name="ItemName" class="form-control" placeholder="Item Name" required="">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="price">Price S$0.00</label>
+                        <input type="text" id="price" name="price" class="form-control" placeholder="price" required="">
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="Description">Item Description</label>
+                        <textarea id="Description" name="Description" rows="8" cols="40" class="form-control" placeholder="Item Description" required=""></textarea>
+                    </fieldset>
+
+                    <fieldset class="form-group">
+                        <label for="MeetupLocation">MeetUp Location</label>
+                        <input type="text" id="MeetupLocation" name="meetup location" class="form-control" placeholder="MeetUp Location" required="">
+                    </fieldset>
+                    
+                    <div class="radiobuttons-container">
+                        
+                            <label for="Cat Toy" class="mdl-radio mdl-js-radio">
+                                <input id="CatToy" class="mdl-radio__button" type="radio" name="category" value="Cat Toy" /> 
+                                <span class="mdl-radio__label">Cat Toy</span>
+                            </label>
+        <br>
+                            <label for="Cat Grooming" class="mdl-radio mdl-js-radio">
+                                <input id="CatGrooming" class="mdl-radio__button" type="radio" name="category" value="Cat Grooming" />
+                                <span class="mdl-radio__label">Cat Grooming</span>
+                            </label>
+        <br>
+                            <label for="Cat Accessories" class="mdl-radio mdl-js-radio">
+                                <input id="CatAccessories" class="mdl-radio__button" type="radio" name="category" value="Cat Accessories" />
+                                <span class="mdl-radio__label">Cat Accessories</span>
+                            </label>
+        <br>
+                            <label for="Dog Toy" class="mdl-radio mdl-js-radio">
+                                <input id="DogToy" class="mdl-radio__button" type="radio" name="category" value="Dog Toy" />
+                                <span class="mdl-radio__label">Dog Toy</span>
+                            </label>
+        <br>
+                            <label for="Dog Grooming" class="mdl-radio mdl-js-radio">
+                                <input id="DogGrooming" class="mdl-radio__button" type="radio" name="category" value="Dog Grooming" />
+                                <span class="mdl-radio__label">Dog Grooming</span>
+                            </label>
+        <br>
+                            <label for="Dog Accessories" class="mdl-radio mdl-js-radio">
+                                <input id="DogAccessories" class="mdl-radio__button" type="radio" name="category" value="Dog Accessories" />
+                                <span class="mdl-radio__label">Dog Accessories</span>
+                            </label>
+
+        
+                        </div><!-- .radiobuttons-container -->
+
+                <label class="file" style="width: 100%">
+                        <input type="file" id="image" name="image">
+                        <span class="file-custom"></span>
+                </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">List it!</button>
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<hr>
+<div class="row">
+    <% itemlist.forEach(function(itemlist){ %>
+        <div class="col-lg-4">
+            <figure class="figure">
+                <img src="images/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %>">
+                <figcaption class="figure-caption"><%= itemlist.ItemName %></figcaption>
+                <small>Price: $<%= itemlist.price %></small>
+                <br>
+                <small>Category: <%= itemlist.category %></small>
+                <br>
+                <small>Item Description: <%= itemlist.Description %></small>
+                <br>
+                <small>MeetUp location: <%= itemlist.MeetupLocation %> </small>
+                <br>
+                <small>Upload by: <%= itemlist.user_id %></small>
+                <br>
+                <small>Date of creation: <%= itemlist.created %> </small>
+            </figure>
+        </div>
+    <% }); %>
+    </div>
+</div>
+ <!--================Footer Area =================-->
+<footer class="footer_area">
+    <div class="container">
+        <div class="footer_widgets">
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-6">
+                    <aside class="f_widget f_about_widget">
+                        <img src="img/logo.png" alt="">
+                        <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to enjoy now</p>
+                        <h6>Social:</h6>
+                        <ul>
+                            <li><a href="#"><i class="social_facebook"></i></a></li>
+                            <li><a href="#"><i class="social_twitter"></i></a></li>
+                            <li><a href="#"><i class="social_pinterest"></i></a></li>
+                            <li><a href="#"><i class="social_instagram"></i></a></li>
+                            <li><a href="#"><i class="social_youtube"></i></a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <aside class="f_widget link_widget f_info_widget">
+                        <div class="f_w_title">
+                            <h3>Information</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">About us</a></li>
+                            <li><a href="#">Delivery information</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                            <li><a href="#">Help Center</a></li>
+                            <li><a href="#">Returns & Refunds</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <aside class="f_widget link_widget f_service_widget">
+                        <div class="f_w_title">
+                            <h3>Customer Service</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">My account</a></li>
+                            <li><a href="#">Ordr History</a></li>
+                            <li><a href="#">Wish List</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <aside class="f_widget link_widget f_extra_widget">
+                        <div class="f_w_title">
+                            <h3>Extras</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">Brands</a></li>
+                            <li><a href="#">Gift Vouchers</a></li>
+                            <li><a href="#">Affiliates</a></li>
+                            <li><a href="#">Specials</a></li>
+                        </ul>
+                    </aside>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6">
+                    <aside class="f_widget link_widget f_account_widget">
+                        <div class="f_w_title">
+                            <h3>My Account</h3>
+                        </div>
+                        <ul>
+                            <li><a href="#">My account</a></li>
+                            <li><a href="#">Order History</a></li>
+                            <li><a href="#">Wish List</a></li>
+                            <li><a href="#">Newsletter</a></li>
+                        </ul>
+                    </aside>
+                </div>
+            </div>
+        </div>
+        <div class="footer_copyright">
+            <h5>© <script>document.write(new Date().getFullYear());</script> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</h5>
+        </div>
+    </div>
+</footer>
+
+<!--================End Footer Area =================-->
+
+
+
+
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-3.2.1.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+ <script src="js/popper.min.js"></script>
+<!--<script src="js/bootstrap.min.js"></script> -->
+ Rev slider js -->
+
+<script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+<script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+<script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<!-- Extra plugin css -->
+
+<script src="vendors/counterup/jquery.waypoints.min.js"></script>
+<script src="vendors/counterup/jquery.counterup.min.js"></script>
+<script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+<script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+<script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+<script src="js/smoothscroll.js"></script>
+<script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+<script src="vendors/isotope/isotope.pkgd.min.js"></script>
+<script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+<script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+<script src="vendors/jquery-ui/jquery-ui.js"></script>
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+
+
+<script src="js/theme.js"></script>
+</body>
+</html>  
