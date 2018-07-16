@@ -5,6 +5,11 @@ var express = require('express');
 var path = require('path');
 var app = express();
 var paypal = require('paypal-rest-sdk');
+var logger = require('morgan');
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var multer = require('multer');
+var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, files: 1} });
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -31,10 +36,6 @@ var httpServer = require('http').Server(app);
 //passport config
 require('./config/passport')(passport);
 
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
-
 ////////////////////////////////
 ////// IMPORT CONTROLLERS //////
 ////////////////////////////////
@@ -46,6 +47,8 @@ var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
 var checkout = require('./controllers/checkout');
+var itemlist= require('./controllers/itemlistController');
+var servicelist = require('./controllers/servicelistC');
 
 
 app.use(logger('dev'));
@@ -137,6 +140,14 @@ app.post("/transactions/:transaction_id", transaction.testpay);
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
+//////////////////////////////////////////////////////
+////>>>>>>  Beginning of Listings  >>>>>>
+app.get("/itemlisted", itemlist.show); 
+app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
+app.get("/servicelisted", servicelist.show);
+app.post("/servicelisted", servicelist.hasAuthorization, upload.single('serviceimage1'), servicelist.uploadService);
+////<<<<<< End of Listings <<<<<<
+//////////////////////////////////////////////////////
 
 // Listening
 var server = app.listen(3000, () => {

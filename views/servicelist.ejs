@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+       <% include partial/head %>
+    </head>
+    <style>
+    .button {
+    background-color: #f55e61; 
+    color: black; 
+    border: 2px solid #f55e61;
+}
+
+.button3:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid gray;
+}
+
+    </style>
+
+    <body>
+        <% include partial/header %>
+        
+        <!--================Categories Banner Area =================
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>error page</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="404.html">Error Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        ================End Categories Banner Area =================-->
+<!-- service listing -->
+        <div class = "container">
+            <h4> My Service Listing</h4>
+            <table> 
+                <tr> 
+                    <th>
+                        <button type="button" id="add-service">Add Service Listing</button>
+                    </th>
+                <!-- </tr>
+            </table> -->
+
+            <th>
+
+            <!-- service listing form -->
+        <div class="show-onclick form-group">
+            <form action="/images" method="post" enctype="multipart/form-data">
+            <div class ="col-lg-3">
+                <div class="form-group">
+                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                            <input type="file" id="serviceimage1" name="serviceimage1" required>                
+                </div>
+            </div>
+
+            <div class ="col-lg-3">
+                    <div class="form-group">
+                                <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                                <input type="file" id="serviceimage2" name="serviceimage2">                
+                    </div>
+            </div>
+
+            <div class ="col-lg-3">
+                <div class="form-group">
+                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                            <input type="file" id="serviceimage3" name="serviceimage3">                
+                </div>
+            </div>
+
+            <div class ="col-lg-3">
+                    <div class="form-group">
+                                <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                                <input type="file" id="serviceimage4" name="serviceimage4">                
+                    </div>
+            </div>
+            
+        
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="servicetitle">Listing Title:  <span>*</span></label>
+                    <input type="text" class="form-control" id="servicetitle" aria-describedby="name" placeholder="Listing Tile">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for= "serviceprice">Price: <span>*</span></label>
+                    <input type="number" required name="serviceprice" min="0" value="0" step=".01"
+                    class="form-control" id="serviceprice" aria-describedby="serviceprice" placeholder="$0.00">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                        <label for="servicedescription">Item Description: <span>*</span></label>
+                        <textarea id="servicedescription" name="servicedescription" rows="5" cols="40" 
+                        class="form-control" placeholder="Service Description" required=""></textarea>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                    <div class="form-group">
+                        <label for="servicecategory">Category <span>*</span></label>
+                        <select class="selectpicker" id="servicecategory">
+                            <option> <value="Dog Grooming">Dog Grooming </value></option>
+                            <option> <value="Dog Daycare">Dog Daycare </value></option>
+                            <option> <value="Dog Boarding">Dog Boarding </value></option>
+                            <option> <value="Cat Grooming">Cat Grooming </value></option>
+                            <option> <value="Cat Daycare">Cat Daycare </value></option>
+                            <option> <value="Cat Boarding">Cat Boarding </value></option>
+
+
+                        </select>
+                    </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                        <label for="servicelocation">Location:  <span>*</span></label>
+                        <input type="text" class="form-control" id="servicelocation" aria-describedby="service-location" placeholder="Location">
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                    <button type="submit" id="servicebutton" value="submit" class="btn subs_btn form-control">Submit</button>
+            </div>
+    </form>
+        </div>
+        </div>
+    </th>
+   
+    </tr>
+
+</table>
+        <!-- end of service listing form -->
+        <!-- end of service listing -->
+        <!-- listed -->
+        <div class="row">
+                <% images.forEach(function(images){ %>
+                    <div class="col-lg-4">
+                        <figure class="figure">
+                            <img src="images/<%= images.imageName %>" class="figure-img img-fluid img-rounded" alt="<%= images.imageName %>">
+                            <figcaption class="figure-caption"><%= images.servicetitle %></figcaption>
+                            <!-- <small>Upload by: <%= images.user_id %></small> -->
+                            <small>Price: <%= images.serviceprice %></small>
+                            <small>Description: <%= images.servicedescription %></small>
+                            <small>Location: <%= images.servicelocation %></small>
+
+                        </figure>
+                    </div>
+                <% }); %>
+            </div>
+        <!-- end of listed -->
+        <!--================Test Area =================-->
+        <div class="container">
+            <h4>This is a test.</h4>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                </tr>
+                <% data.forEach(function(data){ %>
+                    <tr>
+                        <td><%= data.id %></td>
+                        <td><%= data.title %></td>
+                    </tr>
+                <% }); %>
+            </table>
+        </div>
+        <!--================End Test Area =================-->
+        
+        <!--================Footer Area =================-->
+        <footer class="footer_area">
+            <div class="container">
+                <div class="footer_widgets">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-6">
+                            <aside class="f_widget f_about_widget">
+                                <img src="img/logo.png" alt="">
+                                <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to enjoy now</p>
+                                <h6>Social:</h6>
+                                <ul>
+                                    <li><a href="#"><i class="social_facebook"></i></a></li>
+                                    <li><a href="#"><i class="social_twitter"></i></a></li>
+                                    <li><a href="#"><i class="social_pinterest"></i></a></li>
+                                    <li><a href="#"><i class="social_instagram"></i></a></li>
+                                    <li><a href="#"><i class="social_youtube"></i></a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_info_widget">
+                                <div class="f_w_title">
+                                    <h3>Information</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">About us</a></li>
+                                    <li><a href="#">Delivery information</a></li>
+                                    <li><a href="#">Terms & Conditions</a></li>
+                                    <li><a href="#">Help Center</a></li>
+                                    <li><a href="#">Returns & Refunds</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_service_widget">
+                                <div class="f_w_title">
+                                    <h3>Customer Service</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">My account</a></li>
+                                    <li><a href="#">Ordr History</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                    <li><a href="#">Contact Us</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_extra_widget">
+                                <div class="f_w_title">
+                                    <h3>Extras</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">Brands</a></li>
+                                    <li><a href="#">Gift Vouchers</a></li>
+                                    <li><a href="#">Affiliates</a></li>
+                                    <li><a href="#">Specials</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <aside class="f_widget link_widget f_account_widget">
+                                <div class="f_w_title">
+                                    <h3>My Account</h3>
+                                </div>
+                                <ul>
+                                    <li><a href="#">My account</a></li>
+                                    <li><a href="#">Order History</a></li>
+                                    <li><a href="#">Wish List</a></li>
+                                    <li><a href="#">Newsletter</a></li>
+                                </ul>
+                            </aside>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer_copyright">
+                    <h5>© <script>document.write(new Date().getFullYear());</script> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+</h5>
+                </div>
+            </div>
+        </footer>
+        <!--================End Footer Area =================-->
+        
+        
+        
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Rev slider js -->
+        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <!-- Extra plugin css -->
+        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+        <script src="vendors/counterup/jquery.counterup.min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+        
+        <script src="js/theme.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script> 
+        $(document).ready(function() {
+            $('#servicebutton').click(function() {
+                $('.show-onclick').show();
+            });
+        });
+        </script>
+    </body>
+</html> 
