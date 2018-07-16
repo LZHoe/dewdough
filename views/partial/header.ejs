@@ -1,63 +1,225 @@
 <!--================Top Header Area =================-->
-<div class="header_top_area">
+<!-- <div class="header_top_area">
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
                 <div class="top_header_left">
-                    <!-- <div class="selector">
+                    <div class="selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                          <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
-                          <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
-                          <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
-                          <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
+                            <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
+                            <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
+                            <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
+                            <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
                         </select>
                     </div>
                     <select class="selectpicker usd_select">
                         <option>USD</option>
                         <option>$</option>
                         <option>$</option>
-                    </select> -->
+                    </select>
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Search" aria-label="Search">
                         <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button"><i class="icon-magnifier"></i></button>
+                            <button class="btn btn-secondary" type="button">
+                                <i class="icon-magnifier"></i>
+                            </button>
                         </span>
                     </div>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="top_header_middle">
-                    <a href="#"><i class="fa fa-phone"></i> Call Us: <span>+65 9380 2555</span></a>
-                    <a href="#"><i class="fa fa-envelope"></i> Email: <span>zhenghan@support.com</span></a>
+                    <a href="#">
+                        <i class="fa fa-phone"></i> Call Us:
+                        <span>+65 9380 2555</span>
+                    </a>
+                    <a href="#">
+                        <i class="fa fa-envelope"></i> Email:
+                        <span>zhenghan@support.com</span>
+                    </a>
                     <img width="200px" src="/img/epetlogo.png" alt="">
                 </div>
             </div>
             <div class="col-lg-3">
                 <div class="top_right_header">
                     <ul class="header_social">
-                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
-                        <li><a href="#"><i class="fa fa-instagram"></i></a></li>
-                        <li><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-facebook"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-twitter"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-pinterest"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-instagram"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-youtube-play"></i>
+                            </a>
+                        </li>
                     </ul>
                     <ul class="top_right">
-                        <li class="user"><a href="#"><i class="icon-user icons"></i></a></li>
-                        <li class="cart"><a href="#"><i class="icon-handbag icons"></i></a></li>
-                        <li class="h_price">
-                            <select class="selectpicker">
-                                <option>$0.00</option>
-                                <option>$0.00</option>
-                                <option>$0.00</option>
-                            </select>
-                        </li>
                         <% if (login) {%>
-                        <li><a href="/logout" class="btn btn-default">Logout</a></li>
-                        <% } %>
+                            <li class="user">
+                                <a href="#">
+                                    <i class="icon-user icons"></i>
+                                </a>
+                            </li>
+                            <li class="cart">
+                                <a href="#">
+                                    <i class="icon-handbag icons"></i>
+                                </a>
+                            </li>
+                            <li class="h_price">
+                                <select class="selectpicker">
+                                    <option>$0.00</option>
+                                    <option>$0.00</option>
+                                    <option>$0.00</option>
+                                </select>
+                            </li>
+                            <li>
+                                <a href="/logout" class="btn btn-default">Logout</a>
+                            </li>
+                            <% } else { %>
+                                <li>
+                                    <a href="/login">
+                                        <span style="font-size: 16px;">Login/Register</span>
+                                    </a>
+                                </li>
+                                <% } %>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <!--================End Top Header Area =================-->
+
+<header class="shop_header_area carousel_menu_area">
+    <div class="carousel_top_header row m0">
+        <div class="container">
+            <div class="carousel_top_h_inner">
+                <!-- <div class="float-md-left">
+                        <div class="top_header_left">
+                            <div class="selector">
+                                <select class="language_drop" name="countries" id="countries" style="width:300px;">
+                                  <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
+                                  <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
+                                  <option value='yt' data-image="img/icon/flag-1.png" data-imagecss="flag yt" data-title="English">English</option>
+                                  <option value='yu' data-image="img/icon/flag-1.png" data-imagecss="flag yu" data-title="Bangladesh">Bangla</option>
+                                </select>
+                            </div>
+                            <select class="selectpicker usd_select">
+                                <option>USD</option>
+                                <option>$</option>
+                                <option>$</option>
+                            </select>
+                        </div>
+                    </div> -->
+                <div class="float-md-right">
+                    <div class="top_header_middle">
+                        <a href="#">
+                            <i class="fa fa-phone"></i> Call Us:
+                            <span>+65 8469 1353</span>
+                        </a>
+                        <a href="#">
+                            <i class="fa fa-envelope"></i> Email:
+                            <span>zhenghan@support.com</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carousel_menu_inner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 2px solid #d91522;">
+                <a class="navbar-brand" href="/">
+                    <img style="width: 180px;" src="img/epetlogo-v2.png" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Items
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="compare.html">Cats</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="checkout.html">Dogs</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown submenu">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Services
+                                <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="categories-no-sidebar-2column.html">Cats</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="categories-no-sidebar-3column.html">Dogs</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Support</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-end">
+                        <% if (login) { %>
+                            <li class="search_icon">
+                                <a href="#">
+                                    <i class="icon-magnifier icons"></i>
+                                </a>
+                            </li>
+                            <li class="user_icon">
+                                <a href="#">
+                                    <i class="icon-user icons"></i>
+                                </a>
+                            </li>
+                            <li class="cart_cart">
+                                <a href="/transactions">
+                                    <i class="icon-handbag icons"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/logout">
+                                    <span style="font-size: 16px;">Logout</span>
+                                </a>
+                            </li>
+                        <% } else { %>
+                            <li>
+                                <a href="/login">
+                                    <span style="font-size: 16px;">Login/Register</span>
+                                </a>
+                            </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>

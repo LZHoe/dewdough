@@ -5,7 +5,6 @@
     </head>
     <body>
         <% include partial/header %>
-        <% include partial/header-menu %>
         
         <!--================Categories Banner Area =================
         <section class="solid_banner_area">
@@ -20,15 +19,20 @@
             </div>
         </section>
         ================End Categories Banner Area =================-->
-
+        <br>
         <div class="container">
-            <h3>View All Transactions</h3>
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+            <h3>Order History</h3>
             <ul>
                 <% data.forEach(function(data){ %>
                 <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.createdAt %></h6></a></li>
                 <% }); %>
             </ul>
-
+            
 
             <form action="/transactions" method="post">
                 <div class="modal-header">

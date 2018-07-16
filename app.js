@@ -109,7 +109,7 @@ app.get('/success/:transaction_id', paypal.success);
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
-app.get("/transactions", transaction.showAll);
+app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.testpay);

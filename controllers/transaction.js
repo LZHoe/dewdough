@@ -8,9 +8,9 @@ var sequelize = myDatabase.sequelize;
 ///////////////////////////////////////////////////
 exports.showAll = function (req, res) {
     // Show transaction data
-    sequelize.query('SELECT transactionId, createdAt FROM Transactions', { model: Transaction }).then((Transactions) => {
+    sequelize.query('SELECT transactionId, createdAt FROM Transactions WHERE buyerId = ' + req.user.id, { model: Transaction }).then((Transactions) => {
         res.render('allTransactions', {
-            title: 'All Transactions',
+            title: 'Order History',
             data: Transactions
         })
     }).catch((err) => {
