@@ -66,10 +66,6 @@ const Transaction = sequelize.define('Transaction', {
 
 // Enter entry into transaction log table right before any time Transaction table is updated
 Transaction.beforeBulkUpdate((updateData) => {
-    // console.log("//////////////////////////YOU'RE★IN★THE★ZONE//////////////////////////");
-    // console.log("data: " + JSON.stringify(updateData));
-    // console.log("tId: " + updateData.where.transactionId);
-
     // Retrieve the current(not yet updated) entry of the transaction
     var tId = updateData.where.transactionId;
     sequelize.query('SELECT * FROM Transactions WHERE transactionId = ' + tId, { model: Transaction }).then((Transactions) => {
@@ -86,6 +82,7 @@ Transaction.beforeBulkUpdate((updateData) => {
             paymentMethod: crrTransaction.paymentMethod,
             bankDetails: crrTransaction.bankDetails,
             action: "UPDATED",
+            commitBy: updateData.id,
             createdAt: crrTransaction.updatedAt
         }
 
@@ -108,7 +105,9 @@ Transaction.sync({ force: false, logging: console.log}).then(() => {
         offer:25.50,
         status: 'Pending',
         listingId: 1,
-        buyerId: 1
+        buyerId: 1,
+        paymentId: null,
+        paymentMethod: null
     });
     // Transaction.upsert({
     //     transactionId:2,

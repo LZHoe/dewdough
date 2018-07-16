@@ -1,4 +1,6 @@
-// Import modules
+////////////////////////////////////
+////////// IMPORT MODULES //////////
+////////////////////////////////////
 var express = require('express');
 var path = require('path');
 var app = express();
@@ -9,9 +11,6 @@ paypal.configure({
     'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
     'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
   });
-
-//import login controller
-var auth = require('./controllers/auth');
 
 //modules to store function
 var myDatabase = require('./controllers/database');
@@ -36,13 +35,18 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 
-// Import controllers
+////////////////////////////////
+////// IMPORT CONTROLLERS //////
+////////////////////////////////
+var auth = require('./controllers/auth');
 var home = require('./controllers/home');
 var transaction = require('./controllers/transaction');
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
+var checkout = require('./controllers/checkout');
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -82,15 +86,20 @@ app.use((req, res, next) => {
     res.locals.login = req.isAuthenticated();
     next();
 })
-// Routes/Routers
+
+//////////////////////////
+///////// ROUTES /////////
+//////////////////////////
 app.get("/", home.show);
+
+/////////////////////////////////////////////////
+////>>>>>>  Beginning of Users  >>>>>>
 app.get("/login", auth.signin);
 app.post('/login', passport.authenticate('local-login', {
     successRedirect: '/profile',
     failureRedirect: '/login',
     failureFlash: true
 }));
-
 app.get('/signup', auth.signup);
 app.post('/signup', passport.authenticate('local-signup', {
     //Success go to Profile Page / Fail go to Signup page
@@ -98,42 +107,35 @@ app.post('/signup', passport.authenticate('local-signup', {
     failureRedirect: '/signup',
     failureFlash: true
 }));
-
-app.get("/cart", cart.show);
-
-app.post('/pay', paypal.show);
-
-app.get('/success/:transaction_id', paypal.success);
-
-  
-app.get('/cancel', (req, res) => {
-    res.render('cancel')
-});
-app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
-app.post("/transactions", transaction.create);
-app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.testpay);
 // Logout
 app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+////<<<<<< End of Users <<<<<<
+/////////////////////////////////////////////////
 
-// 404 handling
-app.use(function (req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+/////////////////////////////////////////////////
+////>>>>>>  Beginning of Payment  >>>>>>
+app.get("/cart", cart.show);
+app.post('/pay/:transaction_id', paypal.show);
+app.get('/success/:transaction_id', paypal.success);
+app.get('/checkout/:transaction_id', checkout.showDetails);
+app.post('/checkout/:transaction_id', paypal.show)
+app.get('/cancel', (req, res) => {
+    res.render('cancel')
 });
+////<<<<<< End of Payment <<<<<<
+/////////////////////////////////////////////////
 
-// production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('404', {
-        title: "Error 404"
-    });
-});
+//////////////////////////////////////////////////////
+////>>>>>>  Beginning of Transactions  >>>>>>
+app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
+app.post("/transactions", transaction.create);
+app.get("/transactions/:transaction_id", transaction.showDetails);
+app.post("/transactions/:transaction_id", transaction.testpay);
+////<<<<<< End of Transactions <<<<<<
+//////////////////////////////////////////////////////
 
 
 // Listening

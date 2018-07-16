@@ -3,9 +3,9 @@ var TransactionLog = require('../models/transactionLog');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 
-///////////////////////////////////////////////////
-//// List all orders/transactions /////////////////
-///////////////////////////////////////////////////
+//////////////////////////////////////
+//// List all orders/transactions ////
+//////////////////////////////////////
 exports.showAll = function (req, res) {
     // Show transaction data
     sequelize.query('SELECT transactionId, createdAt FROM Transactions WHERE buyerId = ' + req.user.id, { model: Transaction }).then((Transactions) => {
@@ -20,9 +20,9 @@ exports.showAll = function (req, res) {
     })
 }
 
-///////////////////////////////////////////////////
-//// List details of ONE transaction //////////////
-///////////////////////////////////////////////////
+/////////////////////////////////////////
+//// List details of ONE transaction ////
+/////////////////////////////////////////
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
@@ -67,7 +67,7 @@ exports.testpay = function (req, res) {
         paymentMethod: 'Paypal'
     }
     transactionId = req.params.transaction_id;
-    Transaction.update(updateData, { where: { transactionId: transactionId } }).then((updatedRecord) => {
+    Transaction.update(updateData, { where: { transactionId: transactionId }, id: req.user.id }).then((updatedRecord) => {
         if (!updatedRecord || updatedRecord == 0) {
             return res.send(400, {
                 message: "error"
