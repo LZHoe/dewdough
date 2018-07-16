@@ -7,12 +7,13 @@ var paypal = require('paypal-rest-sdk');
 exports.show = function(req,res) {
     var transaction_id = req.params.transaction_id;
     sequelize.query('SELECT transactionId,offer,qty,listingId FROM Transactions WHERE transactionId = ' + transaction_id,{model:Transactions}).then((Transactions)=>{
-        console.log(Transactions);
+
         Transactions = Transactions[0];
+        console.log(Transactions)
         const create_payment_json = {
             "intent": "sale",
             "payer": {
-                "payment_method": "Paypal"
+                "payment_method": "paypal"
             },
             "redirect_urls": {
                 "return_url": "http://localhost:3000/success/" + transaction_id, 
