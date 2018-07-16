@@ -64,7 +64,7 @@ exports.uploadImage = function (req, res) {
     });
 
     exports.create = function (req, res) {
-        console.log("service listing entered")
+        console.log("item listing entered")
     
         var ItemData = {
             ItemName: req.body.ItemName,
@@ -83,7 +83,7 @@ exports.uploadImage = function (req, res) {
                     message: "error"
                 });
             }
-            res.redirect('itemlist');
+            res.redirect('itemlisted');
         })
     
     };

@@ -33,6 +33,8 @@ exports.show = function(req, res) {
 
 //image upload
 exports.uploadService = function (req, res) {
+    console.log("i am in here 2");
+
 var src;
 var dest;
 var targetPath;
@@ -44,7 +46,7 @@ var type = mime.lookup(req.file.mimetype);
 //file extension 
 var extension = req.file.path.split(/[. ]+/).pop();
 //check support file types 
-if (IMAGES_TYPES.indexOf(type) == -1) {
+if (IMAGE_TYPES.indexOf(type) == -1) {
     return res.status(415).send('Supported image formats: jpeg, jpg, jpe, png.')
 }
 //set new path to images 
@@ -94,7 +96,7 @@ src.on('end', function () {
     var serviceData = {
         servicetitle: req.body.servicetitle,
         imageName: req.file.originalname,
-        user_id: req.user.id,
+        user_id: "2",
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,
@@ -103,7 +105,7 @@ src.on('end', function () {
     //save to database
     servicelistM.create(serviceData).then((newServiceData, created) => {
         if (!newServiceData) {
-            return res.send(40, {
+            return res.send(400, {
                 message: "error"
             });
         }
@@ -122,9 +124,12 @@ src.on('end', function () {
 };
 
 
-exports.hasAuthorization = function (req, res, next) {
-    if (req.isAuthenticated())
+exports.hasAuthorization = function(req, res, next) {
+    console.log("authenticated: " + req.isAuthenticated);
+    if (true){
+        
         return next();
+    }
     res.redirect('/login');
-}
+};
 
