@@ -15,7 +15,8 @@ var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
-var checkout = require('./controllers/checkout')
+var checkout = require('./controllers/checkout');
+var checkoutcard = require('./controllers/checkoutcard');
 
 var logger = require('morgan');
 var bodyParser = require('body-parser');
@@ -46,9 +47,12 @@ app.post('/pay/:transaction_id', paypal.show);
 app.get('/success/:transaction_id', paypal.success);
 
 app.get('/checkout/:transaction_id', checkout.showDetails);
-app.post('/checkout/:transaction_id', paypal.show)
+app.post('/checkout/:transaction_id', paypal.show);
 
-  
+app.get('/checkoutcard/:transaction_id', checkoutcard.show);
+app.post("/savecard", checkoutcard.create)
+
+
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
@@ -57,8 +61,6 @@ app.get("/transactions", transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.testpay);
-
-
 
 // Listening
 var server = app.listen(3000, () => {

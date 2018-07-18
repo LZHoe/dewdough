@@ -26,7 +26,7 @@ exports.show = function(req,res) {
                         "sku": Transactions.listingId,
                         "price": Transactions.offer,
                         "currency": "SGD",
-                        "quantity": Transactions.qty,
+                        "quantity": "001",
                     }]
                 },
                 "amount": {
