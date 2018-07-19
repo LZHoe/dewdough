@@ -60,6 +60,7 @@
                                                 <th scope="col" style="text-align: center">Product</th>
                                                 <th scope="col">User</th>
                                                 <th scope="col">Date</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col">Details</th>
                                             </tr>
                                         </thead>
@@ -163,6 +164,7 @@
                                                 <td>` + result[i].ItemName + `</td>
                                                 <td>Buyer: ` + result[i].buyerUser + `<br>Seller: ` + result[i].sellerUser + `</td>
                                                 <td>First offer: ` + result[i].createdAt + `<br>Last Update: ` + result[i].updatedAt + `</td>
+                                                <td>` + result[i].status + `</td>
                                                 <td><a href="/transactions/`+ result[i].transactionId +`">GO</a></td>
                                             </tr>`;
                                     }

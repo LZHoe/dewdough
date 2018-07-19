@@ -4,61 +4,40 @@
         <% include partial/head %>
     </head>
     <body>
-        
         <% include partial/header %>
         
         <!--================Categories Banner Area =================-->
         <section class="solid_banner_area">
             <div class="container">
                 <div class="solid_banner_inner">
-                    <h3>Sign Up</h3>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="/signup">Sign Up</a></li>
-                    </ul>
+                    <h3>Welcome, <strong><%= user.name%></strong></h3>
                 </div>
             </div>
         </section>
         <!--================End Categories Banner Area =================-->
-        <!-- <% if (message) { %> -->
-            <p>MESSAGE: <%= message %></p>
-            <!-- <% } %> -->
-        <!--================signup Area =================-->
-        <section class="login_area p_100">
-            <div class="container">
-                <div class="login_inner">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="login_title" align="center">
-                                <h2>create account</h2>
-                                <p>Follow the steps below to create email account enjoy the great mail.com emailing experience. Vivamus tempus risus vel felis condimentum, non vehicula est iaculis.</p>
-                            </div>
-                            <form class="login_form row" action="/signup" method="post">
-                                <div class="col-lg-6 form-group">
-                                    <input class="form-control" name = 'name' type="text" placeholder="Name">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <input class="form-control" name = 'email' type="email" placeholder="Email">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <input class="form-control" name = 'username' type="text" placeholder="User Name">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <input class="form-control" name = 'phone' type="text" placeholder="Phone">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <input class="form-control" name = 'password' type="password" placeholder="Password">
-                                </div>
-                                <div class="col-lg-6 form-group">
-                                    <button type="submit" value="submit" class="btn subs_btn form-control">register now</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+        
+        <!--================End Categories Banner Area =================-->
+        <div class="container">
+        <h1>Profile</h1>
+        <div class="datails" style="text-align: center">
+
+            <div class="card text-xs-center" align="center">
+                <br>
+                <img class="card-img-top" src="<%= avatar %>" alt="Card image cap" style="width: 10%;">
+                <div class="card-block">
+                    <br>
+                    <h3 class="card-title">User Details</h3>
+                    <p class="card-text">
+                        <strong>Name</strong>: <%= user.name %><br>
+                        <strong>Email</strong>: <%= user.email %><br>
+                        <strong>Phone</strong>: <%= user.phone %>
+                    </p>
                 </div>
             </div>
+        </div>
+    </div>
         </section>
-        <!--================End login Area =================-->
+        <!--================End Categories Banner Area =================-->
         
         <!--================Footer Area =================-->
         <% include partial/footer %>

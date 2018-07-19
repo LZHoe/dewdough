@@ -119,6 +119,7 @@ app.post('/signup', passport.authenticate('local-signup', {
     failureRedirect: '/signup',
     failureFlash: true
 }));
+app.get('/profile', auth.isLoggedIn, auth.profile);
 // Logout
 app.get('/logout', function (req, res) {
     req.logout();

@@ -26,6 +26,10 @@
                                     <td><h5><%= data.username %></h5></td>
                                 </tr>
                                 <tr>
+                                    <th scope="row"><span>Start Date</span></th>
+                                    <td><h5><%= data.createdAt %></h5></td>
+                                </tr>
+                                <tr>
                                     <th scope="row"><span>Status</span></th>
                                     <td><h5><%= data.status %></h5></td>
                                 </tr>
@@ -74,7 +78,9 @@
                         <% }) %>
                     </table>
                     <% } %>
+                    <% if (login == 1) { %>
                     <a class="add_cart_btn continue" href="/transactions">Return to All Transactions</a>
+                    <% } %>
                     <a href="/checkout/<%= data.transactionId %>" >
                         <button class="add_cart_btn continue"  style="background-color: blue; cursor: pointer;">Simulate payment</button>
                     </a>

@@ -17,9 +17,10 @@ function convertDate (myDate) {
 //////////////////////////////////////
 exports.showAll = function (req, res) {
     // Join transactions & item listing table
-    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName \
+    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser \
                     FROM Transactions t \
                     INNER JOIN itemlists il ON t.listingId = il.Itemid \
+                    INNER JOIN Users seller ON seller.id = il.user_id \
                     WHERE buyerId = ' + req.user.id +
                     ' ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
             // formatting dates
@@ -44,7 +45,7 @@ exports.showAll = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails  
+    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt  
     FROM Transactions t 
     INNER JOIN itemlists il ON il.Itemid = t.listingId 
     INNER JOIN Users u ON u.id = il.user_id  
@@ -54,6 +55,9 @@ exports.showDetails = function (req, res) {
         },
         type: sequelize.QueryTypes.SELECT
      }).then((Transactions) => {
+        for (var i=0; i<Transactions.length; i++) {
+            Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+        }
         sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
         FROM TransactionLogs tl 
         INNER JOIN Users u ON u.id = tl.commitBy 

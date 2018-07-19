@@ -35,8 +35,8 @@
                                                 <tr>
                                                     <th scope="col"></th>
                                                     <th scope="col" style="text-align: center">Product</th>
-                                                    <th scope="col">Started</th>
-                                                    <th scope="col">Last Updated</th>
+                                                    <th scope="col">Sold by</th>
+                                                    <th scope="col">Date</th>
                                                     <th scope="col">Current offer</th>
                                                     <th scope="col">Status</th>
                                                     <th scope="col">Details</th>
@@ -57,8 +57,8 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td><%= data.createdAt %></td>
-                                                    <td><%= data.updatedAt %></td>
+                                                    <td><%= data.sellerUser %></td>
+                                                    <td>Start: <%= data.createdAt %><br>Last Update: <%= data.updatedAt %></td>
                                                     <td>$<%= data.offer %></td>
                                                     <td><%= data.status %></td>
                                                     <td><a href="/transactions/<%= data.transactionId %>">Go</a></td>
