@@ -2,13 +2,17 @@ var Transaction = require('../models/transaction');
 var TransactionLog = require('../models/transactionLog');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
+var itemlists = require('../models/itemlist')
 
 //////////////////////////////////////
 //// List all orders/transactions ////
 //////////////////////////////////////
 exports.showAll = function (req, res) {
-    // Show transaction data
-    sequelize.query('SELECT transactionId, createdAt FROM Transactions WHERE buyerId = ' + req.user.id, { model: Transaction }).then((Transactions) => {
+    // Join transactions & item listing table
+    sequelize.query('SELECT transactionId, listingId, t.createdAt, ItemName \
+                    FROM Transactions t \
+                    INNER JOIN itemlists il ON t.listingId = il.Itemid \
+                    WHERE buyerId = ' + req.user.id, { type: sequelize.QueryTypes.SELECT}).then((Transactions) => {
         res.render('allTransactions', {
             title: 'Order History',
             data: Transactions
@@ -38,28 +42,42 @@ exports.showDetails = function (req, res) {
     })
 }
 
+////////////////////////////////////////////////
+//// Start a transaction with initial offer ////
+////////////////////////////////////////////////
 exports.create = function (req, res) {
-    // retreive user input
-    var transactionData = {
-        qty: req.body.qty,
-        offer: req.body.offer,
-        listingId: req.body.listingId,
-        buyerId: req.body.buyerId
-    };
+    var initialPrice = 0;
+    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
 
-    // after retreiving, push into db
-    Transaction.create(transactionData).then((newTransaction, created) => {
-        if (!newTransaction) {
-            return res.send(400, {
-                message: "error"
-            });
-        }
+        // retreive user input
+        var transactionData = {
+            qty: req.body.qty,
+            listingId: req.body.listingId,
+            buyerId: req.user.id,
+            offer: results[0].price
+        };
 
-        console.log("New transaction successful");
-        res.redirect('/transactions');
-    });
+        // after retreiving, push into db
+        Transaction.create(transactionData).then((newTransaction, created) => {
+            if (!newTransaction) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+
+            console.log("New transaction successful");
+            res.redirect('/transactions');
+        });
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
 }
 
+/////////////////
+//// Payment ////
+/////////////////
 exports.testpay = function (req, res) {
     var updateData = {
         status: 'Delivering',

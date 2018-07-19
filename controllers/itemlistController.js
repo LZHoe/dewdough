@@ -94,11 +94,11 @@ exports.uploadImage = function (req, res) {
         var ItemData = {
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
-            user_id: '2',
+            user_id: req.user.id,
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation
+            MeetupLocation: req.body.MeetupLocation
             
         }
         // Save to database

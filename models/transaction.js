@@ -29,10 +29,10 @@ const Transaction = sequelize.define('Transaction', {
     listingId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //     model: 'Listings',
-        //     id: 'listingId'
-        // }
+        references: {
+            model: 'itemlists',
+            id: 'Itemid'
+        }
     },
     buyerId: {
         type: Sequelize.INTEGER,
@@ -99,16 +99,16 @@ Transaction.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
-    Transaction.upsert({
-        transactionId:1,
-        qty:2,
-        offer:25.50,
-        status: 'Pending',
-        listingId: 1,
-        buyerId: 1,
-        paymentId: null,
-        paymentMethod: null
-    });
+    // Transaction.upsert({
+    //     transactionId:1,
+    //     qty:2,
+    //     offer:25.50,
+    //     status: 'Pending',
+    //     listingId: 1,
+    //     buyerId: 1,
+    //     paymentId: null,
+    //     paymentMethod: null
+    // });
     // Transaction.upsert({
     //     transactionId:2,
     //     qty:2,

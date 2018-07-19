@@ -26,10 +26,10 @@
                 <li></li>
                 <li></li>
             </ul>
-            <h3>Order History</h3>
+            <h3>View all you are buying</h3>
             <ul>
                 <% data.forEach(function(data){ %>
-                <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.createdAt %></h6></a></li>
+                <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.ItemName %></h6></a></li>
                 <% }); %>
             </ul>
             
@@ -46,16 +46,8 @@
                         <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="inputoffer">Price</label>
-                        <input type="text" id="inputoffer" name="offer" class="form-control" placeholder="Enter price" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
                         <label for="inputlistingid">Listing ID</label>
-                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Test only" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="inputbuyerid">Buyer ID</label>
-                        <input type="text" id="inputbuyerid" name="buyerId" class="form-control" placeholder="From current logged-in user" required="">
+                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
                     </fieldset>
                 </div>
                 <div class="modal-footer">
