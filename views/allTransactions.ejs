@@ -38,6 +38,7 @@
                                                     <th scope="col">Started</th>
                                                     <th scope="col">Last Updated</th>
                                                     <th scope="col">Current offer</th>
+                                                    <th scope="col">Status</th>
                                                     <th scope="col">Details</th>
                                                 </tr>
                                             </thead>
@@ -59,6 +60,7 @@
                                                     <td><%= data.createdAt %></td>
                                                     <td><%= data.updatedAt %></td>
                                                     <td>$<%= data.offer %></td>
+                                                    <td><%= data.status %></td>
                                                     <td><a href="/transactions/<%= data.transactionId %>">Go</a></td>
                                                 </tr>
                                                 <% }); %>
@@ -73,7 +75,7 @@
 
             <form action="/transactions" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
+                    <h4 class="modal-title" id="myModalLabel">Example New Purchase</h4>
                 </div>
 
                 <div class="modal-body">

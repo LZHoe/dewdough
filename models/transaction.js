@@ -37,10 +37,10 @@ const Transaction = sequelize.define('Transaction', {
     buyerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {
-            model: 'Users',
-            id: 'id'
-        }
+        // references: {
+        //     model: 'Users',
+        //     id: 'id'
+        // }
     },
     rating: {
         type: Sequelize.INTEGER,

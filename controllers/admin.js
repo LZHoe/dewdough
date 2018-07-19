@@ -37,14 +37,14 @@ exports.search = function (req, res) {
         INNER JOIN itemlists il ON t.listingId = il.Itemid 
         INNER JOIN Users buyer ON buyer.id = t.buyerId 
         INNER JOIN Users seller ON seller.id = il.user_id 
-        WHERE buyer.id LIKE :inputBuyer  
+        WHERE buyer.username LIKE :inputBuyer  
         AND transactionId LIKE :inputTransId 
-        AND listingId LIKE :inputList 
+        AND ItemName LIKE :inputList 
         ORDER BY t.createdAt;`, {
             replacements: {
-                inputBuyer: byUser,
+                inputBuyer: '%' + byUser + '%',
                 inputTransId: byTransNo,
-                inputList: byListing
+                inputList: '%' + byListing + '%'
             },
             type: sequelize.QueryTypes.SELECT
         }).then((Transactions) => {

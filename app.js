@@ -50,6 +50,7 @@ var checkout = require('./controllers/checkout');
 var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
+var checkoutcard = require('./controllers/checkoutcard');
 
 
 app.use(logger('dev'));
@@ -132,7 +133,9 @@ app.get("/cart", cart.show);
 app.post('/pay/:transaction_id', paypal.show);
 app.get('/success/:transaction_id', paypal.success);
 app.get('/checkout/:transaction_id', checkout.showDetails);
-app.post('/checkout/:transaction_id', paypal.show)
+app.post('/checkout/:transaction_id', paypal.show);
+app.get('/checkoutcard/:transaction_id', checkoutcard.show);
+app.post("/savecard", checkoutcard.create)
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
@@ -144,7 +147,7 @@ app.get('/cancel', (req, res) => {
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.testpay);
+app.post("/transactions/:transaction_id", transaction.afterPayment);
 
 // Admin
 app.get("/admin", auth.isAdmin, admin.show);

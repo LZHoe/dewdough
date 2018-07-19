@@ -9,17 +9,21 @@
         <!--================Product Compare Area =================-->
         <section class="product_compare_area">
             <div class="container">
+                <% if (login == 2) { %>
+                <h2>Admin Actions</h2>
+                <hr>
+                <% } %>
                 <div class="compare_table">
                     <div class="table-responsive-md">
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <th scope="row"><span>Transaction ID</span></th>
-                                    <td><h5><%= data.transactionId %></h5></td>
+                                    <th scope="row"><span>Item</span></th>
+                                    <td><h5><%= data.ItemName %></h5></td>
                                 </tr>
                                 <tr>
-                                    <th scope="row"><span>Item/Service (ID)</span></th>
-                                    <td><h5><%= data.listingId %></h5></td>
+                                    <th scope="row"><span>Sold by</span></th>
+                                    <td><h5><%= data.username %></h5></td>
                                 </tr>
                                 <tr>
                                     <th scope="row"><span>Status</span></th>
@@ -63,7 +67,7 @@
                         <tr>
                             <td><%= log.updatedAt %></td>
                             <td><%= log.qty %></td>
-                            <td><%= log.offer %></td>
+                            <td>$<%= log.offer %></td>
                             <td><%= log.username %></td>
                             <td><%= log.action %></td>
                         </tr>
@@ -71,11 +75,12 @@
                     </table>
                     <% } %>
                     <a class="add_cart_btn continue" href="/transactions">Return to All Transactions</a>
-                    <!-- <a href="/transactions/<%= data.transactionId %>" >
-                    <button class="add_cart_btn continue"  style="background-color: blue; cursor: pointer;"></button>Simulate payment</a> -->
+                    <a href="/checkout/<%= data.transactionId %>" >
+                        <button class="add_cart_btn continue"  style="background-color: blue; cursor: pointer;">Simulate payment</button>
+                    </a>
                     <form action="/transactions/<%= data.transactionId %>" method="post">
-                        <button class="add_cart_btn continue" style="background-color: blue; cursor: pointer;">Simulate payment</a>
-                        </form>
+                        <button class="add_cart_btn continue" style="background-color: blue; cursor: pointer;">Simulate payment(Direct)</a>
+                    </form>
                 </div>
             </div>
         </section>

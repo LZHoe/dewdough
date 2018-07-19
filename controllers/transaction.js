@@ -17,7 +17,7 @@ function convertDate (myDate) {
 //////////////////////////////////////
 exports.showAll = function (req, res) {
     // Join transactions & item listing table
-    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, offer, ItemName, imageName \
+    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName \
                     FROM Transactions t \
                     INNER JOIN itemlists il ON t.listingId = il.Itemid \
                     WHERE buyerId = ' + req.user.id +
@@ -44,7 +44,16 @@ exports.showAll = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
+    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails  
+    FROM Transactions t 
+    INNER JOIN itemlists il ON il.Itemid = t.listingId 
+    INNER JOIN Users u ON u.id = il.user_id  
+    WHERE t.transactionId = :transaction_id `, { 
+        replacements: {
+            transaction_id: transactionId
+        },
+        type: sequelize.QueryTypes.SELECT
+     }).then((Transactions) => {
         sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
         FROM TransactionLogs tl 
         INNER JOIN Users u ON u.id = tl.commitBy 
@@ -111,7 +120,7 @@ exports.create = function (req, res) {
 /////////////////
 //// Payment ////
 /////////////////
-exports.testpay = function (req, res) {
+exports.afterPayment = function (req, res) {
     var updateData = {
         status: 'Delivering',
         paymentId: 'some_payment_id',

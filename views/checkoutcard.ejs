@@ -12,69 +12,71 @@
         <section class="solid_banner_area">
             <div class="container">
                 <div class="solid_banner_inner">
-                    <h3>checkout method</h3>
+                    <h3>Contact</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="checkout.html">Checkout Method</a></li>
+                        <li><a href="#">Checkout</a></li>
+                        <li><a href="contact.html">Card Information</a></li>
                     </ul>
                 </div>
             </div>
         </section>
         <!--================End Categories Banner Area =================-->
         
-        <!--================End Categories Banner Area =================-->
-        <section class="checkout_method_area p_100">
+        <!--================Contact Area =================-->
+        <section class="contact_area p_100">
             <div class="container">
-                <div class="row">
-                    <div class="checkout_main_area">
-                        <div class="checkout_prosses">
-                            <div class="row m0">
-                                <div class="col-md-6">
-                                    <div class="checkout_method">
-                                        <h3>Checkout without logging in</h3>
-                                        <h4>Choose Method:</h4>
-                                        <form action="/pay/<%= data.transactionId %>" method="post" >
-                                            <input type="submit" style="width:90%" value="Proceed With PayPal" value="Buy" class="btn subs_btn form-control"></input>
-                                            </form><br>
-                                            <form action="/checkoutcard/<%= data.transactionId %>">
-                                            <input type="submit" style="width:90%" value="Proceed With Card" value="Buy" class="btn subs_btn form-control"></input>
-                                            </form> 
-
-                                          <h5>register and save time !</h5>
-                                          <h6>Register with us for future convenience:</h6>
-                                          <a class="checkout_list" href="#"><i class="arrow_carrot-right"></i> Fast and easy check out</a>
-                                          <a class="checkout_list" href="#"><i class="arrow_carrot-right"></i> Easy access to your order history and status</a>
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="row checkout_from_area">
-                                       <h2>already registed ?</h2>
-                                       <p>Please log in below :</p>
-                                        <form role="form">
-                                            <div class="form-group">
-                                                <label for="email">Email address <span>*</span></label>
-                                                <input type="email" class="form-control" id="email">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pwd">Password <span>*</span></label>
-                                                <input type="password" class="form-control" id="pwd">
-                                            </div>
-                                            <h3>* Required Filelds</h3>
-                                            <div class="forgot_area">
-                                                <button type="submit" class="btn update_btn btn-default">log in</button>
-                                                <h4>Forgot Your Password ?</h4>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                <div class="contact_title">
+                    <h2>Card Information</h2>
+                            </div>
+                <div style="margin-top:-70px" class="row contact_details">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
+                            </div>
+                            <div class="media-body">
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
+                            </div>
+                            <div class="media-body">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
+
+                            </div>
+                            <div class="media-body">                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact_form_inner">
+                    <h3>Drop a Message</h3>
+                    <form class="contact_us_form row" action = "/savecard" method="post" id="contactForm" novalidate="novalidate">
+                        <div class="form-group col-lg-12">
+                            <input type="text" class="form-control" id="cardnumber" name="cardnumber" placeholder="Credit Card Number *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="email" class="form-control" id="expiry" name="expiry" placeholder="Expiry Date *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="text" class="form-control" id="cardname" name="cardname" placeholder="Name *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="text" class="form-control" name="cardcode" id="cardcode" placeholder="Security Code *"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <button type="submit" value="submit" class="btn update_btn form-control">Confirm</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
-        <!--================End Categories Banner Area =================-->
+        <!--================End Contact Area =================-->
         
         <!--================Footer Area =================-->
         <footer class="footer_area">
@@ -163,6 +165,39 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         
         
         
+        <!--================Contact Success and Error message Area =================-->
+        <div id="success" class="modal modal-message fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <h2>Thank you</h2>
+                        <p>Your message is successfully sent...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals error -->
+
+        <div id="error" class="modal modal-message fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <h2>Sorry !</h2>
+                        <p> Something went wrong </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================End Contact Success and Error message Area =================-->
+        
+        
         
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery-3.2.1.min.js"></script>
@@ -190,6 +225,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
         <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
         <script src="vendors/jquery-ui/jquery-ui.js"></script>
+        
+        <!-- contact js -->
+        <script src="js/jquery.form.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/contact.js"></script>
         
         <script src="js/theme.js"></script>
     </body>
