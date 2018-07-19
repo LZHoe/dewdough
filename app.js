@@ -49,6 +49,7 @@ var paypal = require('./controllers/paypal');
 var checkout = require('./controllers/checkout');
 var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
+var admin = require('./controllers/admin');
 
 
 app.use(logger('dev'));
@@ -84,9 +85,16 @@ app.use(passport.session());
 //flash messages
 app.use(flash());
 
-//check if logged in before continuing to routes
+// check if logged in before continuing to routes
+// values for login:
+// 0: not logged in
+// 1: normal log in
+// 2: admin log in
 app.use((req, res, next) => {
-    res.locals.login = req.isAuthenticated();
+    if (req.isAuthenticated()) {
+        req.user.id == 101 ? res.locals.login = 2 : res.locals.login = 1;
+    }
+    else { res.locals.login = 0; }
     next();
 })
 
@@ -137,6 +145,10 @@ app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.testpay);
+
+// Admin
+app.get("/admin", auth.isAdmin, admin.show);
+app.post("/admin/search", auth.isAdmin, admin.search)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 

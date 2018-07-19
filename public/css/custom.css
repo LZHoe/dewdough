@@ -2,3 +2,12 @@
  write our own css here :)
 */
 
+.space-between-inputs > * {
+    margin-right: 4px;
+}
+
+.black-box {
+    background-color: black; 
+    color: white; 
+    padding: 8px;
+}

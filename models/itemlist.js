@@ -22,10 +22,10 @@ const itemlist = sequelize.define('itemlist', {
     user_id:{
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //     model: 'Users',
-        //     key: 'id'
-        // }
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
     },
     price: {
         type: Sequelize.DECIMAL(10,2),

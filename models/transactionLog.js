@@ -57,7 +57,8 @@ const TransactionLog = sequelize.define('TransactionLog', {
     },
     action: {
         type: Sequelize.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'UPDATED'
     },
     commitBy: {
         type: Sequelize.INTEGER,

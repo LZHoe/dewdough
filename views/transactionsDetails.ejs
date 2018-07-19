@@ -48,6 +48,28 @@
                             </tbody>
                         </table>
                     </div>
+                    <% if (login == 2) { %>
+                    <hr>
+                    <h3>Transaction Log</h3>
+                    <table class="table">
+                        <tr>
+                            <th>Date</th>
+                            <th>Quantity</th>
+                            <th>Offer</th>
+                            <th>Made By</th>
+                            <th>Action</th>
+                        </tr>
+                        <% logData.forEach((log) => { %>
+                        <tr>
+                            <td><%= log.updatedAt %></td>
+                            <td><%= log.qty %></td>
+                            <td><%= log.offer %></td>
+                            <td><%= log.username %></td>
+                            <td><%= log.action %></td>
+                        </tr>
+                        <% }) %>
+                    </table>
+                    <% } %>
                     <a class="add_cart_btn continue" href="/transactions">Return to All Transactions</a>
                     <!-- <a href="/transactions/<%= data.transactionId %>" >
                     <button class="add_cart_btn continue"  style="background-color: blue; cursor: pointer;"></button>Simulate payment</a> -->

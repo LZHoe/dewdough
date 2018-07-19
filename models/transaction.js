@@ -81,7 +81,7 @@ Transaction.beforeBulkUpdate((updateData) => {
             paymentId: crrTransaction.paymentId,
             paymentMethod: crrTransaction.paymentMethod,
             bankDetails: crrTransaction.bankDetails,
-            action: "UPDATED",
+            action: updateData.action,
             commitBy: updateData.id,
             createdAt: crrTransaction.updatedAt
         }
