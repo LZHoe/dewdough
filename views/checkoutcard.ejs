@@ -54,6 +54,16 @@
                         </div>
                     </div>
                 </div>
+                <form action="/charge/<%= data.transactionId %>" method="POST">
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="pk_test_or5XFJx40fobrVfcBw7YLm3n"
+                      data-amount="<%= data.offer %>" 
+                      data-name="Test"
+                      data-image="/img/epetlogo.png"
+                      data-locale="auto">
+                    </script>
+
                 <div class="contact_form_inner">
                     <h3>Drop a Message</h3>
                     <form class="contact_us_form row" action = "/savecard" method="post" id="contactForm" novalidate="novalidate">
@@ -76,6 +86,8 @@
                 </div>
             </div>
         </section>
+
+
         <!--================End Contact Area =================-->
         
         <!--================Footer Area =================-->
