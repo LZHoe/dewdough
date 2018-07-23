@@ -126,7 +126,7 @@ exports.create = function (req, res) {
 /////////////////
 exports.afterPayment = function (req, res) {
     var updateData = {
-        status: 'Delivering',
+        status: 'Paid',
         paymentId: 'some_payment_id',
         paymentMethod: 'Paypal'
     }

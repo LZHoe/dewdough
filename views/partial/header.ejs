@@ -192,7 +192,7 @@
                         <% if (login == 1 || login == 2) { %>
                             <% if (login == 1) { %>
                             <li class="search_icon">
-                                <a href="#">
+                                <a href="/itemlisted">
                                     <i class="icon-magnifier icons"></i>
                                 </a>
                             </li>
@@ -235,4 +235,10 @@
             </nav>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var value = $('.cart_cart a').before();
+        });
+    </script>
 </header>

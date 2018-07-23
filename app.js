@@ -136,7 +136,7 @@ app.get('/success/:transaction_id', paypal.success);
 app.get('/checkout/:transaction_id', checkout.showDetails);
 app.post('/checkout/:transaction_id', paypal.show);
 app.get('/checkoutcard/:transaction_id', checkoutcard.show);
-app.post("/savecard", checkoutcard.create)
+app.post("/savecard", checkoutcard.create);
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });

@@ -21,6 +21,18 @@ const Transaction = sequelize.define('Transaction', {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
+    pendingOffer: {
+        type: Sequelize.DECIMAL,
+        allowNull: true
+    },
+    pendingOfferBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+    },
     status: {
         type: Sequelize.STRING,
         defaultValue: "Pending",
@@ -31,16 +43,16 @@ const Transaction = sequelize.define('Transaction', {
         allowNull: false,
         references: {
             model: 'itemlists',
-            id: 'Itemid'
+            key: 'Itemid'
         }
     },
     buyerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //     model: 'Users',
-        //     id: 'id'
-        // }
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
     },
     rating: {
         type: Sequelize.INTEGER,
