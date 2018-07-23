@@ -36,9 +36,15 @@
                                         <form action="/pay/<%= data.transactionId %>" method="post" >
                                             <input type="submit" style="width:90%" value="Proceed With PayPal" value="Buy" class="btn subs_btn form-control"></input>
                                             </form><br>
-                                            <form action="/checkoutcard/<%= data.transactionId %>">
-                                            <input type="submit" style="width:90%" value="Proceed With Card" value="Buy" class="btn subs_btn form-control"></input>
-                                            </form> 
+                                            <form action="/charge/<%= data.transactionId %>" method="POST">
+                                                <script
+                                                  src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                                  data-key="pk_test_or5XFJx40fobrVfcBw7YLm3n"
+                                                  data-amount="<%= data.offer %>" 
+                                                  data-name="Test"
+                                                  data-image="/img/epetlogo.png"
+                                                  data-locale="auto">
+                                                </script>
 
                                           <h5>register and save time !</h5>
                                           <h6>Register with us for future convenience:</h6>

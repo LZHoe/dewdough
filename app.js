@@ -10,6 +10,9 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var multer = require('multer');
 var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, files: 1} });
+var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
+var exphbs = require('express-handlebars');
+
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -36,12 +39,19 @@ var httpServer = require('http').Server(app);
 //passport config
 require('./config/passport')(passport);
 
+//middleware
+app.engine('handlebars',exphbs({defaultLayout:'main'}));
+app.set('view engine', 'handlebars');
+
 ////////////////////////////////
 ////// IMPORT CONTROLLERS //////
 ////////////////////////////////
 var auth = require('./controllers/auth');
 var home = require('./controllers/home');
 var transaction = require('./controllers/transaction');
+
+
+// Import controllers
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
@@ -67,6 +77,8 @@ app.use(require('node-sass-middleware')({
 // View engine ejs
 app.set("views", path.resolve(__dirname, "views"));
 app.set("view engine", "ejs");
+
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -164,6 +176,11 @@ app.get("/servicelisted", servicelist.show);
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('serviceimage1'), servicelist.uploadService);
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
+
+
+//Charge route
+app.post("/charge/:transaction_id", checkoutcard.charge);
+
 
 // Listening
 var server = app.listen(3000, () => {
