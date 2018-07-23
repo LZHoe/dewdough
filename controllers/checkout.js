@@ -10,6 +10,7 @@ exports.showDetails = function(req,res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
     sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
+        Transactions[0].offer = Transactions[0].offer * 100;
         res.render('checkout', {
             title: 'Transaction Details',
             data: Transactions[0]
@@ -28,3 +29,4 @@ exports.hasAuthorization = function (req,res,next) {
         return next();
     res.redirect('/login');
 }
+
