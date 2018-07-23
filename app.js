@@ -11,6 +11,7 @@ var cookieParser = require('cookie-parser');
 var multer = require('multer');
 var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, files: 1} });
 
+
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
@@ -144,8 +145,11 @@ app.post("/transactions/:transaction_id", transaction.testpay);
 ////>>>>>>  Beginning of Listings  >>>>>>
 app.get("/itemlisted", itemlist.show); 
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
+app.get("/item/:Itemid", itemlist.showDetails);
+
 app.get("/servicelisted", servicelist.show);
-app.post("/servicelisted", servicelist.hasAuthorization, upload.single('serviceimage1'), servicelist.uploadService);
+app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
+
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 

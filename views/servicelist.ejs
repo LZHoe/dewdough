@@ -4,25 +4,47 @@
        <% include partial/head %>
     </head>
     <style>
-    .button {
-    background-color: #f55e61; 
-    color: black; 
-    border: 2px solid #f55e61;
+    #servicebutton {
+    background-color: black; 
+    color: white; 
+    border: 1px solid black;
+    width: 50%;
 }
 
-.button3:hover {
+#servicebutton:hover {
     background-color: white;
     color: black;
-    border: 2px solid gray;
+    border: 1px solid black;
 }
 
+#servicecategory{
+  height: 37px;
+  border: 1px solid #cccccc;
+  border-radius: 0px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  padding: 0px 22px;
+  width: 100%;
+  font-size: 15px;
+}
+
+#servicepickup{
+    background: transparent;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333333;
+    position: relative;
+}
     </style>
 
     <body>
         <% include partial/header %>
         
-        <!--================Categories Banner Area =================
-        <section class="solid_banner_area">
+        <!--================Categories Banner Area =================-->
+        <!-- <section class="solid_banner_area">
             <div class="container">
                 <div class="solid_banner_inner">
                     <h3>error page</h3>
@@ -32,51 +54,55 @@
                     </ul>
                 </div>
             </div>
-        </section>
-        ================End Categories Banner Area =================-->
-<!-- service listing -->
-        <div class = "container">
-            <h4> My Service Listing</h4>
-            <table> 
-                <tr> 
-                    <th>
-                        <button type="button" id="add-service">Add Service Listing</button>
-                    </th>
-                <!-- </tr>
-            </table> -->
+        </section> -->
+        <!--================End Categories Banner Area =================-->
+<!--service listing form-->
+<div class="container">
 
-            <th>
+<h4> My Service Listing</h4>
+<div class = "row">
+            <div class="col-lg-10">
+                    <h4 class="text-muted">Services you have listed!</h4>
+            </div>
+            <div class="col-lg-2">
+                        <button type="button" id="add-service">Add Service Listing</button>
+            </div>
+</div>
+
+            <br><br>
 
             <!-- service listing form -->
-        <div class="show-onclick form-group">
-            <form action="/images" method="post" enctype="multipart/form-data">
-            <div class ="col-lg-3">
+        
+        <form action="/servicelisted" method="post" enctype="multipart/form-data" id="serviceform">
+                <div class = "row"> 
+
+            <div class ="col-lg-12">    
                 <div class="form-group">
                             <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
-                            <input type="file" id="serviceimage1" name="serviceimage1" required>                
+                            <input type="file" id="imageName" name="imageName" required>                
                 </div>
             </div>
 
-            <div class ="col-lg-3">
+            <!-- <div class ="col-lg-3">
                     <div class="form-group">
-                                <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
-                                <input type="file" id="serviceimage2" name="serviceimage2">                
+                                <label for="serviceimage1">First Name <span>*</span></label>
+                                <input type="file" id="imageName2" name="imageName2">                
                     </div>
             </div>
 
             <div class ="col-lg-3">
                 <div class="form-group">
-                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
-                            <input type="file" id="serviceimage3" name="serviceimage3">                
+                            <label for="serviceimage1">First Name <span>*</span></label>
+                            <input type="file" id="imageName3" name="imageName3">                
                 </div>
             </div>
 
             <div class ="col-lg-3">
                     <div class="form-group">
-                                <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
-                                <input type="file" id="serviceimage4" name="serviceimage4">                
+                                <label for="serviceimage1">First Name <span>*</span></label>
+                                <input type="file" id="imageName4" name="imageName4">                
                     </div>
-            </div>
+            </div> -->
             
         
             <div class="col-lg-6">
@@ -86,92 +112,104 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-2">
                 <div class="form-group">
                     <label for= "serviceprice">Price: <span>*</span></label>
-                    <input type="number" required name="serviceprice" min="0" value="0" step=".01"
+                    <input type="number" required name="serviceprice" min="0.00" value="0.00" step=".01"
                     class="form-control" id="serviceprice" aria-describedby="serviceprice" placeholder="$0.00">
                 </div>
             </div>
-
-            <div class="col-lg-6">
-                <div class="form-group">
-                        <label for="servicedescription">Item Description: <span>*</span></label>
-                        <textarea id="servicedescription" name="servicedescription" rows="5" cols="40" 
-                        class="form-control" placeholder="Service Description" required=""></textarea>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
+            <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="servicecategory">Category <span>*</span></label>
-                        <select class="selectpicker" id="servicecategory">
-                            <option> <value="Dog Grooming">Dog Grooming </value></option>
-                            <option> <value="Dog Daycare">Dog Daycare </value></option>
-                            <option> <value="Dog Boarding">Dog Boarding </value></option>
-                            <option> <value="Cat Grooming">Cat Grooming </value></option>
-                            <option> <value="Cat Daycare">Cat Daycare </value></option>
-                            <option> <value="Cat Boarding">Cat Boarding </value></option>
+                        <label for="servicecategory">Category: <span>*</span></label>
+                        <br>
+                        <select name="servicecategory" id="servicecategory" placeholder="Category">
+                            <option value="Dog Grooming">Dog Grooming </option>
+                            <option value="Dog Daycare">Dog Daycare </option>
+                            <option value="Dog Boarding">Dog Boarding </option>
+                            <option value="Cat Grooming">Cat Grooming </option>
+                            <option value="Cat Daycare">Cat Daycare </option>
+                            <option value="Cat Boarding">Cat Boarding </option>
 
 
                         </select>
                     </div>
             </div>
-
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="form-group">
-                        <label for="servicelocation">Location:  <span>*</span></label>
-                        <input type="text" class="form-control" id="servicelocation" aria-describedby="service-location" placeholder="Location">
+                        <label for="servicedescription">Item Description: <span>*</span></label>
+                        <textarea id="servicedescription" name="servicedescription" rows="3" cols="40" 
+                        class="form-control" placeholder="Service Description" required=""></textarea>
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                    <button type="submit" id="servicebutton" value="submit" class="btn subs_btn form-control">Submit</button>
+            
+            <div class="col-lg-4">
+                    <div class="form-group">
+                            <label for="servicepickup" name="servicepickup" >PickUp Available?:  <span>*</span></label>
+                            <br>
+                            
+                            <input type="radio" id="servicepickup" name="servicepickup" value="Yes">
+                            <label for="Yes">Yes</label> 
+                            
+                            <input type="radio" id="servicepickup" name="servicepickup" value="No"> 
+                            <label for="No">No</label> 
+                            
+                    </div>
             </div>
-    </form>
-        </div>
-        </div>
-    </th>
+            
+
+            <div class="col-lg-4">
+                <div class="form-group">
+                        <label for="servicelocation">Pick Up Location:  <span>*</span></label>
+                        <input type="text" class="form-control" id="servicelocation" aria-describedby="service-location" placeholder="Location">
+                </div>
+            </div>
+                        
+            <br>
+            <div class="col-lg-4">
+                    <button type="submit" id="servicebutton" value="submit" class="btn subs_btn form-control">Submit</button>
+                    <input type="submit" value="Submit">
+
+            </div>
+        </form>
+    </div>
+</div>
+    <!-- </th>
    
     </tr>
 
-</table>
-        <!-- end of service listing form -->
-        <!-- end of service listing -->
-        <!-- listed -->
+</table> -->
+<!-- service listing show -->
+<div class = "container">
+        <hr>
         <div class="row">
-                <% images.forEach(function(images){ %>
-                    <div class="col-lg-4">
-                        <figure class="figure">
-                            <img src="images/<%= images.imageName %>" class="figure-img img-fluid img-rounded" alt="<%= images.imageName %>">
-                            <figcaption class="figure-caption"><%= images.servicetitle %></figcaption>
-                            <!-- <small>Upload by: <%= images.user_id %></small> -->
-                            <small>Price: <%= images.serviceprice %></small>
-                            <small>Description: <%= images.servicedescription %></small>
-                            <small>Location: <%= images.servicelocation %></small>
-
-                        </figure>
-                    </div>
-                <% }); %>
+            <% servicelist.forEach(function(servicelist){ %>
+                <div class="col-lg-4">
+                    <figure class="figure">
+                        <img src="service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %>">
+                        <p><%= servicelist.servicetitle %></p>
+                        <figcaption class="figure-caption">$<%= servicelist.price %></figcaption>
+                        <!-- <small>$<%= servicelist.servicetitle %></small> -->
+                        <br>
+                        <small>PickUp: <%= servicelist.servicepickup %></small>
+                        <br>
+                        <small>Category: <%= servicelist.servicecategory %></small>
+                        <br>
+                        <small>Item Description: <%= servicelist.servicedescription %></small>
+                        <br>
+                        <small>MeetUp location: <%= servicelist.servicelocation %> </small>
+                        <br>
+                        <small>Upload by: <%= servicelist.user_id %></small>
+                        <br>
+                        <small>Date of creation: <%= servicelist.createdAt %> </small>
+                    </figure>
+                </div>
+            <% }); %>
             </div>
-        <!-- end of listed -->
-        <!--================Test Area =================-->
-        <div class="container">
-            <h4>This is a test.</h4>
-            <table>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                </tr>
-                <% data.forEach(function(data){ %>
-                    <tr>
-                        <td><%= data.id %></td>
-                        <td><%= data.title %></td>
-                    </tr>
-                <% }); %>
-            </table>
         </div>
-        <!--================End Test Area =================-->
+</div>
+
         
         <!--================Footer Area =================-->
         <footer class="footer_area">
@@ -291,11 +329,12 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="js/theme.js"></script>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script> 
-        $(document).ready(function() {
-            $('#servicebutton').click(function() {
-                $('.show-onclick').show();
+                    $(document).ready(function(){
+                        $("#serviceform").hide();
+                $("#add-service").click(function(){
+                    $("#serviceform").toggle();
+                });
             });
-        });
         </script>
     </body>
 </html> 

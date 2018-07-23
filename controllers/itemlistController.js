@@ -19,7 +19,7 @@ exports.show = function (req, res) {
         res.render('itemlist', {
             title: 'CUTE ITEMS HEHE',
             itemlist: itemlist,
-            user: "1"
+            user: "2"
         });
 
     }).catch((err) => {
@@ -30,7 +30,22 @@ exports.show = function (req, res) {
     });
 };
 
-// Image upload
+exports.showDetails = function (req, res) {
+    // Show item details
+    var Itemid = req.params.Itemid;
+    sequelize.query('SELECT * FROM itemlists WHERE Itemid = ' + Itemid, { model: itemlist }).then((itempage) => {
+        res.render('itemPage', {
+            title: 'Item Details',
+            itemlist: itempage[0]
+        })
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
+
+// Image upload //
 exports.uploadImage = function (req, res) {
     console.log("i am in here");
     var src;
@@ -67,13 +82,15 @@ exports.uploadImage = function (req, res) {
         console.log("item listing entered")
     
         var ItemData = {
+            Itemid: req.params.Itemid, 
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
             user_id: req.user.id,
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation
+            MeetupLocation: req.MeetupLocation,
+            pickupmethod: req.pickupmethod
             
         }
         // Save to database
@@ -92,13 +109,16 @@ exports.uploadImage = function (req, res) {
     src.on('end', function() {
         // create a new instance of the Images model with request body
         var ItemData = {
+            Itemid: req.param.Itemid, 
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
-            user_id: '2',
+            user_id: req.user.id,
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation
+            MeetupLocation: req.MeetupLocation,
+            pickupmethod: req.pickupmethod
+
             
         }
         // Save to database
@@ -108,7 +128,7 @@ exports.uploadImage = function (req, res) {
                     message: "error"
                 });
             }
-            res.redirect('itemlist');
+            res.redirect('/itemlisted');
         })
 
          // remove from temp folder
@@ -121,6 +141,9 @@ exports.uploadImage = function (req, res) {
         });
     });
 };
+
+
+
 
 // Images authorization middleware
 exports.hasAuthorization = function(req, res, next) {
