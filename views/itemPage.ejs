@@ -4,6 +4,12 @@
         <% include partial/head %>
 
     </head>
+    <style>
+    .extrainfo{
+        background: #f4f3f3;  
+        padding: 40px;
+    }
+    </style>
     <body>
             <% include partial/header %>
 
@@ -112,7 +118,7 @@
         <!--================End Menu Area =================-->
         
         <!--================Categories Banner Area =================-->
-        <section class="categories_banner_area">
+        <!-- <section class="categories_banner_area">
             <div class="container">
                 <div class="c_banner_inner">
                     <h3>simple product</h3>
@@ -123,60 +129,52 @@
                     </ul>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!--================End Categories Banner Area =================-->
         
         <!--================Product Details Area =================-->
-        <section class="item_details_area">
+        <section class="product_details_area">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4">
-                        <!-- <div class="item_details_slider"> -->
-                           <!-- <div id="item_slider" class="rev_slider" data-version="5.3.1.6">
-                                <ul>	 SLIDE  -->
+                        <div class="product_details_slider">
+                           <div id="product_slider" class="rev_slider" data-version="5.3.1.6">
+                                <!-- <ul>	 SLIDE  -->
                                     <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
                                         <!-- MAIN IMAGE -->
-                                        <img src="img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %>">                                        <!-- LAYERS -->
+                                        <img src="public/img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %> ">                                        <!-- LAYERS -->
                                     <!-- </li> -->
                                     
-                                <!-- </ul> -->
-                            <!-- </div> -->
+                                <!-- </ul>  -->
+                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-8">
+                    <div class="col-lg-6">
                         <div class="item_details_text">
                             <h3><%= itemlist.ItemName %></h3>
-                            <!-- <ul class="p_rating">
-                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                            </ul>-->
-                            <div class="itemcategory">
-                                <!-- <a href="#">5 Reviews</a> -->
-                                <a href="#"><%= itemlist.category %></a>
-                            </div>
-                            <h5> <%= itemlist.user_id %></span></h5>
-
-                            <h6>Available In <span>Stock</span></h6>
+                            <br>
                             <h4>$<%= itemlist.price %></h4>
-                            <p><%= itemlist.Description %></p>
-                            <div class="p_color">
+                           
+                            <hr>
+                            
+                            <br>
+                            <p><i><%= itemlist.Description %></i></p>
+                            <!-- <div class="p_color">
                                 <h4 class="pickupmethod">Delivery Method: <span>*</span></h4>
-                                <!-- <ul class="color_list"> -->
+                                <ul class="color_list"> 
                                    <p> Mail/Meetup </p>
-                                <!-- </ul> -->
-                            </div>
-                            <div class="p_color">
+                               </ul> 
+                             </div> -->
+                            <!-- <div class="p_color">
                                 <h4 class="location">MeetUp Location <span>*</span></h4>
                                 <p> <%= itemlist.MeetupLocation %> </p>
-                            </div>
+                            </div>  -->
+                            <br><br><br>
                             <div class="addcart">
                                 
                                 <a class="add_cart_btn" href="#">add to cart</a>
                             </div>
-                            <div class="shareing_icon">
+                            <!-- <div class="shareing_icon">
                                 <h5>share :</h5>
                                 <ul>
                                     <li><a href="#"><i class="social_facebook"></i></a></li>
@@ -185,12 +183,40 @@
                                     <li><a href="#"><i class="social_instagram"></i></a></li>
                                     <li><a href="#"><i class="social_youtube"></i></a></li>
                                 </ul>
-                            </div>
+                            </div> -->
                         </div>
+                    </div>
+                    <div class="col-lg-2" > 
+                        <div class="extrainfo">
+                        
+                            <h6 class="cat">Found In: </h6>
+                            <div class="itemcategory">
+                                    <a href="#"><%= itemlist.category %></a>
+                                </div>
+                                <br>
+                        <i>Delivery Options</i>
+                        <br><br>
+                            <h6 class="pickupmethod">Delivery Method: </h6>
+                               <p> Mail/Meetup </p>
+                               <br>
+                                <h6 class="location">MeetUp Location </h6>
+                                <p> <%= itemlist.MeetupLocation %> </p>
+                                <br>
+                                <h6>Sold by:</h6> 
+                                <a href="#"> <%= itemlist.username %></a>
+
+                            </div>
+                         
+                        </div>
+
                     </div>
                 </div>
             </div>
         </section>
+        <br>
+        <br>
+        <br>
+
         <!--================End Product Details Area =================-->
         
         <!--================Product Description Area =================-->
@@ -234,7 +260,7 @@
         <!--================End Product Details Area =================-->
         
         <!--================End Related Product Area =================-->
-        <section class="related_product_area">
+        <!-- <section class="related_product_area">
             <div class="container">
                 <div class="related_product_inner">
                     <h2 class="single_c_title">Related Product</h2>
@@ -319,7 +345,7 @@
                     </nav>
                 </div>
             </div>
-        </section>
+        </section> -->
         <!--================End Related Product Area =================-->
         
         <!--================Footer Area =================-->

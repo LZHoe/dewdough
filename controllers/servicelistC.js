@@ -14,7 +14,8 @@ var sequelize = myDatabase.sequelize;
 exports.show = function(req, res) {
 
     console.log("i'm in show");
-    sequelize.query('SELECT * from servicelists', 
+    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
+    + Itemid, 
     { model: servicelistM }).then((servicelist) => {
 
         console.log(servicelist);
@@ -76,11 +77,11 @@ exports.create = function (req, res) {
     var serviceData = {
         servicetitle: req.body.servicetitle,
         imageName: req.file.originalname,
-        user_id: "2",
+        user_id: req.user.id,
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,
-        servicelocation: req.servicelocation,
+        servicelocation: req.body.servicelocation,
         servicepickup: req.body.servicepickup
 
     }
@@ -101,7 +102,7 @@ src.on('end', function () {
     var serviceData = {
         servicetitle: req.body.servicetitle,
         imageName: req.file.originalname,
-        user_id: "2",
+        user_id: req.user.id,
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,

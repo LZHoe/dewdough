@@ -93,30 +93,17 @@ exports.success = function(req,res) {
                   transactionId: transRef
               };
     
-              Transactions.update(paypaldata, { where: { transactionId: transRef } }).then((updatedRecord) => {
+              Transactions.update(paypaldata, { where: { transactionId: transRef }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
                 if (!updatedRecord || updatedRecord == 0) {
                     return res.send(400, {
                         message: "error"
                     });
                 }
             });
-            res.render('success',{
-                title:'successdata',
-            })
-        
         }
 
         // Show test data
-        sequelize.query('SELECT * FROM Transactions', { model: Transactions }).then((data) => {
-            res.render('success', {
-                title: 'Payment successful',
-                data: data
-            })
-        }).catch((err) => {
-            return res.status(400).send({
-                message: err
-            })
-        })        
+        res.redirect('/transactions/' + transRef);
     })
 })
 }

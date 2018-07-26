@@ -10,6 +10,9 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var multer = require('multer');
 var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, files: 1} });
+var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
+var exphbs = require('express-handlebars');
+
 
 
 paypal.configure({
@@ -37,12 +40,19 @@ var httpServer = require('http').Server(app);
 //passport config
 require('./config/passport')(passport);
 
+//middleware
+app.engine('handlebars',exphbs({defaultLayout:'main'}));
+app.set('view engine', 'handlebars');
+
 ////////////////////////////////
 ////// IMPORT CONTROLLERS //////
 ////////////////////////////////
 var auth = require('./controllers/auth');
 var home = require('./controllers/home');
 var transaction = require('./controllers/transaction');
+
+
+// Import controllers
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
 var cancel = require('./controllers/cancel');
@@ -50,6 +60,8 @@ var paypal = require('./controllers/paypal');
 var checkout = require('./controllers/checkout');
 var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
+var admin = require('./controllers/admin');
+var checkoutcard = require('./controllers/checkoutcard');
 
 
 app.use(logger('dev'));
@@ -66,6 +78,8 @@ app.use(require('node-sass-middleware')({
 // View engine ejs
 app.set("views", path.resolve(__dirname, "views"));
 app.set("view engine", "ejs");
+
+
 
 // Static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -85,9 +99,16 @@ app.use(passport.session());
 //flash messages
 app.use(flash());
 
-//check if logged in before continuing to routes
+// check if logged in before continuing to routes
+// values for login:
+// 0: not logged in
+// 1: normal log in
+// 2: admin log in
 app.use((req, res, next) => {
-    res.locals.login = req.isAuthenticated();
+    if (req.isAuthenticated()) {
+        req.user.id == 101 ? res.locals.login = 2 : res.locals.login = 1;
+    }
+    else { res.locals.login = 0; }
     next();
 })
 
@@ -111,6 +132,7 @@ app.post('/signup', passport.authenticate('local-signup', {
     failureRedirect: '/signup',
     failureFlash: true
 }));
+app.get('/profile', auth.isLoggedIn, auth.profile);
 // Logout
 app.get('/logout', function (req, res) {
     req.logout();
@@ -125,7 +147,9 @@ app.get("/cart", cart.show);
 app.post('/pay/:transaction_id', paypal.show);
 app.get('/success/:transaction_id', paypal.success);
 app.get('/checkout/:transaction_id', checkout.showDetails);
-app.post('/checkout/:transaction_id', paypal.show)
+app.post('/checkout/:transaction_id', paypal.show);
+app.get('/checkoutcard/:transaction_id', checkoutcard.show);
+app.post("/savecard", checkoutcard.create);
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
@@ -137,7 +161,11 @@ app.get('/cancel', (req, res) => {
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.testpay);
+app.post("/transactions/:transaction_id", transaction.afterPayment);
+
+// Admin
+app.get("/admin", auth.isAdmin, admin.show);
+app.post("/admin/search", auth.isAdmin, admin.search)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
@@ -152,6 +180,11 @@ app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageNam
 
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
+
+
+//Charge route
+app.post("/charge/:transaction_id", checkoutcard.charge);
+
 
 // Listening
 var server = app.listen(3000, () => {

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-       <% include partial/head %>
-    </head>
-    <body>
-        <% include partial/header %>
-        
+
+<head>
+    <% include partial/head %>
+</head>
+
+<body>
+    <% include partial/header %>
+
         <!--================Categories Banner Area =================
         <section class="solid_banner_area">
             <div class="container">
@@ -21,22 +23,59 @@
         ================End Categories Banner Area =================-->
         <br>
         <div class="container">
-            <ul>
-                <li></li>
-                <li></li>
-                <li></li>
-            </ul>
-            <h3>Order History</h3>
-            <ul>
-                <% data.forEach(function(data){ %>
-                <li><a href="/transactions/<%= data.transactionId %>"><h6><%= data.createdAt %></h6></a></li>
-                <% }); %>
-            </ul>
-            
+            <section class="shopping_cart_area p_100">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="cart_product_list">
+                                    <h2 class="cart_single_title">Purchases in-progress</h2>
+                                    <div class="table-responsive-md">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col" style="text-align: center">Product</th>
+                                                    <th scope="col">Sold by</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col">Current offer</th>
+                                                    <th scope="col">Status</th>
+                                                    <th scope="col">Details</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% data.forEach(function(data){ %>
+                                                <tr>
+                                                    <th scope="row">
+                                                    </th>
+                                                    <td>
+                                                        <div class="media">
+                                                            <div class="d-flex">
+                                                                <img style="max-height: 160px;" src="img_uploads/<%= data.imageName %>" alt="">
+                                                            </div>
+                                                            <div class="media-body">
+                                                                <h4><%= data.ItemName %></h4>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td><%= data.sellerUser %></td>
+                                                    <td>Start: <%= data.createdAt %><br>Last Update: <%= data.updatedAt %></td>
+                                                    <td>$<%= data.offer %></td>
+                                                    <td><%= data.status %></td>
+                                                    <td><a href="/transactions/<%= data.transactionId %>">Go</a></td>
+                                                </tr>
+                                                <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
             <form action="/transactions" method="post">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
+                    <h4 class="modal-title" id="myModalLabel">Example New Purchase</h4>
                 </div>
 
                 <div class="modal-body">
@@ -46,16 +85,8 @@
                         <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
                     </fieldset>
                     <fieldset class="form-group">
-                        <label for="inputoffer">Price</label>
-                        <input type="text" id="inputoffer" name="offer" class="form-control" placeholder="Enter price" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
                         <label for="inputlistingid">Listing ID</label>
-                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Test only" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="inputbuyerid">Buyer ID</label>
-                        <input type="text" id="inputbuyerid" name="buyerId" class="form-control" placeholder="From current logged-in user" required="">
+                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
                     </fieldset>
                 </div>
                 <div class="modal-footer">
@@ -63,36 +94,37 @@
                 </div>
             </form>
         </div>
-        
+
         <% include partial/footer %>
-        
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Rev slider js -->
-        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
-        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <!-- Extra plugin css -->
-        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
-        <script src="vendors/counterup/jquery.counterup.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
-        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
-        <script src="js/smoothscroll.js"></script>
-        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
-        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
-        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
-        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
-        <script src="vendors/jquery-ui/jquery-ui.js"></script>
-        
-        <script src="js/theme.js"></script>
-    </body>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Rev slider js -->
+            <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+            <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <!-- Extra plugin css -->
+            <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+            <script src="vendors/counterup/jquery.counterup.min.js"></script>
+            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+            <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+            <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+            <script src="js/smoothscroll.js"></script>
+            <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+            <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+            <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+            <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+            <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+            <script src="js/theme.js"></script>
+</body>
+
 </html>

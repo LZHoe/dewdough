@@ -1,212 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
     <head>
-       <% include partial/head %>
-    </head>
-    <style>
-    #itembtn {
-    background-color: black; 
-    color: white; 
-    border: 1px solid black;
-    width: 50%;
-}
-
-#itembtn:hover {
-    background-color: white;
-    color: black;
-    border: 1px solid black;
-}
-
-#category{
-  height: 37px;
-  border: 1px solid #cccccc;
-  border-radius: 0px;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  outline: none;
-  padding: 0px 22px;
-  width: 100%;
-  font-size: 15px;
-}
-
-#pickupmethod{
-    background: transparent;
-    text-transform: uppercase;
-    font-family: "Montserrat", sans-serif;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333333;
-    position: relative;
-}
-    </style>
-
-    <body>
+        <% include partial/head %>
         <% include partial/header %>
+        <% include partial/header-menu %>
+    </head>
+    <body>
         
         <!--================Categories Banner Area =================-->
-        <!-- <section class="solid_banner_area">
+        <section class="solid_banner_area">
             <div class="container">
                 <div class="solid_banner_inner">
-                    <h3>error page</h3>
+                    <h3>Contact</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="404.html">Error Page</a></li>
+                        <li><a href="#">Checkout</a></li>
+                        <li><a href="contact.html">Card Information</a></li>
                     </ul>
                 </div>
             </div>
-        </section> -->
+        </section>
         <!--================End Categories Banner Area =================-->
-<!--service listing form-->
-<div class="container">
-
-<h4> My Item Listing</h4>
-<div class = "row">
-            <div class="col-lg-10">
-                    <h4 class="text-muted">Items you have listed!</h4>
-            </div>
-            <div class="col-lg-2">
-                        <button type="button" id="add-item">Add Item Listing</button>
-            </div>
-</div>
-
-            <br><br>
-
-            <!-- service listing form -->
         
-        <form action="/itemlisted" method="post" enctype="multipart/form-data" id="itemform">
-                <div class = "row"> 
-
-            <div class ="col-lg-12">    
-                <div class="form-group">
-                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
-                            <input type="file" id="image" name="image" required>                
-                </div>
-            </div>
-
-            <!-- <div class ="col-lg-3">
-                    <div class="form-group">
-                                <label for="serviceimage1">First Name <span>*</span></label>
-                                <input type="file" id="imageName2" name="imageName2">                
+        <!--================Contact Area =================-->
+        <section class="contact_area p_100">
+            <div class="container">
+                <div class="contact_title">
+                    <h2>Card Information</h2>
+                            </div>
+                <div style="margin-top:-70px" class="row contact_details">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
+                            </div>
+                            <div class="media-body">
+                            </div>
+                        </div>
                     </div>
-            </div>
-
-            <div class ="col-lg-3">
-                <div class="form-group">
-                            <label for="serviceimage1">First Name <span>*</span></label>
-                            <input type="file" id="imageName3" name="imageName3">                
-                </div>
-            </div>
-
-            <div class ="col-lg-3">
-                    <div class="form-group">
-                                <label for="serviceimage1">First Name <span>*</span></label>
-                                <input type="file" id="imageName4" name="imageName4">                
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
+                            </div>
+                            <div class="media-body">
+                            </div>
+                        </div>
                     </div>
-            </div> -->
-            
-        
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label for="ItemName">Listing Title:  <span>*</span></label>
-                    <input type="text" class="form-control" id="ItemName" name= "ItemName" aria-describedby="ItemName" placeholder="Listing Tile">
-                </div>
-            </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="media">
+                            <div class="d-flex">
 
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <label for= "servicepriceprice">Price: <span>*</span></label>
-                    <input type="number" required name="price" min="0.00" value="0.00" step=".01"
-                    class="form-control" id="price" aria-describedby="price" placeholder="$0.00">
-                </div>
-            </div>
-            <div class="col-lg-4">
-                    <div class="form-group">
-                        <label for="category">Category: <span>*</span></label>
-                        <br>
-                        <select name="category" id="category" placeholder="Category">
-                            <option value="Dog Toy">Dog Toy </option>
-                            <option value="Dog Accessory">Dog Accessory </option>
-                            <option value="Dog Grooming Tools">Dog Grooming Tools </option>
-                            <option value="Cat Toy">Cat Toy </option>
-                            <option value="Cat Accessory">Cat Accessory </option>
-                            <option value="Cat GroomGrooming Toolsing">Cat Grooming Tools </option>
-
-
-                        </select>
+                            </div>
+                            <div class="media-body">                            </div>
+                        </div>
                     </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="form-group">
-                        <label for="Description">Item Description: <span>*</span></label>
-                        <textarea id="Description" name="Description" rows="3" cols="40" 
-                        class="form-control" placeholder="Description" required=""></textarea>
+                </div>
+                <form action="/charge/<%= data.transactionId %>" method="POST">
+                    <script
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="pk_test_or5XFJx40fobrVfcBw7YLm3n"
+                      data-amount="<%= data.offer %>" 
+                      data-name="Test"
+                      data-image="/img/epetlogo.png"
+                      data-locale="auto">
+                    </script>
+
+                <div class="contact_form_inner">
+                    <h3>Drop a Message</h3>
+                    <form class="contact_us_form row" action = "/savecard" method="post" id="contactForm" novalidate="novalidate">
+                        <div class="form-group col-lg-12">
+                            <input type="text" class="form-control" id="cardnumber" name="cardnumber" placeholder="Credit Card Number *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="email" class="form-control" id="expiry" name="expiry" placeholder="Expiry Date *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="text" class="form-control" id="cardname" name="cardname" placeholder="Name *">
+                        </div>
+                        <div class="form-group col-lg-4">
+                            <input type="text" class="form-control" name="cardcode" id="cardcode" placeholder="Security Code *"></textarea>
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <button type="submit" value="submit" class="btn update_btn form-control">Confirm</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </section>
 
-            
-            <div class="col-lg-4">
-                    <div class="form-group">
-                            <label for="pickupmethod">  Mailing/Meetup?: <span>*</span></label>
-                            <br>
-                            
-                            <input type="radio" id="pickupmethod" name="pickupmethod" value="Mail">
-                            <label for="Yes">Mailing</label> 
-                            
-                            <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp"> 
-                            <label for="No">MeetUp</label> 
-                            
-                    </div>
-            </div>
-            
 
-            <div class="col-lg-4">
-                <div class="form-group">
-                        <label for="MeetupLocation">Meetup Location:  <span>*</span></label>
-                        <input type="text" class="form-control" id="MeetupLocation" name="MeetupLocation" aria-describedby="MeetupLocation" placeholder="Meetup Location">
-                </div>
-            </div>
-                        
-            <br>
-            <div class="col-lg-4">
-                    <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Submit</button>
-
-            </div>
-        </form>
-    </div>
-</div>
-    <!-- </th>
-   
-    </tr>
-
-</table> -->
-<!-- service listing show -->
-<div class = "container">
-        <hr>
-<div class="row">
-    <% itemlist.forEach(function(itemlist){ %>
-        <div class="col-lg-4">
-            <figure class="figure">
-                <a href="/item/<%= itemlist.Itemid %>">
-                <img src="img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %>">
-                </a>
-                <p><%= itemlist.ItemName %></p>
-                <figcaption class="figure-caption">$<%= itemlist.price %></figcaption>
-                <p>Category: <%= itemlist.category %></p>
-                <!-- <br> -->
-                <!-- <p>Item Description: <%= itemlist.Description %></p> -->
-                <br>
-                <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
-                <br>
-                <p>Upload by: <%= itemlist.user_id %></p>
-                <br>
-                <p>Date of creation: <%= itemlist.createdAt %> </p>
-            </figure>
-        </div>
-    <% }); %>
-    </div>
-</div>
-</div>
-
+        <!--================End Contact Area =================-->
         
         <!--================Footer Area =================-->
         <footer class="footer_area">
@@ -275,7 +157,7 @@
                                 </div>
                                 <ul>
                                     <li><a href="#">My account</a></li>
-                                    <li><a href="#">Order History</a></li>
+                                    <li><a href="#">Ordr History</a></li>
                                     <li><a href="#">Wish List</a></li>
                                     <li><a href="#">Newsletter</a></li>
                                 </ul>
@@ -293,6 +175,39 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         </footer>
         <!--================End Footer Area =================-->
         
+        
+        
+        <!--================Contact Success and Error message Area =================-->
+        <div id="success" class="modal modal-message fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <h2>Thank you</h2>
+                        <p>Your message is successfully sent...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modals error -->
+
+        <div id="error" class="modal modal-message fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-close"></i>
+                        </button>
+                        <h2>Sorry !</h2>
+                        <p> Something went wrong </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================End Contact Success and Error message Area =================-->
         
         
         
@@ -323,15 +238,11 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
         <script src="vendors/jquery-ui/jquery-ui.js"></script>
         
+        <!-- contact js -->
+        <script src="js/jquery.form.js"></script>
+        <script src="js/jquery.validate.min.js"></script>
+        <script src="js/contact.js"></script>
+        
         <script src="js/theme.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script> 
-                    $(document).ready(function(){
-                        $("#itemform").hide();
-                $("#add-item").click(function(){
-                    $("#itemform").toggle();
-                });
-            });
-        </script>
     </body>
-</html> 
+</html>

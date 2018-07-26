@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+</head>
+
+<body>
+    <% include partial/header %>
+
+        <!--================Categories Banner Area =================
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>error page</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="404.html">Error Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        ================End Categories Banner Area =================-->
+        <br>
+        <div class="container">
+            <h3>View Transaction Log</h3>
+            <hr/>
+            <!--=========== FORM FOR RETRIEVING TRANSACTION LOG DATA ===========-->
+            <div class="form-inline space-between-inputs">
+                <!-- <h6 class="black-box">Search</h6> -->
+
+                <label for="inputListing">Listing Name: </label>
+                <input type="text" id="inputListing" name="inputListing">
+
+                <label for="inputUser">User Name: </label>
+                <input type="text" id="inputUser" name="inputUser">
+
+                <label for="inputTransNo">Transaction No.: </label>
+                <input type="text" id="inputTransNo" name="inputTransNo">
+
+                <label for="sortBy">Sort by:</label>
+                <select class="" name="sortBy" id="sortBy">
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
+                </select>
+
+                <button onclick="searchForTransaction()" class="">Show</button>
+            </div>
+
+            <section class="shopping_cart_area p_100">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart_product_list">
+                                <div class="table-responsive-md">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col"></th>
+                                                <th scope="col" style="text-align: center">Product</th>
+                                                <th scope="col">User</th>
+                                                <th scope="col">Date</th>
+                                                <th scope="col">Status</th>
+                                                <th scope="col">Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="viewTable">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <form action="/transactions" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
+                </div>
+
+                <div class="modal-body">
+
+                    <fieldset class="form-group">
+                        <label for="inputqty">Quantity</label>
+                        <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
+                    </fieldset>
+                    <fieldset class="form-group">
+                        <label for="inputlistingid">Listing ID</label>
+                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
+                    </fieldset>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </div>
+            </form>
+        </div>
+
+        <% include partial/footer %>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Rev slider js -->
+            <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+            <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <!-- Extra plugin css -->
+            <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+            <script src="vendors/counterup/jquery.counterup.min.js"></script>
+            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+            <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+            <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+            <script src="js/smoothscroll.js"></script>
+            <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+            <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+            <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+            <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+            <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+            <script src="js/theme.js"></script>
+
+            <script>
+                function searchForTransaction() {
+                    var listing = $("#inputListing").val();
+                    var user = $("#inputUser").val();
+                    var transNo = $("#inputTransNo").val();
+                    var sortBy = $("#sortBy").val();
+
+                    var criteria = {
+                        byListing: listing,
+                        byUser: user,
+                        byTransNo: transNo,
+                        sortBy: sortBy
+                    }
+
+                    sendAjax(criteria);
+                }
+
+                function sendAjax(searchCriteria) {
+                    $.ajax({
+                        url: "http://localhost:3000/admin/search",
+                        type: 'POST',
+                        data: JSON.stringify(searchCriteria),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (result) {
+                            // display the reply from server under the timer, maximum 10 lines
+                            var node = $("#viewTable");
+                            var html;
+                            if (result.length != 0) {
+                                for (var i=0; i < result.length; i++ ) {
+                                    html += `<tr>
+                                                <th scope="row">
+                                                </th>
+                                                <td>` + result[i].ItemName + `</td>
+                                                <td>Buyer: ` + result[i].buyerUser + `<br>Seller: ` + result[i].sellerUser + `</td>
+                                                <td>First offer: ` + result[i].createdAt + `<br>Last Update: ` + result[i].updatedAt + `</td>
+                                                <td>` + result[i].status + `</td>
+                                                <td><a href="/transactions/`+ result[i].transactionId +`">GO</a></td>
+                                            </tr>`;
+                                    }
+                            }
+                            else {
+                                html = '<div class="jumbotron">No results matches the criteria</div>'
+                            }
+                            node.html(html);
+                        },
+                        error: function (error) {
+                            alert("Unable to send message.");
+                            console.log(error);
+                        }
+                    })
+                }
+
+            </script>
+</body>
+
+</html>

@@ -21,6 +21,18 @@ const Transaction = sequelize.define('Transaction', {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
+    pendingOffer: {
+        type: Sequelize.DECIMAL,
+        allowNull: true
+    },
+    pendingOfferBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+    },
     status: {
         type: Sequelize.STRING,
         defaultValue: "Pending",
@@ -29,17 +41,17 @@ const Transaction = sequelize.define('Transaction', {
     listingId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        // references: {
-        //     model: 'Listings',
-        //     id: 'listingId'
-        // }
+        references: {
+            model: 'itemlists',
+            key: 'Itemid'
+        }
     },
     buyerId: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
             model: 'Users',
-            id: 'id'
+            key: 'id'
         }
     },
     rating: {
@@ -81,7 +93,7 @@ Transaction.beforeBulkUpdate((updateData) => {
             paymentId: crrTransaction.paymentId,
             paymentMethod: crrTransaction.paymentMethod,
             bankDetails: crrTransaction.bankDetails,
-            action: "UPDATED",
+            action: updateData.action,
             commitBy: updateData.id,
             createdAt: crrTransaction.updatedAt
         }
@@ -99,16 +111,16 @@ Transaction.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
-    Transaction.upsert({
-        transactionId:1,
-        qty:2,
-        offer:25.50,
-        status: 'Pending',
-        listingId: 1,
-        buyerId: 1,
-        paymentId: null,
-        paymentMethod: null
-    });
+    // Transaction.upsert({
+    //     transactionId:1,
+    //     qty:2,
+    //     offer:25.50,
+    //     status: 'Pending',
+    //     listingId: 1,
+    //     buyerId: 1,
+    //     paymentId: null,
+    //     paymentMethod: null
+    // });
     // Transaction.upsert({
     //     transactionId:2,
     //     qty:2,

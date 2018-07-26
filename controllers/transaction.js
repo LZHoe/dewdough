@@ -2,22 +2,41 @@ var Transaction = require('../models/transaction');
 var TransactionLog = require('../models/transactionLog');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
+var itemlists = require('../models/itemlist')
+var moment = require('moment');
+
+// function to convert date from sql to more readable format using moment js
+function convertDate (myDate) {
+    var dateObj = moment(myDate);
+    var newDate = moment(dateObj).calendar();
+    return newDate;
+}
 
 //////////////////////////////////////
 //// List all orders/transactions ////
 //////////////////////////////////////
 exports.showAll = function (req, res) {
-    // Show transaction data
-    sequelize.query('SELECT transactionId, createdAt FROM Transactions WHERE buyerId = ' + req.user.id, { model: Transaction }).then((Transactions) => {
-        res.render('allTransactions', {
-            title: 'Order History',
-            data: Transactions
+    // Join transactions & item listing table
+    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser \
+                    FROM Transactions t \
+                    INNER JOIN itemlists il ON t.listingId = il.Itemid \
+                    INNER JOIN Users seller ON seller.id = il.user_id \
+                    WHERE buyerId = ' + req.user.id +
+                    ' ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allTransactions', {
+                title: 'Order History',
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
         })
-    }).catch((err) => {
-        return res.status(400).send({
-            message: err
-        })
-    })
 }
 
 /////////////////////////////////////////
@@ -26,10 +45,41 @@ exports.showAll = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
-        res.render('transactionsDetails', {
-            title: 'Transaction Details',
-            data: Transactions[0]
+    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt  
+    FROM Transactions t 
+    INNER JOIN itemlists il ON il.Itemid = t.listingId 
+    INNER JOIN Users u ON u.id = il.user_id  
+    WHERE t.transactionId = :transaction_id `, { 
+        replacements: {
+            transaction_id: transactionId
+        },
+        type: sequelize.QueryTypes.SELECT
+     }).then((Transactions) => {
+        for (var i=0; i<Transactions.length; i++) {
+            Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+        }
+        sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
+        FROM TransactionLogs tl 
+        INNER JOIN Users u ON u.id = tl.commitBy 
+        WHERE transactionId = :transaction_id `, {
+            replacements: {
+                transaction_id: transactionId
+            },
+            type: sequelize.QueryTypes.SELECT
+        }).then((TransactionLogs) => {
+            // formatting dates
+            for (var i=0; i<TransactionLogs.length; i++) {
+                TransactionLogs[i].updatedAt = convertDate(TransactionLogs[i].updatedAt);
+            }
+            res.render('transactionsDetails', {
+                title: 'Transaction Details',
+                data: Transactions[0],
+                logData: TransactionLogs
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
         })
     }).catch((err) => {
         return res.status(400).send({
@@ -38,36 +88,50 @@ exports.showDetails = function (req, res) {
     })
 }
 
+////////////////////////////////////////////////
+//// Start a transaction with initial offer ////
+////////////////////////////////////////////////
 exports.create = function (req, res) {
-    // retreive user input
-    var transactionData = {
-        qty: req.body.qty,
-        offer: req.body.offer,
-        listingId: req.body.listingId,
-        buyerId: req.body.buyerId
-    };
+    var initialPrice = 0;
+    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
 
-    // after retreiving, push into db
-    Transaction.create(transactionData).then((newTransaction, created) => {
-        if (!newTransaction) {
-            return res.send(400, {
-                message: "error"
-            });
-        }
+        // retreive user input
+        var transactionData = {
+            qty: req.body.qty,
+            listingId: req.body.listingId,
+            buyerId: req.user.id,
+            offer: results[0].price
+        };
 
-        console.log("New transaction successful");
-        res.redirect('/transactions');
-    });
+        // after retreiving, push into db
+        Transaction.create(transactionData).then((newTransaction, created) => {
+            if (!newTransaction) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+
+            console.log("New transaction successful");
+            res.redirect('/transactions');
+        });
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
 }
 
-exports.testpay = function (req, res) {
+/////////////////
+//// Payment ////
+/////////////////
+exports.afterPayment = function (req, res) {
     var updateData = {
-        status: 'Delivering',
+        status: 'Paid',
         paymentId: 'some_payment_id',
         paymentMethod: 'Paypal'
     }
     transactionId = req.params.transaction_id;
-    Transaction.update(updateData, { where: { transactionId: transactionId }, id: req.user.id }).then((updatedRecord) => {
+    Transaction.update(updateData, { where: { transactionId: transactionId }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
         if (!updatedRecord || updatedRecord == 0) {
             return res.send(400, {
                 message: "error"

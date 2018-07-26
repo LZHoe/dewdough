@@ -1,5 +1,5 @@
 
-// models/images.js
+// models/itemlist.js
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
@@ -48,11 +48,11 @@ const itemlist = sequelize.define('itemlist', {
     },
     MeetupLocation: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: true 
     }, 
     pickupmethod: {
         type: Sequelize.STRING,
-        allowNull: false 
+        allowNull: false
     }
 });
 

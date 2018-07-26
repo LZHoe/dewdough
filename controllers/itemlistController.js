@@ -33,7 +33,8 @@ exports.show = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show item details
     var Itemid = req.params.Itemid;
-    sequelize.query('SELECT * FROM itemlists WHERE Itemid = ' + Itemid, { model: itemlist }).then((itempage) => {
+    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, t.createdAt, t.updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
+    + Itemid, { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
         res.render('itemPage', {
             title: 'Item Details',
             itemlist: itempage[0]
@@ -89,8 +90,8 @@ exports.uploadImage = function (req, res) {
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation,
-            pickupmethod: req.pickupmethod
+            MeetupLocation: req.body.MeetupLocation,
+            pickupmethod: req.body.pickupmethod
             
         }
         // Save to database
@@ -116,10 +117,8 @@ exports.uploadImage = function (req, res) {
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation,
-            pickupmethod: req.pickupmethod
-
-            
+            MeetupLocation: req.body.MeetupLocation,
+            pickupmethod: req.body.pickupmethod            
         }
         // Save to database
         itemlist.create(ItemData).then((newItem, created) => {
@@ -142,7 +141,14 @@ exports.uploadImage = function (req, res) {
     });
 };
 
-
+// //test data 
+// var sql = "INSERT INTO responses (user, response) VALUES ('test_user', 'A')";
+// connection.query(sql, function (err, result) {
+//      if (err) throw err;
+//      console.log("1 record inserted");
+   
+// });
+// connection.end();
 
 
 // Images authorization middleware

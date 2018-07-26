@@ -30,6 +30,18 @@ const TransactionLog = sequelize.define('TransactionLog', {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
+    pendingOffer: {
+        type: Sequelize.DECIMAL,
+        allowNull: true
+    },
+    pendingOfferBy: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
+    },
     status: {
         type: Sequelize.STRING,
         defaultValue: "Pending",
@@ -57,7 +69,8 @@ const TransactionLog = sequelize.define('TransactionLog', {
     },
     action: {
         type: Sequelize.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'UPDATED'
     },
     commitBy: {
         type: Sequelize.INTEGER,
@@ -66,7 +79,7 @@ const TransactionLog = sequelize.define('TransactionLog', {
 });
 
 // force: true will drop the table if it already exists
-TransactionLog.sync({ force: true, logging: console.log}).then(() => {
+TransactionLog.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 

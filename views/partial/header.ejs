@@ -70,7 +70,7 @@
                         </li>
                     </ul>
                     <ul class="top_right">
-                        <% if (login) {%>
+                        <%% if (login) {%>
                             <li class="user">
                                 <a href="#">
                                     <i class="icon-user icons"></i>
@@ -91,13 +91,13 @@
                             <li>
                                 <a href="/logout" class="btn btn-default">Logout</a>
                             </li>
-                            <% } else { %>
+                            <%% } else { %>
                                 <li>
                                     <a href="/login">
                                         <span style="font-size: 16px;">Login/Register</span>
                                     </a>
                                 </li>
-                                <% } %>
+                                <%% } %>
                     </ul>
                 </div>
             </div>
@@ -146,7 +146,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 2px solid #d91522;">
                 <a class="navbar-brand" href="/">
-                    <img style="width: 180px;" src="img/epetlogo-v2.png" alt="">
+                    <img style="width: 180px;" src="/img/epetlogo-v2.png" alt="">
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -207,14 +207,15 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav justify-content-end">
-                        <% if (login) { %>
+                        <% if (login == 1 || login == 2) { %>
+                            <% if (login == 1) { %>
                             <li class="search_icon">
-                                <a href="#">
+                                <a href="/itemlisted">
                                     <i class="icon-magnifier icons"></i>
                                 </a>
                             </li>
                             <li class="user_icon">
-                                <a href="#">
+                                <a href="/profile">
                                     <i class="icon-user icons"></i>
                                 </a>
                             </li>
@@ -223,6 +224,13 @@
                                     <i class="icon-handbag icons"></i>
                                 </a>
                             </li>
+                            <% } else if (login == 2) {%>
+                            <li>
+                                <a href="/admin">
+                                    <span style="font-size: 16px;">Admin Page</span>
+                                </a>
+                            </li>
+                            <% } %>
                             <li>
                                 <a href="/logout">
                                     <span style="font-size: 16px;">Logout</span>
@@ -231,7 +239,12 @@
                         <% } else { %>
                             <li>
                                 <a href="/login">
-                                    <span style="font-size: 16px;">Login/Register</span>
+                                    <span style="font-size: 16px;">Login</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/signup">
+                                    <span style="font-size: 16px;">Signup</span>
                                 </a>
                             </li>
                         <% } %>
@@ -240,4 +253,10 @@
             </nav>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            var value = $('.cart_cart a').before();
+        });
+    </script>
 </header>
