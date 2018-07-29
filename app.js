@@ -177,10 +177,17 @@ app.post("/servicelisted", servicelist.hasAuthorization, upload.single('servicei
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 
+app.get("/contact" , exports.show = (req, res) => {
+    res.render('contact');
+}
+)
+
+
+app.post('/ask',)
+
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
-
 
 // Listening
 var server = app.listen(3000, () => {
