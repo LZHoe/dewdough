@@ -62,7 +62,7 @@ var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
-
+var contact = require('./controllers/contact')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -184,10 +184,17 @@ app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageNam
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 
+app.get("/contact" , exports.show = (req, res) => {
+    res.render('contact');
+}
+)
+
+
+app.post('/ask', contact.create);
+
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
-
 
 // Listening
 var server = app.listen(3000, () => {
