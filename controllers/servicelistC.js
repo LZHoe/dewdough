@@ -8,19 +8,23 @@ var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 
 var servicelistM = require('../models/servicelistM');
 var myDatabase = require('./database');
-var seqeulize = myDatabase.sequelize;
+var sequelize = myDatabase.sequelize;
 
 //services listed gallery 
 exports.show = function(req, res) {
-    seqeulize.query('SELECT * from servicelist', 
+
+    console.log("i'm in show");
+    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
+    + Itemid, 
     { model: servicelistM }).then((servicelist) => {
 
+        console.log(servicelist);
         res.render('servicelist', {
             title: 'Service Listed',
-            servicelist: servicelist,
-            gravatar: gravatar.url(images.user_id, { s: '80', r: 'x', d: 'retro'}, true),
-
+            servicelist: servicelist
         });
+
+        // res.render('servicelist', {title: 'Service Listed', servicelist: servicelist});
 
     }).catch((err) => {
         return res.status(400).send({
@@ -50,7 +54,7 @@ if (IMAGE_TYPES.indexOf(type) == -1) {
     return res.status(415).send('Supported image formats: jpeg, jpg, jpe, png.')
 }
 //set new path to images 
-targetPath = './public/images/' + req.file.originalname; 
+    targetPath = './public/service_img/' + req.file.originalname; 
 //read stream API to read files 
 src = fs.createReadStream(tempPath);
 //write stream API to write file 
@@ -77,7 +81,9 @@ exports.create = function (req, res) {
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,
-        location: req.location
+        servicelocation: req.body.servicelocation,
+        servicepickup: req.body.servicepickup
+
     }
 
     servicelistM.create(serviceData).then((newServiceData, created) => {
@@ -96,11 +102,13 @@ src.on('end', function () {
     var serviceData = {
         servicetitle: req.body.servicetitle,
         imageName: req.file.originalname,
-        user_id: "2",
+        user_id: req.user.id,
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,
-        location: req.location
+        servicelocation: req.servicelocation,
+        servicepickup: req.body.servicepickup
+
     }   
     //save to database
     servicelistM.create(serviceData).then((newServiceData, created) => {
@@ -109,7 +117,7 @@ src.on('end', function () {
                 message: "error"
             });
         }
-        res.redirect('/servicelisted');
+            res.redirect('servicelisted');
     })
 
     //remove from temp folder
@@ -117,7 +125,7 @@ src.on('end', function () {
         if (err) {
             return res.status(500).send('Something bad happened here');
         }
-        res.redirect('/servicelisted');
+            res.redirect('servicelisted');
     });
 });
 

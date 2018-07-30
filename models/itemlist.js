@@ -17,7 +17,9 @@ const itemlist = sequelize.define('itemlist', {
         trim: true
     },
     imageName: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+
     },
     user_id:{
         type: Sequelize.INTEGER,
@@ -32,7 +34,9 @@ const itemlist = sequelize.define('itemlist', {
         allowNull: false
     },
     category: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false
+
     },
     visible: {
         type: Sequelize.BOOLEAN,
@@ -44,8 +48,11 @@ const itemlist = sequelize.define('itemlist', {
     },
     MeetupLocation: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: "Yio Chu Kang MRT"
+        allowNull: true 
+    }, 
+    pickupmethod: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
 

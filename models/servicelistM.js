@@ -4,7 +4,7 @@ var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
 
-const servicelist = sequelize.define('servicelist', {
+const servicelist = sequelize.define('servicelists', {
     serviceid: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -19,10 +19,11 @@ const servicelist = sequelize.define('servicelist', {
     },
     imageName: {
         type: Sequelize.STRING
+        // allowNull: false
     },
     user_id:{
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
         // references: {
         //     model: 'Users',
         //     key: 'id'
@@ -34,6 +35,8 @@ const servicelist = sequelize.define('servicelist', {
     },
     servicecategory: {
         type: Sequelize.STRING
+        // allowNull: false
+
     },
     visible: {
         type: Sequelize.BOOLEAN,
@@ -45,16 +48,35 @@ const servicelist = sequelize.define('servicelist', {
     },
     location: {
         type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: "Yio Chu Kang MRT"
+        allowNull: false
+    }, 
+    // createdAt: {
+    //     type: Sequelize.DATE,
+    //     allowNull: false
+    // },
+    // updatedAt:{
+    //     type: Sequelize.DATE,
+    //     allowNull: false
+    // }
+    servicepickup: {
+        type: Sequelize.STRING,
+        allowNull: false
     }
 });
 
-
+// sequelize.sync();
+// servicelist.sync().then(function () {
+//     // Table created
+//     return servicelist.create({
+//       servicepickup: 'Yes',
+//     });
+//   });
 // force: true will drop the table if it already exists
 servicelist.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("service table synced");
 });
 
-module.exports = sequelize.model('servicelist', servicelist);
+module.exports = sequelize.model('servicelists', servicelist);
+
+console.log("HELLO");

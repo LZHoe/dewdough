@@ -19,7 +19,7 @@ exports.show = function (req, res) {
         res.render('itemlist', {
             title: 'CUTE ITEMS HEHE',
             itemlist: itemlist,
-            user: "1"
+            user: "2"
         });
 
     }).catch((err) => {
@@ -30,7 +30,23 @@ exports.show = function (req, res) {
     });
 };
 
-// Image upload
+exports.showDetails = function (req, res) {
+    // Show item details
+    var Itemid = req.params.Itemid;
+    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, t.createdAt, t.updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
+    + Itemid, { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
+        res.render('itemPage', {
+            title: 'Item Details',
+            itemlist: itempage[0]
+        })
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
+
+// Image upload //
 exports.uploadImage = function (req, res) {
     console.log("i am in here");
     var src;
@@ -67,13 +83,15 @@ exports.uploadImage = function (req, res) {
         console.log("item listing entered")
     
         var ItemData = {
+            Itemid: req.params.Itemid, 
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
             user_id: req.user.id,
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.MeetupLocation
+            MeetupLocation: req.body.MeetupLocation,
+            pickupmethod: req.body.pickupmethod
             
         }
         // Save to database
@@ -92,14 +110,15 @@ exports.uploadImage = function (req, res) {
     src.on('end', function() {
         // create a new instance of the Images model with request body
         var ItemData = {
+            Itemid: req.param.Itemid, 
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
             user_id: req.user.id,
             price: req.body.price,
             category: req.body.category,
             Description: req.body.Description,
-            MeetupLocation: req.body.MeetupLocation
-            
+            MeetupLocation: req.body.MeetupLocation,
+            pickupmethod: req.body.pickupmethod            
         }
         // Save to database
         itemlist.create(ItemData).then((newItem, created) => {
@@ -108,7 +127,7 @@ exports.uploadImage = function (req, res) {
                     message: "error"
                 });
             }
-            res.redirect('itemlist');
+            res.redirect('/itemlisted');
         })
 
          // remove from temp folder
@@ -121,6 +140,16 @@ exports.uploadImage = function (req, res) {
         });
     });
 };
+
+// //test data 
+// var sql = "INSERT INTO responses (user, response) VALUES ('test_user', 'A')";
+// connection.query(sql, function (err, result) {
+//      if (err) throw err;
+//      console.log("1 record inserted");
+   
+// });
+// connection.end();
+
 
 // Images authorization middleware
 exports.hasAuthorization = function(req, res, next) {

@@ -71,4 +71,5 @@ typings/
 
 # Serverless directories
 .serverless
-public/img_uploads
+public/img_uploads/
+public/service_img/

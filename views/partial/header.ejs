@@ -184,6 +184,24 @@
                                 </li>
                             </ul>
                         </li>
+                        <% if (login) { %>
+                        <li class="nav-item dropdown submenu">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    My Listings
+                                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/itemlisted">Items Listing</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/servicelisted">Service Listing</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <% } else { %>
+                               
+                            <% } %>
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Support</a>
                         </li>
