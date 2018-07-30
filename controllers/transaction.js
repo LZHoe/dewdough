@@ -169,21 +169,26 @@ exports.create = function (req, res) {
 exports.confirmPrice = function(req, res) {
     var tId = req.params.transaction_id;
     var uId = req.user.id;
-    var updateData = {}
-    if (res.locals.isBuyer) {
-        updateData.buyerReady = true;
-    }
-    else {
-        updateData.sellerReady = true;
-    }
-    Transaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CONFIRM_PR' }).then((updatedRecord) => {
-        if (!updatedRecord || updatedRecord == 0) {
-            return res.send(400, {
-                message: "error"
-            });
+    sequelize.query("SELECT buyerReady, sellerReady FROM Transactions WHERE transactionId = :transaction_id", { replacements: { transaction_id: tId }, model: Transaction }).then((results) => {
+        var updateData = {}
+        if (res.locals.isBuyer) {
+            updateData.buyerReady = true;
         }
-        res.redirect('/transactions');
-    });
+        else {
+            updateData.sellerReady = true;
+        }
+        if ((results[0].buyerReady || updateData.buyerReady) && (results[0].sellerReady || updateData.sellerReady)) {
+            updateData.status = 'Awaiting payment';
+        }
+        Transaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CONFIRM_PR' }).then((updatedRecord) => {
+            if (!updatedRecord || updatedRecord == 0) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+            res.redirect('/transactions');
+        });
+    })
 }
 
 //////////////////////

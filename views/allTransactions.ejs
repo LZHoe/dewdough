@@ -110,7 +110,7 @@
                                                         </i> Seller 
                                                     </div>
                                                     
-                                                    <% if ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == false)) { %>
+                                                    <% if ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == uid)) { %>
                                                     <form style="display:inline-block;" method="POST" action="/transactions/confirm_price/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
                                                         Confirm Price
@@ -118,19 +118,26 @@
                                                     </form>
                                                     <% } %>
 
-                                                    <% if (data.buyerReady == false || data.sellerReady == false) { %>
+                                                    <% if (data.status == 'Offering') { %>
                                                     <button type="button" class="btn btn-primary update_btn" data-toggle="modal" data-target="#changeOfferModal" 
                                                     data-id="<%= data.transactionId %>" style="cursor:pointer;" data-name="<%= data.ItemName %>">
                                                     New Offer
                                                     </button>
-                                                    <% } %>
 
                                                     <form style="display:inline-block;" method="POST" action="/transactions/cancel/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary checkout_btn" style="cursor:pointer;">
                                                         Cancel
                                                         </button>
                                                     </form>
+                                                    <% } %>
 
+                                                    <% if (data.status == 'Awaiting payment' && data.buyerId == uid) { %>
+                                                    <form style="display:inline-block;" method="POST" action="/checkout/<%= data.transactionId %>">
+                                                        <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
+                                                        Make Payment
+                                                        </button>
+                                                    </form>
+                                                    <% } %>
                                                 </div>
                                             </div>
                                         </div>
