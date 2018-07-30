@@ -12,24 +12,42 @@ function convertDate (myDate) {
     return newDate;
 }
 
+// function given user id and transaction id, if user is buyer
+exports.isBuyer = function (req, res, next) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    sequelize.query('SELECT buyerId FROM Transactions WHERE transactionId = :tId', { model: Transaction, replacements: { tId: tId } }).then((Transactions) => {
+        if (Transactions[0].buyerId == uId) {
+            console.log("isbuyer...");
+            res.locals.isBuyer = true;
+        } 
+        else {
+            res.locals.isBuyer = false;
+        }
+        return next();
+    })
+}
+
 //////////////////////////////////////
 //// List all orders/transactions ////
 //////////////////////////////////////
 exports.showAll = function (req, res) {
     // Join transactions & item listing table
-    sequelize.query('SELECT transactionId, listingId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser \
+    if (req.query.view == 'selling') {
+        sequelize.query('SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser, buyerReady, sellerReady \
                     FROM Transactions t \
                     INNER JOIN itemlists il ON t.listingId = il.Itemid \
                     INNER JOIN Users seller ON seller.id = il.user_id \
-                    WHERE buyerId = ' + req.user.id +
-                    ' ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
+                    WHERE il.user_id = ' + req.user.id + ' AND t.status <> \'Archived\' \
+                    ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
             // formatting dates
             for (var i=0; i<Transactions.length; i++) {
                 Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
                 Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
             }
             res.render('allTransactions', {
-                title: 'Order History',
+                title: 'All Selling',
+                uid: req.user.id,
                 data: Transactions
             })
         }).catch((err) => {
@@ -37,6 +55,30 @@ exports.showAll = function (req, res) {
                 message: err
             })
         })
+    }
+    else {
+        sequelize.query('SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser, buyerReady, sellerReady \
+                        FROM Transactions t \
+                        INNER JOIN itemlists il ON t.listingId = il.Itemid \
+                        INNER JOIN Users seller ON seller.id = il.user_id \
+                        WHERE buyerId = ' + req.user.id + ' AND t.status <> \'Archived\' \
+                        ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allTransactions', {
+                title: 'All Buying',
+                uid: req.user.id,
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }
 }
 
 /////////////////////////////////////////
@@ -119,6 +161,76 @@ exports.create = function (req, res) {
             message: err
         })
     })
+}
+
+///////////////////////
+//// Confirm Price ////
+///////////////////////
+exports.confirmPrice = function(req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    var updateData = {}
+    if (res.locals.isBuyer) {
+        updateData.buyerReady = true;
+    }
+    else {
+        updateData.sellerReady = true;
+    }
+    Transaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CONFIRM_PR' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.redirect('/transactions');
+    });
+}
+
+//////////////////////
+//// Change offer ////
+//////////////////////
+exports.changeOffer = function(req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    var updateData = {
+        offer: req.body.newOffer,
+    }
+    console.log("\n\n\n\n\n\n\n\n\n\n\n\n" + res.locals.isBuyer)
+    if (res.locals.isBuyer) {
+        updateData.buyerReady = true;
+        updateData.sellerReady = false;
+    }
+    else {
+        updateData.buyerReady = false;
+        updateData.sellerReady = true;
+    }
+    Transaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'NEW_OFFER' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.redirect('/transactions');
+    });
+}
+
+//////////////////////
+//// Cancel Order ////
+//////////////////////
+exports.cancel = function (req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    var updateData = {
+        status: 'Archived'
+    }
+    Transaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CANCEL' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.redirect('/transactions');
+    });
 }
 
 /////////////////

@@ -30,21 +30,21 @@ const TransactionLog = sequelize.define('TransactionLog', {
         type: Sequelize.DECIMAL,
         allowNull: false
     },
-    pendingOffer: {
-        type: Sequelize.DECIMAL,
-        allowNull: true
-    },
-    pendingOfferBy: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
-    },
+    // pendingOffer: {
+    //     type: Sequelize.DECIMAL,
+    //     allowNull: true
+    // },
+    // pendingOfferBy: {
+    //     type: Sequelize.INTEGER,
+    //     allowNull: true,
+    //     references: {
+    //         model: 'Users',
+    //         key: 'id'
+    //     }
+    // },
     status: {
         type: Sequelize.STRING,
-        defaultValue: "Pending",
+        defaultValue: "Offering",
         allowNull: false
     },
     rating: {
@@ -75,6 +75,16 @@ const TransactionLog = sequelize.define('TransactionLog', {
     commitBy: {
         type: Sequelize.INTEGER,
         allowNull: false
+    }, 
+    buyerReady: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
+    }, 
+    sellerReady: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 
