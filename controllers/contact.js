@@ -1,32 +1,26 @@
-////////////////////////////////////////////////
-//// Start a transaction with initial offer ////
-////////////////////////////////////////////////
+var Question = require('../models/question');
+var myDatabase = require('./database');
+var sequelize = myDatabase.sequelize;
+var flash = require('connect-flash');
+
 exports.create = function (req, res) {
-    var initialPrice = 0;
-    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
 
         // retreive user input
-        var transactionData = {
-            qty: req.body.qty,
-            listingId: req.body.listingId,
-            buyerId: req.user.id,
-            offer: results[0].price
+        var questiondata = {
+            name : req.body.name,
+            email: req.body.email,
+            question: req.body.question,
         };
 
         // after retreiving, push into db
-        Transaction.create(transactionData).then((newTransaction, created) => {
-            if (!newTransaction) {
+        Question.create(questiondata).then((newquestion, created) => {
+            if (!newquestion) {
                 return res.send(400, {
                     message: "error"
                 });
             }
-
             console.log("New transaction successful");
-            res.redirect('/transactions');
-        });
-    }).catch((err) => {
-        return res.status(400).send({
-            message: err
+            res.redirect('/');
         })
-    })
-}
+        }
+    
