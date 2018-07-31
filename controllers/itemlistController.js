@@ -12,14 +12,16 @@ var sequelize = myDatabase.sequelize;
 
 // Show images gallery -  function to get all the uploaded images from the database and show it on the page. 
 exports.show = function (req, res) {
-
-    sequelize.query('select * from itemlists'
-    , { model: itemlist}).then((itemlist)=> {
+    var userID = req.user.id;
+    sequelize.query('select itemid, u.username, u.id ItemName, imageName, \
+    category, price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt \
+     from itemlists t inner join users u on t.user_id = u.id where user_id = '
+     + userID, { model: itemlist}).then((itemlist)=> {
 
         res.render('itemlist', {
             title: 'CUTE ITEMS HEHE',
             itemlist: itemlist,
-            user: "2"
+            
         });
 
     }).catch((err) => {
@@ -33,7 +35,9 @@ exports.show = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show item details
     var Itemid = req.params.Itemid;
-    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, t.createdAt, t.updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
+    sequelize.query('select itemid, u.username, ItemName, imageName, category, \
+    price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt \
+    from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
     + Itemid, { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
         res.render('itemPage', {
             title: 'Item Details',

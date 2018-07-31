@@ -14,8 +14,7 @@ var sequelize = myDatabase.sequelize;
 exports.show = function(req, res) {
 
     console.log("i'm in show");
-    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
-    + Itemid, 
+    sequelize.query('SELECT * from servicelists', 
     { model: servicelistM }).then((servicelist) => {
 
         console.log(servicelist);
@@ -75,6 +74,7 @@ exports.create = function (req, res) {
     console.log("service listing entered")
 
     var serviceData = {
+        serviceid: req.params.serviceid,
         servicetitle: req.body.servicetitle,
         imageName: req.file.originalname,
         user_id: req.user.id,
@@ -106,7 +106,7 @@ src.on('end', function () {
         serviceprice: req.body.serviceprice,
         servicecategory: req.body.servicecategory,
         servicedescription: req.body.servicedescription,
-        servicelocation: req.servicelocation,
+        servicelocation: req.body.servicelocation,
         servicepickup: req.body.servicepickup
 
     }   

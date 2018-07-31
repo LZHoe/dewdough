@@ -205,6 +205,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Support</a>
                         </li>
+                        <li class="search">
+                            <input type="text" class="search form-control" id="searchinput" placeholder="Search..">
+                            <input type="button" class="btn btn-primary" value="Search" onclick="getUsers({{id}})"/>
+                        </li>   
                     </ul>
                     <ul class="navbar-nav justify-content-end">
                         <% if (login == 1 || login == 2) { %>

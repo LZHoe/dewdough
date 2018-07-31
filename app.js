@@ -178,6 +178,8 @@ app.get("/item/:Itemid", itemlist.showDetails);
 app.get("/servicelisted", servicelist.show);
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
 
+app.get("/:category", search.showcategory);
+
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 
