@@ -109,6 +109,9 @@ app.use((req, res, next) => {
         req.user.id == 101 ? res.locals.login = 2 : res.locals.login = 1;
     }
     else { res.locals.login = 0; }
+    
+    if (res.locals.login != 0)
+        res.locals.username = req.user.username;
     next();
 })
 

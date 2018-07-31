@@ -34,12 +34,14 @@ exports.isBuyer = function (req, res, next) {
 exports.showAll = function (req, res) {
     // Join transactions & item listing table
     if (req.query.view == 'selling') {
-        sequelize.query('SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser, buyerReady, sellerReady \
-                    FROM Transactions t \
-                    INNER JOIN itemlists il ON t.listingId = il.Itemid \
-                    INNER JOIN Users seller ON seller.id = il.user_id \
-                    WHERE il.user_id = ' + req.user.id + ' AND t.status <> \'Archived\' \
-                    ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, buyerReady, sellerReady 
+                        FROM Transactions t 
+                        INNER JOIN itemlists il ON t.listingId = il.Itemid 
+                        INNER JOIN Users seller ON seller.id = il.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE il.user_id = :currUser AND t.status NOT IN ('Archived', 'Paid')  
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
             // formatting dates
             for (var i=0; i<Transactions.length; i++) {
                 Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
@@ -56,13 +58,40 @@ exports.showAll = function (req, res) {
             })
         })
     }
+    else if (req.query.view == 'archived') {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, paymentId, paymentMethod, buyerReady, sellerReady 
+                        FROM Transactions t 
+                        INNER JOIN itemlists il ON t.listingId = il.Itemid 
+                        INNER JOIN Users seller ON seller.id = il.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE (il.user_id = :currUser OR buyerId = :currUser) AND t.status IN ('Archived', 'Paid') 
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allTransactions', {
+                title: 'Order History',
+                uid: req.user.id,
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }
     else {
-        sequelize.query('SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, seller.username sellerUser, buyerReady, sellerReady \
-                        FROM Transactions t \
-                        INNER JOIN itemlists il ON t.listingId = il.Itemid \
-                        INNER JOIN Users seller ON seller.id = il.user_id \
-                        WHERE buyerId = ' + req.user.id + ' AND t.status <> \'Archived\' \
-                        ORDER BY t.createdAt', { type: sequelize.QueryTypes.SELECT }).then((Transactions) => {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, ItemName, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, buyerReady, sellerReady 
+                        FROM Transactions t 
+                        INNER JOIN itemlists il ON t.listingId = il.Itemid 
+                        INNER JOIN Users seller ON seller.id = il.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE buyerId = :currUser AND t.status NOT IN ('Archived', 'Paid') 
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
             // formatting dates
             for (var i=0; i<Transactions.length; i++) {
                 Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
@@ -87,7 +116,7 @@ exports.showAll = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt  
+    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt, t.updatedAt  
     FROM Transactions t 
     INNER JOIN itemlists il ON il.Itemid = t.listingId 
     INNER JOIN Users u ON u.id = il.user_id  
@@ -99,6 +128,7 @@ exports.showDetails = function (req, res) {
      }).then((Transactions) => {
         for (var i=0; i<Transactions.length; i++) {
             Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+            Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
         }
         sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
         FROM TransactionLogs tl 

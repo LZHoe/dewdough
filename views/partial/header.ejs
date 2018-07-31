@@ -127,6 +127,18 @@
                             </select>
                         </div>
                     </div> -->
+                <div class="float-md-left">
+                    <div class="top_header_left">
+                            Welcome, 
+                            <span class="font-weight-light font-italic">
+                                <% if (login == 0) { %>
+                                <span>Guest</span>
+                                <% } else { %>
+                                <%= username %>
+                                <% } %>
+                            </span>.
+                    </div>
+                </div>
                 <div class="float-md-right">
                     <div class="top_header_middle">
                         <a href="#">

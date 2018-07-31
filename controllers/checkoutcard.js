@@ -47,7 +47,7 @@ exports.charge = function(req,res) {
             var paypaldata = {
                 paymentId : paymentId,
                 paymentMethod : "stripe",
-                status: 'Delivering',
+                status: 'Paid',
                 transactionId: Transactions.transactionId
             };
             Transaction.update(paypaldata, { where: { transactionId: transactionId }, action: 'PAID' }).then((updatedRecord) => {

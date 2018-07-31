@@ -9,17 +9,28 @@ var IMAGE_TYPES = ['image/jpeg', 'image/jpg', 'image/png'];
 var itemlist = require('../models/itemlist');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
+var moment = require('moment');
+
+// function to convert date from sql to more readable format using moment js
+function convertDate (myDate) {
+    var dateObj = moment(myDate);
+    var newDate = moment(dateObj).calendar();
+    return newDate;
+}
 
 // Show images gallery -  function to get all the uploaded images from the database and show it on the page. 
 exports.show = function (req, res) {
 
-    sequelize.query('select * from itemlists'
-    , { model: itemlist}).then((itemlist)=> {
-
+    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id'
+    , { type: sequelize.QueryTypes.SELECT }).then((itemlist)=> {
+        for (var i=0; i<itemlist.length; i++) {
+            itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
+            itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+        }
         res.render('itemlist', {
             title: 'CUTE ITEMS HEHE',
             itemlist: itemlist,
-            user: "2"
+            user: "2",
         });
 
     }).catch((err) => {

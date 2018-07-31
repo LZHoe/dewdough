@@ -22,6 +22,7 @@
         </section>
         ================End Categories Banner Area =================-->
         <br>
+        <h2 class="text-center"><%= title %></h2>
         <section class="categories_product_main p_80">
                 <div class="container">
                     <div class="categories_main_inner">
@@ -30,7 +31,7 @@
                                 <div class="showing_fillter">
                                     <div class="row m0">
                                         <div class="first_fillter">
-                                            <h4>Showing 1 to <%= data.length %> of <%= data.length %> total</h4>
+                                            <h4>Showing <%= data.length %> to <%= data.length %> of <%= data.length %> total</h4>
                                         </div>
                                         <!-- <div class="secand_fillter">
                                             <h4>SORT BY :</h4>
@@ -74,9 +75,9 @@
                                                         <% } else if (data.status == "Pending new offer") { %>
                                                         <span class="text-warning"><%= data.status %></span>
                                                         <% } else if (data.status == "Awaiting payment") { %>
-                                                        <span class="text-primary"><%= data.status %></span>
-                                                        <% } else if (data.status == "Paid") { %>
                                                         <span class="text-success"><%= data.status %></span>
+                                                        <% } else if (data.status == "Paid") { %>
+                                                        <span class="text-muted"><%= data.status %></span>
                                                         <% } else { %>
                                                         <span class="text-muted"><%= data.status %></span>
                                                         <% } %>
@@ -86,7 +87,7 @@
                                                     <hr>
                                                     <div style="font-size: 18px;">
                                                         Confirm price: <br>
-                                                        Buyer 
+                                                        <%= data.buyerUser %> 
                                                         <% if (data.buyerReady) { %>
                                                         <i class="fa fa-square" style="font-size:18px;color:green;">
                                                         <% } else { %>
@@ -107,7 +108,7 @@
                                                         <% } else { %>
                                                         <i class="fa fa-square-o" style="font-size:18px;">
                                                         <% } %>
-                                                        </i> Seller 
+                                                        </i> <%= data.sellerUser %> 
                                                     </div>
                                                     
                                                     <% if ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == uid)) { %>
@@ -132,11 +133,16 @@
                                                     <% } %>
 
                                                     <% if (data.status == 'Awaiting payment' && data.buyerId == uid) { %>
-                                                    <form style="display:inline-block;" method="POST" action="/checkout/<%= data.transactionId %>">
+                                                    <form style="display:inline-block;" method="GET" action="/checkout/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
                                                         Make Payment
                                                         </button>
                                                     </form>
+                                                    <% } %>
+
+                                                    <% if (data.status == 'Paid') { %>
+                                                        <span class="font-weight-bold"><%= data.paymentMethod %>: </span>
+                                                        <%= data.paymentId %>
                                                     <% } %>
                                                 </div>
                                             </div>
@@ -195,18 +201,18 @@
                                                 <a class="nav-link" href="/transactions?view=selling">Currently selling</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="#">Paid & archived</a>
+                                                <a class="nav-link" href="/transactions?view=archived">Paid & archived</a>
                                             </li>
                                         </ul>
                                     </aside>
-                                    <aside class="l_widgest l_fillter_widget">
+                                    <!-- <aside class="l_widgest l_fillter_widget">
                                         <div class="l_w_title">
                                             <h3>Filter section</h3>
                                         </div>
                                         <div id="slider-range" class="ui_slider"></div>
                                         <label for="amount">Price:</label>
                                         <input type="text" id="amount" readonly>
-                                    </aside>
+                                    </aside> -->
                                 </div>
                             </div>
                         </div>
