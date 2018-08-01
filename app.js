@@ -55,6 +55,7 @@ var transaction = require('./controllers/transaction');
 // Import controllers
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
+var chat = require('./controllers/chat');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
 var checkout = require('./controllers/checkout');
@@ -138,6 +139,11 @@ app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+
+//Routes for chat
+app.get('/chat', chat.hasAuthorization, chat.list);
+app.post('/chat', chat.hasAuthorization, chat.create);
+
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 

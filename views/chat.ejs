@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include partial/head %>
+        <script src = "/javascripts/socket.io.js"></script>
+    </head>
+    <body>     
+        <% include partial/header %>
+        
+        <!--================Categories Banner Area =================-->
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>chat</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="/chat">Chat</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--================End Categories Banner Area =================-->
+
+        <div class="container">
+            <br>
+            <div class="jumbotron">
+                <h1 class="display-4">Send Message</h1>
+                <br>
+                <input id="name" class="form-control" placeholder="Name">
+                <br>
+                <textarea id="message" class="form-control" placeholder="Message"></textarea>
+                <br>
+                <button id="send" class="btn btn-success">Send</button>
+            </div>
+            <div id="messages">
+            <%data.forEach(function(msg){%>
+                <h4> <%=msg.name%> </h4> <p> <%=msg.message%> </p>
+            <%})%>
+            </div>
+        </div>
+        <script>
+            var socket = io()
+            $(() => {
+                $("#send").click(()=>{
+                    var message = { name: $("#name").val(), message: $("#message").val()}
+                    postMessage(message)
+                })
+            })
+
+            socket.on('message', addMessage)
+
+            function addMessage(msg){
+                $("#messages").append(`<h4> ${msg.name} </h4> <p> ${msg.message} </p>`)
+            }
+
+            function postMessage(message) {
+                $.post(`<%-url%>`, message)
+            }
+        </script>
+        
+            <!-- <img src="/w3images/bandmember.jpg" alt="Avatar">
+            <p>Hello. How are you today?</p>
+            <span class="time-right">11:00</span>
+        </div>
+        
+        <div class="container darker">
+            <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+            <p>Hey! I'm fine. Thanks for asking!</p>
+            <span class="time-left">11:01</span>
+        </div>
+        
+        <div class="container">
+            <img src="/w3images/bandmember.jpg" alt="Avatar">
+            <p>Sweet! So, what do you wanna do today?</p>
+            <span class="time-right">11:02</span>
+        </div>
+        
+        <div class="container darker">
+            <img src="/w3images/avatar_g2.jpg" alt="Avatar" class="right">
+            <p>Nah, I dunno. Play soccer.. or learn more coding perhaps?</p>
+            <span class="time-left">11:05</span>
+        </div> -->
+      
+    </body>
+</html>
