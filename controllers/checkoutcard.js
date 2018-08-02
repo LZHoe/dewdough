@@ -57,11 +57,11 @@ exports.charge = function(req,res) {
                     });
                 }
             });
-            res.redirect('/transactions/' + transRef);
+            res.redirect('/transactions?view=archived');
             // database after success charge
         })
         
-        res.redirect('/transactions/' + transRef);
+        res.redirect('/transactions?view=archived');
 })
 
    

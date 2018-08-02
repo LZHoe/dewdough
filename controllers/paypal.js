@@ -103,7 +103,7 @@ exports.success = function(req,res) {
         }
 
         // Show test data
-        res.redirect('/transactions/' + transRef);
+        res.redirect('/transactions?view=archived');
     })
 })
 }
