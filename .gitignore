@@ -72,3 +72,4 @@ typings/
 # Serverless directories
 .serverless
 public/img_uploads
+node_modules/validator

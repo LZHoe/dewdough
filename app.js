@@ -51,6 +51,7 @@ var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
+var userController = require("./controllers/userController")
 
 
 app.use(logger('dev'));
@@ -125,6 +126,9 @@ app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+
+app.get("/editprofile", userController.editProfile)
+app.post("/edit/:id", userController.updateProfile)
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 
