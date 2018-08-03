@@ -9,9 +9,12 @@ exports.show = (req, res) => {
 exports.showDetails = function(req,res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
+    sequelize.query('SELECT * FROM Transactions t INNER JOIN itemlists il ON t.listingId = il.Itemid  WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
+        console.log(Transactions);
+        
         Transactions[0].offer = Transactions[0].offer * 100;
         res.render('checkout', {
+            image : Transaction.imagename,
             title: 'Transaction Details',
             data: Transactions[0]
         })
