@@ -3,23 +3,33 @@ var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 var Transaction = require('../models/transaction');
 var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
+var itemlist = require('../models/itemlist');
 
 exports.show = function (req,res){
     var transactionId = req.params.transaction_id;
+   
+   
     sequelize.query('SELECT * FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
         Transactions[0].offer = Transactions[0].offer * 100;
+        sequelize.query('select * from itemlists'
+    , { model: itemlist}).then((itemlist)=> {
+
         res.render('checkoutcard', {
-            title: 'Transaction Details',
-            data: Transactions[0]
-        }
-    ).catch((err) => {
+            itemlist: itemlist,
+            user: "1",
+            title:'Transaction Details',
+            data:Transactions[0],
+        });
+
+    }).catch((err) => {
         return res.status(400).send({
             message: err
-        })
-    })
+        });
+        console.log(err)
+    });
 })
 }
-
+       
 
 
 exports.charge = function(req,res) {

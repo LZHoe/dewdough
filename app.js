@@ -17,8 +17,8 @@ var exphbs = require('express-handlebars');
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
-    'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
+    'client_id': 'AbUV860wWXlP-pMI8HW5iJ25Eu2-GHgJAIFjYsN4pS8S3As7nPXTwAjcB3qsPGzTJqDucLeewSadKFVI',
+    'client_secret': 'EItAFrEZbj8dE1_I3pE3jhVNPlFDx6vLAi_6vnmRf_-xVVPm7yJWieZCuz3M6C_8RNCIwdiJXtk94bwW',
   });
 
 //modules to store function
