@@ -17,7 +17,7 @@ exports.show = function(req,res) {
             },
             "redirect_urls": {
                 "return_url": "http://localhost:3000/success/" + transaction_id, 
-                "cancel_url": "http://localhost:3000/cancel"
+                "cancel_url": "http://localhost:3000/transactions"
             },
             "transactions": [{
                 "item_list": {
