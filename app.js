@@ -62,7 +62,7 @@ var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
-
+var contact = require('./controllers/contact')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -109,6 +109,9 @@ app.use((req, res, next) => {
         req.user.id == 101 ? res.locals.login = 2 : res.locals.login = 1;
     }
     else { res.locals.login = 0; }
+    
+    if (res.locals.login != 0)
+        res.locals.username = req.user.username;
     next();
 })
 
@@ -163,6 +166,9 @@ app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.afterPayment);
 
+app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
+app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
+app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 // Admin
 app.get("/admin", auth.isAdmin, admin.show);
 app.post("/admin/search", auth.isAdmin, admin.search)
@@ -183,10 +189,17 @@ app.get("/:category", search.showcategory);
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 
+app.get("/contact" , exports.show = (req, res) => {
+    res.render('contact');
+}
+)
+
+
+app.post('/ask', contact.create);
+
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
-
 
 // Listening
 var server = app.listen(3000, () => {

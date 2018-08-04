@@ -22,78 +22,225 @@
         </section>
         ================End Categories Banner Area =================-->
         <br>
-        <div class="container">
-            <section class="shopping_cart_area p_100">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="cart_product_list">
-                                    <h2 class="cart_single_title">Purchases in-progress</h2>
-                                    <div class="table-responsive-md">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"></th>
-                                                    <th scope="col" style="text-align: center">Product</th>
-                                                    <th scope="col">Sold by</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Current offer</th>
-                                                    <th scope="col">Status</th>
-                                                    <th scope="col">Details</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <% data.forEach(function(data){ %>
-                                                <tr>
-                                                    <th scope="row">
-                                                    </th>
-                                                    <td>
-                                                        <div class="media">
-                                                            <div class="d-flex">
-                                                                <img style="max-height: 160px;" src="img_uploads/<%= data.imageName %>" alt="">
-                                                            </div>
-                                                            <div class="media-body">
-                                                                <h4><%= data.ItemName %></h4>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td><%= data.sellerUser %></td>
-                                                    <td>Start: <%= data.createdAt %><br>Last Update: <%= data.updatedAt %></td>
-                                                    <td>$<%= data.offer %></td>
-                                                    <td><%= data.status %></td>
-                                                    <td><a href="/transactions/<%= data.transactionId %>">Go</a></td>
-                                                </tr>
-                                                <% }); %>
-                                            </tbody>
-                                        </table>
+        <h2 class="text-center"><%= title %></h2>
+        <section class="categories_product_main p_80">
+                <div class="container">
+                    <div class="categories_main_inner">
+                        <div class="row row_disable">
+                            <div class="col-lg-9 float-md-right">
+                                <div class="showing_fillter">
+                                    <div class="row m0">
+                                        <div class="first_fillter">
+                                            <h4>Showing <%= data.length %> to <%= data.length %> of <%= data.length %> total</h4>
+                                        </div>
+                                        <!-- <div class="secand_fillter">
+                                            <h4>SORT BY :</h4>
+                                            <select class="selectpicker">
+                                                <option>Name</option>
+                                                <option>Name 2</option>
+                                                <option>Name 3</option>
+                                            </select>
+                                        </div>
+                                        <div class="third_fillter">
+                                            <h4>Show : </h4>
+                                            <select class="selectpicker">
+                                                <option>09</option>
+                                                <option>10</option>
+                                                <option>10</option>
+                                            </select>
+                                        </div>
+                                        <div class="four_fillter">
+                                            <h4>View</h4>
+                                            <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
+                                            <a href="#"><i class="icon_grid-3x3"></i></a>
+                                        </div> -->
                                     </div>
+                                </div>
+                                <div class="c_product_grid_details">
+                                    <% data.forEach(function(data){ %>
+                                    <div class="c_product_item">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-6">
+                                                <div class="c_product_img">
+                                                    <img class="img-fluid" src="img_uploads/<%= data.imageName %>" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8 col-md-6">
+                                                <div class="c_product_text">
+                                                    <h3><%= data.ItemName %></h3>
+                                                    <h6 >Sold by: <%= data.sellerUser %></h6>
+                                                    <h6>Status: 
+                                                        <% if (data.status == "Offering") { %>
+                                                        <span class="text-info"><%= data.status %></span>
+                                                        <% } else if (data.status == "Pending new offer") { %>
+                                                        <span class="text-warning"><%= data.status %></span>
+                                                        <% } else if (data.status == "Awaiting payment") { %>
+                                                        <span class="text-success"><%= data.status %></span>
+                                                        <% } else if (data.status == "Paid") { %>
+                                                        <span class="text-muted"><%= data.status %></span>
+                                                        <% } else { %>
+                                                        <span class="text-muted"><%= data.status %></span>
+                                                        <% } %>
+                                                    </h6>
+                                                    <h6>Last update: <%= data.updatedAt %></h6>
+
+                                                    <hr>
+                                                    <div style="font-size: 18px;">
+                                                        Confirm price: <br>
+                                                        <%= data.buyerUser %> 
+                                                        <% if (data.buyerReady) { %>
+                                                        <i class="fa fa-square" style="font-size:18px;color:green;">
+                                                        <% } else { %>
+                                                        <i class="fa fa-square-o" style="font-size:18px;"></i>
+                                                        <% } %>
+                                                        </i>
+                                                        <div style="color: 00; display: inline-block;"> >>>> 
+                                                        <% if (data.buyerReady && data.sellerReady) { %>
+                                                        <h5 class="d-inline" style="color:green;">
+                                                        <% } else { %>
+                                                        <h5 class="d-inline">
+                                                        <% } %>
+                                                        $<%= data.offer %>
+                                                        </h5>
+                                                         <<<<< </div>
+                                                        <% if (data.sellerReady) { %>
+                                                        <i class="fa fa-square" style="font-size:18px;color:green;">
+                                                        <% } else { %>
+                                                        <i class="fa fa-square-o" style="font-size:18px;">
+                                                        <% } %>
+                                                        </i> <%= data.sellerUser %> 
+                                                    </div>
+                                                    
+                                                    <% if ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == uid)) { %>
+                                                    <form style="display:inline-block;" method="POST" action="/transactions/confirm_price/<%= data.transactionId %>">
+                                                        <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
+                                                        Confirm Price
+                                                        </button>
+                                                    </form>
+                                                    <% } %>
+
+                                                    <% if (data.status == 'Offering') { %>
+                                                    <button type="button" class="btn btn-primary update_btn" data-toggle="modal" data-target="#changeOfferModal" 
+                                                    data-id="<%= data.transactionId %>" style="cursor:pointer;" data-name="<%= data.ItemName %>">
+                                                    New Offer
+                                                    </button>
+
+                                                    <form style="display:inline-block;" method="POST" action="/transactions/cancel/<%= data.transactionId %>">
+                                                        <button type="submit" class="btn btn-primary checkout_btn" style="cursor:pointer;">
+                                                        Cancel
+                                                        </button>
+                                                    </form>
+                                                    <% } %>
+
+                                                    <% if (data.status == 'Awaiting payment' && data.buyerId == uid) { %>
+                                                    <form style="display:inline-block;" method="GET" action="/checkout/<%= data.transactionId %>">
+                                                        <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
+                                                        Make Payment
+                                                        </button>
+                                                    </form>
+                                                    <% } %>
+
+                                                    <% if (data.status == 'Paid') { %>
+                                                        <span class="font-weight-bold"><%= data.paymentMethod %>: </span>
+                                                        <%= data.paymentId %>
+                                                    <% } %>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% }); %>
+                                    <!-- CHANGE OFFER MODAL -->
+                                    <div class="modal fade" id="changeOfferModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered" role="document">
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              <h5 class="modal-title" id="offerModalTitle">New offer for: </h5>
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form id="makeOfferForm" method="POST" action="">
+                                                    <div class="form-group">
+                                                      <label for="new-offer" class="col-form-label">New offer:</label>
+                                                      <input type="text" class="form-control" id="new-offer" name="newOffer">
+                                                    </div>
+                                                </div>
+                                            </form>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                <button type="submit" form="makeOfferForm" class="btn btn-primary">Make offer</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    <nav aria-label="Page navigation example" class="pagination_area">
+                                      <ul class="pagination">
+                                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">5</a></li>
+                                        <li class="page-item"><a class="page-link" href="#">6</a></li>
+                                        <li class="page-item next"><a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
+                                      </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 float-md-right">
+                                <div class="categories_sidebar">
+                                    <aside class="l_widgest l_p_categories_widget">
+                                        <div class="l_w_title">
+                                            <h3>View transactions</h3>
+                                        </div>
+                                        <ul class="navbar-nav">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/transactions">Currently buying</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/transactions?view=selling">Currently selling</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/transactions?view=archived">Paid & archived</a>
+                                            </li>
+                                        </ul>
+                                    </aside>
+                                    <!-- <aside class="l_widgest l_fillter_widget">
+                                        <div class="l_w_title">
+                                            <h3>Filter section</h3>
+                                        </div>
+                                        <div id="slider-range" class="ui_slider"></div>
+                                        <label for="amount">Price:</label>
+                                        <input type="text" id="amount" readonly>
+                                    </aside> -->
                                 </div>
                             </div>
                         </div>
                     </div>
-                </section>
-
-            <form action="/transactions" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Example New Purchase</h4>
                 </div>
+            </section>
 
-                <div class="modal-body">
-
-                    <fieldset class="form-group">
-                        <label for="inputqty">Quantity</label>
-                        <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="inputlistingid">Listing ID</label>
-                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
-                    </fieldset>
+            <div class="container">
+                    <form action="/transactions" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="myModalLabel">Example New Purchase</h4>
+                        </div>
+        
+                        <div class="modal-body">
+                            <fieldset class="form-group">
+                                <label for="inputqty">Quantity</label>
+                                <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
+                            </fieldset>
+                            <fieldset class="form-group">
+                                <label for="inputlistingid">Listing ID</label>
+                                <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
+                            </fieldset>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Create</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </form>
-        </div>
 
         <% include partial/footer %>
 
@@ -125,6 +272,19 @@
             <script src="vendors/jquery-ui/jquery-ui.js"></script>
 
             <script src="js/theme.js"></script>
+
+            <script>
+                $('#changeOfferModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Button that triggered the modal
+                var tId = button.data('id'); // Extract info from data-* attributes
+                var name = button.data('name');
+                // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+                // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+                var modal = $(this);
+                modal.find('.modal-title').text(modal.find('.modal-title').text() + name);
+                modal.find('#makeOfferForm').attr('action', "/transactions/newoffer/" + tId);
+                })
+            </script>
 </body>
 
 </html>

@@ -89,7 +89,7 @@ exports.success = function(req,res) {
               var paypaldata = {
                   paymentId : paymentiddata,
                   paymentMethod : paymentmethod,
-                  status: 'Delivering',
+                  status: 'Paid',
                   transactionId: transRef
               };
     

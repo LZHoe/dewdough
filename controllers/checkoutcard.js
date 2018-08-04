@@ -26,8 +26,8 @@ exports.charge = function(req,res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
     sequelize.query('SELECT offer FROM Transactions t WHERE t.transactionId = ' + transactionId, { model: Transaction }).then((Transactions) => {
-
-        var amount = 2500;
+        Transactions[0].offer = Transactions[0].offer * 100;
+        var amount = Transactions[0].offer;
         console.log(req.body);
 
         stripe.customers.create({
@@ -36,16 +36,36 @@ exports.charge = function(req,res) {
         })
         .then(customer => stripe.charges.create({
             amount,
-            description: "Item thingy shit thing",
-            currency : "usd",
+            description: "Item Bought from E Pet",
+            currency : "sgd",
             customer:customer.id
         }))
-        .then(charge=>res.render('success'));
-    })
-    
-    res.redirect('/charge/' + transactionId);
-}
+        .then(charge=>{
+            console.log(charge)
+            paymentId = charge.id;
+            console.log(paymentId)
+            var paypaldata = {
+                paymentId : paymentId,
+                paymentMethod : "stripe",
+                status: 'Paid',
+                transactionId: Transactions.transactionId
+            };
+            Transaction.update(paypaldata, { where: { transactionId: transactionId }, action: 'PAID' }).then((updatedRecord) => {
+                if (!updatedRecord || updatedRecord == 0) {
+                    return res.send(400, {
+                        message: "error"
+                    });
+                }
+            });
+            res.redirect('/transactions/' + transRef);
+            // database after success charge
+        })
+        
+        res.redirect('/transactions/' + transRef);
+})
 
+   
+}
 
 
 

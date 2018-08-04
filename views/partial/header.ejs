@@ -127,6 +127,18 @@
                             </select>
                         </div>
                     </div> -->
+                <div class="float-md-left">
+                    <div class="top_header_left">
+                            Welcome, 
+                            <span class="font-weight-light font-italic">
+                                <% if (login == 0) { %>
+                                <span>Guest</span>
+                                <% } else { %>
+                                <%= username %>
+                                <% } %>
+                            </span>.
+                    </div>
+                </div>
                 <div class="float-md-right">
                     <div class="top_header_middle">
                         <a href="#">
@@ -203,7 +215,7 @@
                                
                             <% } %>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Support</a>
+                            <a class="nav-link" href="/contact">Support</a>
                         </li>
                         <li class="search">
                             <input type="text" class="search form-control" id="searchinput" placeholder="Search..">
