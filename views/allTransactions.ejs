@@ -3,10 +3,56 @@
 
 <head>
     <% include partial/head %>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <% include partial/header %>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+        
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+        
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        
+        </style>
 
         <!--================Categories Banner Area =================
         <section class="solid_banner_area">
@@ -20,6 +66,7 @@
                 </div>
             </div>
         </section>
+        
         ================End Categories Banner Area =================-->
         <br>
         <h2 class="text-center"><%= title %></h2>
@@ -57,7 +104,7 @@
                                     </div>
                                 </div>
                                 <div class="c_product_grid_details">
-                                    <% data.forEach(function(data){ %>
+                                    <% data.forEach(function(data) { %>
                                     <div class="c_product_item">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6">
@@ -143,6 +190,12 @@
                                                     <% if (data.status == 'Paid') { %>
                                                         <span class="font-weight-bold"><%= data.paymentMethod %>: </span>
                                                         <%= data.paymentId %>
+                                                        <br>
+                                                        <form style="display:inline-block;" target="_blank" method="GET" action="/receipt/<%= data.transactionId %>">
+                                                            <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
+                                                            View Receipt
+                                                            </button>
+                                                        </form>                                                        
                                                     <% } %>
                                                 </div>
                                             </div>
