@@ -171,7 +171,8 @@ app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, tra
 app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 // Admin
 app.get("/admin", auth.isAdmin, admin.show);
-app.post("/admin/search", auth.isAdmin, admin.search)
+app.post("/admin/search", auth.isAdmin, admin.search);
+app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 

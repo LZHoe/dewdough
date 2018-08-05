@@ -58,3 +58,19 @@ exports.search = function (req, res) {
             })
         })
 }
+
+exports.showMessages = function(req, res) {
+    sequelize.query(
+        `SELECT * FROM Question`, 
+        { type: sequelize.QueryTypes.SELECT }
+    ).then((messages) => {
+        for (var i = 0; i < messages.length; i++) {
+            messages[i].createdAt = convertDate(messages[i].createdAt);
+            messages[i].updatedAt = convertDate(messages[i].updatedAt);
+        }
+        res.render('adminMessages', {
+            title: 'Admin Support',
+            messages: messages
+        })
+    })
+}

@@ -111,7 +111,7 @@ exports.showAll = function (req, res) {
 }
 
 /////////////////////////////////////////
-//// List details of ONE transaction ////
+//// List details of ONE transaction //// 
 /////////////////////////////////////////
 exports.showDetails = function (req, res) {
     // Show transaction data
