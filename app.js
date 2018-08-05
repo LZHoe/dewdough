@@ -62,7 +62,8 @@ var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
-var contact = require('./controllers/contact')
+var contact = require('./controllers/contact');
+var receipt = require('./controllers/receipt')
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -196,6 +197,8 @@ app.get("/contact" , exports.show = (req, res) => {
 
 app.post('/ask', contact.create);
 
+//Receipt Shit
+app.get('/receipt/:transaction_id',receipt.show)
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
