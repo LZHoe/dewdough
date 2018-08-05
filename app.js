@@ -14,7 +14,6 @@ var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
 var exphbs = require('express-handlebars');
 
 
-
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': 'AbUV860wWXlP-pMI8HW5iJ25Eu2-GHgJAIFjYsN4pS8S3As7nPXTwAjcB3qsPGzTJqDucLeewSadKFVI',
@@ -64,6 +63,8 @@ var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
 var receipt = require('./controllers/receipt')
+var search = require('./controllers/searchController');
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -180,12 +181,21 @@ app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Listings  >>>>>>
 app.get("/itemlisted", itemlist.show); 
+app.get("/editItemListing/:Itemid", itemlist.editItemRecord);
+app.post("/editItemListing/:Itemid", itemlist.update);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
-
+    
 app.get("/servicelisted", servicelist.show);
+app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord, servicelist.update)
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
+app.get("/service/:serviceid", servicelist.showDetails)
 
+
+
+// app.get("/:category", search.showcategory);
+app.get("/listoverview", search.show);
+// var query = req.query.search;
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 

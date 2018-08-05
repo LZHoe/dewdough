@@ -12,7 +12,7 @@ var sequelize = myDatabase.sequelize;
 var moment = require('moment');
 
 // function to convert date from sql to more readable format using moment js
-function convertDate (myDate) {
+function convertDate(myDate) {
     var dateObj = moment(myDate);
     var newDate = moment(dateObj).calendar();
     return newDate;
@@ -21,41 +21,83 @@ function convertDate (myDate) {
 // Show images gallery -  function to get all the uploaded images from the database and show it on the page. 
 exports.show = function (req, res) {
 
-    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id'
-    , { type: sequelize.QueryTypes.SELECT }).then((itemlist)=> {
-        for (var i=0; i<itemlist.length; i++) {
-            itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-            itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
-        }
-        res.render('itemlist', {
-            title: 'CUTE ITEMS HEHE',
-            itemlist: itemlist,
-            user: "2",
-        });
+    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id WHERE il.user_id = ' + req.user.id
+        , { type: sequelize.QueryTypes.SELECT }).then((itemlist) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
+                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+            }
+            res.render('itemlist', {
+                title: 'CUTE ITEMS HEHE',
+                itemlist: itemlist,
+                user: req.user.id
+            });
 
-    }).catch((err) => {
-        return res.status(400).send({
-            message: err
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            });
+            console.log(err)
         });
-        console.log(err)
-    });
 };
 
 exports.showDetails = function (req, res) {
     // Show item details
     var Itemid = req.params.Itemid;
-    sequelize.query('select itemid, u.username, ItemName, imageName, category, price, Description, pickupmethod, visible, MeetupLocation, t.createdAt, t.updatedAt from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = ' 
-    + Itemid, { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
-        res.render('itemPage', {
-            title: 'Item Details',
-            itemlist: itempage[0]
+    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id WHERE il.Itemid = ' + Itemid,
+         { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
+                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+            }
+            res.render('itemPage', {
+                title: 'Item Details',
+                itemlist: itempage[0]
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
         })
+}
+
+exports.editItemRecord = function (req, res) {
+    var Itemid = req.params.Itemid;
+    itemlist.findById(Itemid).then(function (itemRecord) {
+        res.render('editItem', {
+            title: "Edit Item Listing",
+            item: itemRecord,
+            hostPath: req.protocol + "://" + req.get("host")
+        });
     }).catch((err) => {
         return res.status(400).send({
             message: err
         })
     })
 }
+
+exports.update = function (req, res) {
+    var Itemid = req.params.Itemid;
+    var updateItem = {
+        ItemName: req.body.ItemName,
+        imageName: req.file.originalname,
+        user_id: req.user.id,
+        price: req.body.price,
+        category: req.body.category,
+        Description: req.body.Description,
+        MeetupLocation: req.body.MeetupLocation,
+        pickupmethod: req.body.pickupmethod
+    }
+    itemlists.update(updateItem, { where: { id: Itemid } }).then((updatedItem) => {
+        if (!updatedItem || updatedItem == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.status(200).send({ message: "updated Item record: " + Itemid });
+    });
+};
+
 
 // Image upload //
 exports.uploadImage = function (req, res) {
@@ -82,7 +124,7 @@ exports.uploadImage = function (req, res) {
     dest = fs.createWriteStream(targetPath);
     src.pipe(dest);
     // Show error
-    src.on('error', function(err) {
+    src.on('error', function (err) {
         if (err) {
             return res.status(500).send({
                 message: error
@@ -92,9 +134,9 @@ exports.uploadImage = function (req, res) {
 
     exports.create = function (req, res) {
         console.log("item listing entered")
-    
+
         var ItemData = {
-            Itemid: req.params.Itemid, 
+            Itemid: req.params.Itemid,
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
             user_id: req.user.id,
@@ -103,7 +145,7 @@ exports.uploadImage = function (req, res) {
             Description: req.body.Description,
             MeetupLocation: req.body.MeetupLocation,
             pickupmethod: req.body.pickupmethod
-            
+
         }
         // Save to database
         itemlist.create(ItemData).then((newItem, created) => {
@@ -114,14 +156,14 @@ exports.uploadImage = function (req, res) {
             }
             res.redirect('itemlisted');
         })
-    
+
     };
 
     // Save file process
-    src.on('end', function() {
+    src.on('end', function () {
         // create a new instance of the Images model with request body
         var ItemData = {
-            Itemid: req.param.Itemid, 
+            Itemid: req.param.Itemid,
             ItemName: req.body.ItemName,
             imageName: req.file.originalname,
             user_id: req.user.id,
@@ -129,7 +171,7 @@ exports.uploadImage = function (req, res) {
             category: req.body.category,
             Description: req.body.Description,
             MeetupLocation: req.body.MeetupLocation,
-            pickupmethod: req.body.pickupmethod            
+            pickupmethod: req.body.pickupmethod
         }
         // Save to database
         itemlist.create(ItemData).then((newItem, created) => {
@@ -141,8 +183,8 @@ exports.uploadImage = function (req, res) {
             res.redirect('/itemlisted');
         })
 
-         // remove from temp folder
-         fs.unlink(tempPath, function (err) {
+        // remove from temp folder
+        fs.unlink(tempPath, function (err) {
             if (err) {
                 return res.status(500).send('Something bad happened here');
             }
@@ -157,16 +199,16 @@ exports.uploadImage = function (req, res) {
 // connection.query(sql, function (err, result) {
 //      if (err) throw err;
 //      console.log("1 record inserted");
-   
+
 // });
 // connection.end();
 
 
 // Images authorization middleware
-exports.hasAuthorization = function(req, res, next) {
+exports.hasAuthorization = function (req, res, next) {
     console.log("authenticated: " + req.isAuthenticated);
-    if (true){
-        
+    if (true) {
+
         return next();
     }
     res.redirect('/login');

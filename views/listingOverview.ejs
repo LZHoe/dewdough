@@ -131,7 +131,7 @@
                         <div class="col-lg-9 float-md-right">
                             <div class="showing_fillter">
                                 <div class="row m0">
-                                    <div class="first_fillter">
+                                    <!-- <div class="first_fillter">
                                         <h4>Showing 1 to 12 of 30 total</h4>
                                     </div>
                                     <div class="secand_fillter">
@@ -149,7 +149,7 @@
                                             <option>10</option>
                                             <option>10</option>
                                         </select>
-                                    </div>
+                                    </div> -->
                                     <div class="four_fillter">
                                         <h4>View</h4>
                                         <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
@@ -159,157 +159,26 @@
                             </div>
                             <div class="categories_product_area">
                                 <div class="row">
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-1.jpg" alt="">
-                                                <h5 class="new">New</h5>
+                                        <% itemlist.forEach(function(itemlist){ %>
+                                            <div class="col-lg-4">
+                                                <figure class="figure">
+                                                    <a href="/item/<%= itemlist.Itemid %>">
+                                                    <img src="img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %>">
+                                                    </a>
+                                                    <p><%= itemlist.ItemName %></p>
+                                                    <!-- <figcaption class="figure-caption">$<%= itemlist.price %></figcaption>
+                                                    <p>Category: <%= itemlist.category %></p>
+                                                    <br> -->
+                                                    <!-- <p>Item Description: <%= itemlist.Description %></p> 
+                                                    <br>
+                                                    <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
+                                                    <br>
+                                                    <p>Upload by: <%= itemlist.user_id %></p>
+                                                    <br>
+                                                    <p>Date of creation: <%= itemlist.createdAt %> </p>
+                                                </figure> -->
                                             </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Travel Bags</h4>
-                                                <h5><del>$45.50</del>  $40</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-2.jpg" alt="">
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Summer Dress</h4>
-                                                <h5>$45.50</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-3.jpg" alt="">
-                                                <h5 class="new">New</h5>
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Nike Shoes</h4>
-                                                <h5><del>$130</del> $110</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-4.jpg" alt="">
-                                                <h5 class="new">New</h5>
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>High Heel</h4>
-                                                <h5><del>$130.50</del>  $110</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-5.jpg" alt="">
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Fossil Watch</h4>
-                                                <h5>$250.50</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-6.jpg" alt="">
-                                                <h5 class="new">New</h5>
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Ricky Shirt</h4>
-                                                <h5>$45.05</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-7.jpg" alt="">
-                                                <h5 class="new">New</h5>
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Nike Max Air Vapor Power</h4>
-                                                <h5>$45.05</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-8.jpg" alt="">
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                <h4>Nike Shoes</h4>
-                                                <h5>$45.05</h5>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4 col-sm-6">
-                                        <div class="l_product_item">
-                                            <div class="l_p_img">
-                                                <img src="img/product/c-product-9.jpg" alt="">
-                                                <h5 class="sale">Sale</h5>
-                                            </div>
-                                            <div class="l_p_text">
-                                               <ul>
-                                                    <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li>
-                                                    <li><a class="add_cart_btn" href="#">Add To Cart</a></li>
-                                                    <li class="p_icon"><a href="#"><i class="icon_heart_alt"></i></a></li>
-                                                </ul>
-                                                
-                                                <h4>Summer Dress</h4>
-                                                <h5>$110</h5>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        <% }); %>
                                 </div>
                                 <nav aria-label="Page navigation example" class="pagination_area">
                                   <ul class="pagination">
@@ -331,136 +200,43 @@
                                         <h3>Categories</h3>
                                     </div>
                                     <ul class="navbar-nav">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Men’s Fashion
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                            <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
                                         <li class="nav-item dropdown">
                                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Women’s Fashion
+                                            Doggo 
                                             <i class="icon_plus" aria-hidden="true"></i>
                                             <i class="icon_minus-06" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <li class="nav-item"><a class="nav-link" href="#">Hoodies & Sweatshirts</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#">Jackets & Coats</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="#">Blouses & Shirts</a></li>
+                                                ITEMS
+                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogtoy">Dog Toys</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogacc">Dog Accessories</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogtools">Dog Grooming tools</a></li>
+                                                SERVICES
+                                                <li class="nav-item"><a class="nav-link" href="servicelist/dogboarding">Dog Boarding</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="servicelist/dogdaycare">Dog Daycare</a></li>
+                                                <li class="nav-item"><a class="nav-link" href="servicelist/doggrooming">Dog Grooming</a></li>
+
+
                                             </ul>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Phone & Accessories 
-                                                <i class="icon_plus" aria-hidden="true"></i>
+
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            Kitty
+                                            <i class="icon_plus" aria-hidden="true"></i>
                                             <i class="icon_minus-06" aria-hidden="true"></i>
                                             </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="#">Electronic Appliance
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                            <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link disabled" href="#">Computer & Networking
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                                <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link disabled" href="#">TV, Audiio & Gaming
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                                <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link disabled" href="#">Office Supplies
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                                <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link disabled" href="#">All Categories
-                                                <i class="icon_plus" aria-hidden="true"></i>
-                                                <i class="icon_minus-06" aria-hidden="true"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </aside>
-                                <aside class="l_widgest l_fillter_widget">
-                                    <div class="l_w_title">
-                                        <h3>Filter section</h3>
-                                    </div>
-                                    <div id="slider-range" class="ui_slider"></div>
-                                    <label for="amount">Price:</label>
-                                    <input type="text" id="amount" readonly>
-                                </aside>
-                                <aside class="l_widgest l_color_widget">
-                                    <div class="l_w_title">
-                                        <h3>Color</h3>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                        <li><a href="#"></a></li>
-                                    </ul>
-                                </aside>
-                                <aside class="l_widgest l_menufacture_widget">
-                                    <div class="l_w_title">
-                                        <h3>Manufacturer</h3>
-                                    </div>
-                                    <ul>
-                                        <li><a href="#">Nigel Cabourn.</a></li>
-                                        <li><a href="#">Cacharel.</a></li>
-                                        <li><a href="#">Calibre (Menswear)</a></li>
-                                        <li><a href="#">Calvin Klein.</a></li>
-                                        <li><a href="#">Camilla and Marc</a></li>
-                                    </ul>
-                                </aside>
-                                <aside class="l_widgest l_feature_widget">
-                                    <div class="l_w_title">
-                                        <h3>Featured Products</h3>
-                                    </div>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/featured-product/f-p-5.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Jeans with <br /> Frayed Hems</h4>
-                                            <h5>$45.05</h5>
-                                        </div>
-                                    </div>
-                                    <div class="media">
-                                        <div class="d-flex">
-                                            <img src="img/product/featured-product/f-p-6.jpg" alt="">
-                                        </div>
-                                        <div class="media-body">
-                                            <h4>Crysp Denim<br />Montana</h4>
-                                            <h5>$45.05</h5>
-                                        </div>
-                                    </div>
-                                </aside>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    ITEMS
+                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catToy">Cat Toys</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catAcc">Cat Accessories</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catTools">Cat Grooming tools</a></li>
+                                                    SERVICES
+                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catBoarding">Cat Boarding</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catDaycare">Cat Daycare</a></li>
+                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catGrooming">Cat Grooming</a></li>
+                                            </ul>
+                                     
                             </div>
                         </div>
                     </div>
