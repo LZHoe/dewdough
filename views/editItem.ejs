@@ -29,19 +29,19 @@
 
             <br>
             <br>
-            <form action="/itemlisted" method="post" enctype="multipart/form-data" id="itemform">
+            <form action="/editItemListing/<%= item.Itemid %>" method="post" enctype="multipart/form-data" id="itemform">
                 <div class="row">
 
                     <div class="col-lg-6">
                         <div class="form-group">
                             Current Image:
-                            <img src="img_uploads/<%= item.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= item.imageName %>">
+                            <img src="/img_uploads/<%= item.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= item.imageName %>" style="max-height: 200px;">
 
                         </div>
 
                     </div>
 
-                    <div class="col-lg-16">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
                             <input type="file" id="image" name="image">
@@ -112,7 +112,7 @@
                             <label for="Description">Item Description:
                                 <span>*</span>
                             </label>
-                            <textarea id="Description" value="<%= item.Description %>" name="Description" rows="3" cols="40" class="form-control" placeholder="Description"></textarea>
+                            <textarea id="Description" value="<%= item.Description %>" name="Description" rows="3" cols="40" class="form-control" placeholder="Description"><%= item.Description %></textarea>
                         </div>
                     </div>
 
@@ -124,10 +124,18 @@
                             </label>
                             <br>
 
-                            <input type="radio" value="<%= item.pickupmethod %>" id="pickupmethod" name="pickupmethod" value="Mail">
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="Mail" 
+                            <% if (item.pickupmethod == "Mail") { %>
+                            checked
+                            <% } %>
+                            >
                             <label for="Yes">Mailing</label>
 
-                            <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp">
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp" 
+                            <% if (item.pickupmethod == "MeetUp") { %>
+                            checked
+                            <% } %>
+                            >
                             <label for="No">MeetUp</label>
 
                         </div>
@@ -147,13 +155,7 @@
                     <br>
                     <div class="col-lg-3">
                         <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Update</button>
-
                     </div>
-                    <div class="col-lg-3">
-                        <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Update</button>
-
-                    </div>
-                    
             </form>
             </div>
 

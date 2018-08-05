@@ -229,9 +229,11 @@
                             <h6>
                                 <%= itemlist.ItemName %>
                             </h6>
-                            <figcaption class="figure-caption">$
-                                <%= itemlist.price %>
+                            <figcaption class="figure-caption" >
+                                S$<%= itemlist.price %>
                             </figcaption>
+                            <p>Uploaded: <%= itemlist.createdAt %></p>
+
                             <!-- 
                 <p>Category: <%= itemlist.category %></p>
                 <br> -->
@@ -244,6 +246,9 @@
                 <p>Date of creation: <%= itemlist.createdAt %> </p> -->
                             <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
+                            </form>
+                            <form style="cursor:pointer;" action="/delItemListing/<%= itemlist.Itemid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Delete">
                             </form>
                             <!-- <input type="button" class="editBtn" value="Delete"> -->
 

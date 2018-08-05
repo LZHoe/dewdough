@@ -11,7 +11,7 @@ var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 var moment = require('moment');
 
-
+// function to convert date from sql to more readable format using moment js
 function convertDate(myDate) {
     var dateObj = moment(myDate);
     var newDate = moment(dateObj).calendar();
@@ -21,7 +21,7 @@ function convertDate(myDate) {
 exports.show = function (req, res) {
 
     sequelize.query('select sl.*, u.username from servicelists sl INNER JOIN Users u \
-    ON sl.user_id = u.id WHERE sl.user_id = ' + req.user.id
+    ON sl.user_id = u.id WHERE sl.user_id = ' + req.user.id + ' AND sl.visible = 1'
         , { type: sequelize.QueryTypes.SELECT }).then((servicelist) => {
             for (var i = 0; i < servicelist.length; i++) {
                 servicelist[i].createdAt = convertDate(servicelist[i].createdAt);
@@ -60,7 +60,7 @@ exports.showDetails = function (req, res) {
 }
 exports.editServiceRecord = function (req, res) {
     var serviceid = req.params.serviceid;
-    servicelist.findById(serviceid).then(function (serviceRecord) {
+    servicelistM.findById(serviceid).then(function (serviceRecord) {
         res.render('editService', {
             title: "Edit Service Listing",
             service: serviceRecord,
@@ -72,9 +72,38 @@ exports.editServiceRecord = function (req, res) {
         })
     })
 }
-console.log("HELLO NOTICE ME"),
 
-    exports.update = function (req, res) {
+exports.update = function (req, res) {
+    var src;
+    var dest;
+    var targetPath;
+    var targetName;
+    var tempPath = req.file.path;
+    console.log(req.file);
+    //get mime type of file
+    var type = mime.lookup(req.file.mimetype);
+    //file extension 
+    var extension = req.file.path.split(/[. ]+/).pop();
+    //check support file types 
+    if (IMAGE_TYPES.indexOf(type) == -1) {
+        return res.status(415).send('Supported image formats: jpeg, jpg, jpe, png.')
+    }
+    //set new path to images 
+    targetPath = './public/service_img/' + req.file.originalname;
+    //read stream API to read files 
+    src = fs.createReadStream(tempPath);
+    //write stream API to write file 
+    dest = fs.createWriteStream(targetPath);
+    src.pipe(dest);
+    //show error 
+    src.on('error', function (err) {
+        if (err) {
+            return res.status(500).send({
+                message: err
+            });
+        }
+    });
+    src.on('end', function () {
         var serviceid = req.params.serviceid;
         var updateService = {
 
@@ -88,21 +117,47 @@ console.log("HELLO NOTICE ME"),
             servicelocation: req.body.servicelocation,
             servicepickup: req.body.servicepickup
         }
-        servicelists.update(updateService, { where: { id: serviceid } }).then((updatedService) => {
-            if (!updatedService || updatedService == 0) {
+        console.log("\n\n\n\n\n" + req.body.servicedescription);
+        servicelistM.update(updateService, { where: { serviceid: serviceid } }).then((updatedService) => {
+            if (!updateService || updateService == 0) {
                 return res.send(400, {
                     message: "error"
                 });
             }
-            res.status(200).send({ message: "Update service listing : " + req.body.servicetitle });
-        })
-    }
+            res.status(200).send({ message: "updated Service record: " + serviceid });
+        });
+                // remove from temp folder
 
+        fs.unlink(tempPath, function (err) {
+            if (err) {
+                return res.status(500).send('Something bad happened here');
+            }
+            // Redirect to gallery's page
+            res.redirect('/servicelisted');
+        });
+    });
+ 
+};
 
+exports.delete = function (req, res){
+    var serviceid = req.params.serviceid;
+        var updateService = {
+            visible: false 
+        }
+        servicelistM.update(updateService, { where: { serviceid: serviceid } }).then((updatedService) => {
+            if (!updateService || updateService == 0) {
+                return res.send(400, {
+                    message: "error"
+                });
+
+            }
+            res.redirect("/servicelisted");
+        });
+
+}
 
 //image upload
 exports.uploadService = function (req, res) {
-    console.log("i am in here 2");
 
     var src;
     var dest;

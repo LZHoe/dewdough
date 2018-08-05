@@ -144,7 +144,7 @@
                                 <!-- <ul>	 SLIDE  -->
                                 <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
                                 <!-- MAIN IMAGE -->
-                                <img src= "img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %> ">
+                                <img src= "/img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %> ">
                                 <!-- LAYERS -->
                                 <!-- </li> -->
 
@@ -213,7 +213,7 @@
                             <br>
                             <br>
                             <h6 class="pickupmethod">Delivery Method: </h6>
-                            <p> Mail/Meetup </p>
+                            <p> <%= itemlist.pickupmethod %> </p>
                             <br>
                             <h6 class="location">MeetUp Location </h6>
                             <p>

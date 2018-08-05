@@ -170,7 +170,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="servicedescription">Item Description:
+                            <label for="servicedescription">Service Description:
                                 <span>*</span>
                             </label>
                             <textarea id="servicedescription" name="servicedescription" rows="3" cols="40" class="form-control" placeholder="Service Description"
@@ -227,13 +227,12 @@
                             <a href="/service/<%= servicelist.serviceid %>">
                                 <img src="service_img/<%= servicelist.imageName %>" id="itemImage" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %>">
                             </a>
-                            <p>
+                            <h6>
                                 <%= servicelist.servicetitle %>
-                            </p>
-                            <figcaption class="figure-caption">$
-                                <%= servicelist.serviceprice %>
+                            </h6>
+                            <figcaption class="figure-caption" >S$<%= servicelist.serviceprice %>
                             </figcaption>
-                            <!-- <small>$<%= servicelist.servicetitle %></small> -->
+                            <p>Uploaded: <%= servicelist.createdAt %></p>
                             <!-- <br>
                         <small>PickUp: <%= servicelist.servicepickup %></small>
                         <br>
@@ -250,7 +249,9 @@
                             <form style="cursor:pointer;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
                             </form>
-                            <!-- <input type="button" class="editBtn" value="Delete"> -->
+                            <form style="cursor:pointer;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Delete">
+                            </form>
                         </figure>
 
 

@@ -23,11 +23,22 @@
         ================End Categories Banner Area =================-->
 
         <!--================editform =================-->
+        <br>
         <div class="container">
-            <form action="/servicelisted" method="post" enctype="multipart/form-data" id="serviceform">
+            <form action="/editServiceListing/<%= service.serviceid %>" method="post" enctype="multipart/form-data" id="serviceform">
                 <div class="row">
 
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            Current Image:
+                            <img src="/service_img/<%= service.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= service.imageName %>"
+                                style="max-height: 200px;">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
                             <input type="file" id="imageName" name="imageName" required>
@@ -95,11 +106,11 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="servicedescription">Item Description:
+                            <label for="servicedescription">Service Description:
                                 <span>*</span>
                             </label>
                             <textarea id="servicedescription" value="<%= service.servicedescription %>" name="servicedescription" rows="3" cols="40"
-                                class="form-control" placeholder="Service Description" required=""></textarea>
+                                class="form-control" placeholder="Service Description" required=""><%= service.servicedescription %></textarea>
                         </div>
                     </div>
 
@@ -111,11 +122,15 @@
                             </label>
                             <br>
 
-                            <input type="radio" id="servicepickup" name="servicepickup" value="Yes">
-                            <label for="Yes">Yes</label>
+                            <input type="radio" id="servicepickup" name="servicepickup" value="Yes" <% if (service.servicepickup=="Yes" ) { %> checked
+                            <% } %>
+                                >
+                                <label for="Yes">Yes</label>
 
-                            <input type="radio" id="servicepickup" name="servicepickup" value="No">
-                            <label for="No">No</label>
+                                <input type="radio" id="servicepickup" name="servicepickup" value="No" <% if (service.servicepickup=="No" ) { %> checked
+                                <% } %>
+                                    >
+                                 <label for="No">No</label>
 
                         </div>
                     </div>
@@ -132,7 +147,6 @@
                     </div>
                     <div class="col-lg-4">
                         <button type="submit" id="servicebutton" value="submit" class="btn subs_btn form-control">Update</button>
-
 
                     </div>
             </form>
@@ -318,6 +332,46 @@
             <script src="vendors/jquery-ui/jquery-ui.js"></script>
 
             <script src="js/theme.js"></script>
+            <script>
+                    function saveChanges() {
+                        
+                        var url = "/editServicelisting/:serviceid" + req.params.Itemid;
+            
+                        // alert(document.getElementById("image").files[0].name);
+            
+                        var serviceid = $(this).closest("div").data('id');
+            
+                        var newServiceValues = {
+                            servicetitle: $("#servicetitle").val(),
+                            serviceprice: $("#serviceprice").val(),
+                            servicecategory: $("#servicecategory").val(),
+                            servicedescription: $("#servicedescription").val(),
+                            servicelocation: $("#servicelocation").val(),
+                            servicepickup: $("servicepickup").val(),
+                            imageName: document.getElementById("image").files[0].name,
+                            // file: document.getElementById("image").files[0].name,
+                        }
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: JSON.stringify(newServiceValues),
+                            dataType: "json",
+                            contentType: "application/json",
+                            success: function(result){
+                                alert("Item details updated successfully");
+                                location.href = "/servicelisted";
+                            },
+                            error: function(result){
+                                alert("Error updating service details");
+                                discardChanges();
+                            }
+                        })
+                    }
+            
+                    function discardChanges() {
+                        location.href = "/servicelisted"
+                    }
+                </script>
 </body>
 
 </html>

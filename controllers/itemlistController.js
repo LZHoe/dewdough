@@ -21,7 +21,8 @@ function convertDate(myDate) {
 // Show images gallery -  function to get all the uploaded images from the database and show it on the page. 
 exports.show = function (req, res) {
 
-    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id WHERE il.user_id = ' + req.user.id
+    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id \
+    WHERE il.user_id = ' + req.user.id + ' AND il.visible = 1'
         , { type: sequelize.QueryTypes.SELECT }).then((itemlist) => {
             for (var i = 0; i < itemlist.length; i++) {
                 itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
@@ -78,26 +79,83 @@ exports.editItemRecord = function (req, res) {
 
 exports.update = function (req, res) {
     var Itemid = req.params.Itemid;
-    var updateItem = {
-        ItemName: req.body.ItemName,
-        imageName: req.file.originalname,
-        user_id: req.user.id,
-        price: req.body.price,
-        category: req.body.category,
-        Description: req.body.Description,
-        MeetupLocation: req.body.MeetupLocation,
-        pickupmethod: req.body.pickupmethod
+    var src;
+    var dest;
+    var targetPath;
+    var targetName;
+    var tempPath = req.file.path;
+    console.log(req.file);
+    // get the mime type of the file
+    var type = mime.lookup(req.file.mimetype);
+    // get file extension
+    var extension = req.file.path.split(/[. ]+/).pop();
+    // check support file types
+    if (IMAGE_TYPES.indexOf(type) == -1) {
+        return res.status(415).send('Supported image formats: jpeg, jpg, jpe, png. ');
     }
-    itemlists.update(updateItem, { where: { id: Itemid } }).then((updatedItem) => {
-        if (!updatedItem || updatedItem == 0) {
-            return res.send(400, {
-                message: "error"
+    // Set new path to images
+    targetPath = './public/img_uploads/' + req.file.originalname;
+    // using read stream API to read file
+    src = fs.createReadStream(tempPath);
+    // using a write stream API to write file
+    dest = fs.createWriteStream(targetPath);
+    src.pipe(dest);
+    // Show error
+    src.on('error', function (err) {
+        if (err) {
+            return res.status(500).send({
+                message: error
             });
         }
-        res.status(200).send({ message: "updated Item record: " + Itemid });
     });
+    src.on('end', function () {
+        var updateItem = {
+            ItemName: req.body.ItemName,
+            imageName: req.file.originalname,
+            user_id: req.user.id,
+            price: req.body.price,
+            category: req.body.category,
+            Description: req.body.Description,
+            MeetupLocation: req.body.MeetupLocation,
+            pickupmethod: req.body.pickupmethod
+        }
+        console.log("\n\n\n\n\n" + req.body.Description);
+        itemlist.update(updateItem, { where: { Itemid: Itemid } }).then((updatedItem) => {
+            if (!updatedItem || updatedItem == 0) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+            res.status(200).send({ message: "updated Item record: " + Itemid });
+        });
+
+        // remove from temp folder
+        fs.unlink(tempPath, function (err) {
+            if (err) {
+                return res.status(500).send('Something bad happened here');
+            }
+            // Redirect to gallery's page
+            res.redirect('/itemlisted');
+        });
+    });
+ 
 };
 
+exports.delete = function (req, res){
+    var Itemid = req.params.Itemid;
+        var updateItem = {
+            visible: false 
+        }
+        itemlist.update(updateItem, { where: { Itemid: Itemid } }).then((updatedItem) => {
+            if (!updateItem || updateItem == 0) {
+                return res.send(400, {
+                    message: "error"
+                });
+
+            }
+            res.redirect("/itemlisted");
+        });
+}
 
 // Image upload //
 exports.uploadImage = function (req, res) {

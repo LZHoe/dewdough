@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <% include partial/head %>
-    </head>
-    <body>
-        <% include partial/header %>
+
+<head>
+    <% include partial/head %>
+</head>
+
+<body>
+    <% include partial/header %>
         <!--================Menu Area =================-->
         <!-- <header class="shop_header_area carousel_menu_area">
             <div class="carousel_top_header row m0">
@@ -107,22 +109,28 @@
             </div>
         </header> -->
         <!--================End Menu Area =================-->
-        
+
         <!--================Categories Banner Area =================-->
         <section class="categories_banner_area">
             <div class="container">
                 <div class="c_banner_inner">
                     <h3>shop grid with left sidebar</h3>
                     <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li class="current"><a href="#">Shop Grid with Left Sidebar</a></li>
+                        <li>
+                            <a href="#">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Shop</a>
+                        </li>
+                        <li class="current">
+                            <a href="#">Shop Grid with Left Sidebar</a>
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
         <!--================End Categories Banner Area =================-->
-        
+
         <!--================Categories Product Area =================-->
         <section class="categories_product_main p_80">
             <div class="container">
@@ -152,24 +160,30 @@
                                     </div> -->
                                     <div class="four_fillter">
                                         <h4>View</h4>
-                                        <a class="active" href="#"><i class="icon_grid-2x2"></i></a>
-                                        <a href="#"><i class="icon_grid-3x3"></i></a>
+                                        <a class="active" href="#">
+                                            <i class="icon_grid-2x2"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="icon_grid-3x3"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                             <div class="categories_product_area">
                                 <div class="row">
-                                        <% itemlist.forEach(function(itemlist){ %>
-                                            <div class="col-lg-4">
-                                                <figure class="figure">
-                                                    <a href="/item/<%= itemlist.Itemid %>">
+                                    <% itemlist.forEach(function(itemlist){ %>
+                                        <div class="col-lg-4">
+                                            <figure class="figure">
+                                                <a href="/item/<%= itemlist.Itemid %>">
                                                     <img src="img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= itemlist.imageName %>">
-                                                    </a>
-                                                    <p><%= itemlist.ItemName %></p>
-                                                    <!-- <figcaption class="figure-caption">$<%= itemlist.price %></figcaption>
+                                                </a>
+                                                <p>
+                                                    <%= itemlist.ItemName %>
+                                                </p>
+                                                <!-- <figcaption class="figure-caption">$<%= itemlist.price %></figcaption>
                                                     <p>Category: <%= itemlist.category %></p>
                                                     <br> -->
-                                                    <!-- <p>Item Description: <%= itemlist.Description %></p> 
+                                                <!-- <p>Item Description: <%= itemlist.Description %></p> 
                                                     <br>
                                                     <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
                                                     <br>
@@ -177,19 +191,35 @@
                                                     <br>
                                                     <p>Date of creation: <%= itemlist.createdAt %> </p>
                                                 </figure> -->
-                                            </div>
+                                        </div>
                                         <% }); %>
                                 </div>
                                 <nav aria-label="Page navigation example" class="pagination_area">
-                                  <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">6</a></li>
-                                    <li class="page-item next"><a class="page-link" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a></li>
-                                  </ul>
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">6</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a class="page-link" href="#">
+                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </nav>
                             </div>
                         </div>
@@ -201,42 +231,68 @@
                                     </div>
                                     <ul class="navbar-nav">
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Doggo 
-                                            <i class="icon_plus" aria-hidden="true"></i>
-                                            <i class="icon_minus-06" aria-hidden="true"></i>
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Doggo
+                                                <i class="icon_plus" aria-hidden="true"></i>
+                                                <i class="icon_minus-06" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                                 ITEMS
-                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogtoy">Dog Toys</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogacc">Dog Accessories</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="itemlist/dogtools">Dog Grooming tools</a></li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/dogtoy">Dog Toys</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/dogacc">Dog Accessories</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/dogtools">Dog Grooming tools</a>
+                                                </li>
                                                 SERVICES
-                                                <li class="nav-item"><a class="nav-link" href="servicelist/dogboarding">Dog Boarding</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="servicelist/dogdaycare">Dog Daycare</a></li>
-                                                <li class="nav-item"><a class="nav-link" href="servicelist/doggrooming">Dog Grooming</a></li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/dogboarding">Dog Boarding</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/dogdaycare">Dog Daycare</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/doggrooming">Dog Grooming</a>
+                                                </li>
 
 
                                             </ul>
                                         </li>
 
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Kitty
-                                            <i class="icon_plus" aria-hidden="true"></i>
-                                            <i class="icon_minus-06" aria-hidden="true"></i>
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Kitty
+                                                <i class="icon_plus" aria-hidden="true"></i>
+                                                <i class="icon_minus-06" aria-hidden="true"></i>
                                             </a>
                                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                    ITEMS
-                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catToy">Cat Toys</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catAcc">Cat Accessories</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="itemlist/catTools">Cat Grooming tools</a></li>
-                                                    SERVICES
-                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catBoarding">Cat Boarding</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catDaycare">Cat Daycare</a></li>
-                                                    <li class="nav-item"><a class="nav-link" href="servicelist/catGrooming">Cat Grooming</a></li>
+                                                ITEMS
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/catToy">Cat Toys</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/catAcc">Cat Accessories</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="itemlist/catTools">Cat Grooming tools</a>
+                                                </li>
+                                                SERVICES
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/catBoarding">Cat Boarding</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/catDaycare">Cat Daycare</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="servicelist/catGrooming">Cat Grooming</a>
+                                                </li>
                                             </ul>
-                                     
+
                             </div>
                         </div>
                     </div>
@@ -244,7 +300,47 @@
             </div>
         </section>
         <!--================End Categories Product Area =================-->
-        
+        <!--PRODUCT AREA-->
+        <div class="container">
+            <div class="row">
+                                <% itemlist.forEach(function(itemlist){ %>
+                    <div class="col-lg-4">
+                        <figure class="figure">
+                            <a href="/item/<%= itemlist.Itemid %>">
+                                <img src="img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= itemlist.imageName %>">
+                            </a>
+                            <h6>
+                                <%= itemlist.ItemName %>
+                            </h6>
+                            <figcaption class="figure-caption">$
+                                <%= itemlist.price %>
+                            </figcaption>
+                            <!-- 
+            <p>Category: <%= itemlist.category %></p>
+            <br> -->
+                            <!-- <p>Item Description: <%= itemlist.Description %></p> 
+            <br>
+            <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
+            <br>
+            <p>Upload by: <%= itemlist.username %></p>
+            <br>
+            <p>Date of creation: <%= itemlist.createdAt %> </p> -->
+                            <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Edit">
+                            </form>
+                            <!-- <input type="button" class="editBtn" value="Delete"> -->
+
+                        </figure>
+
+
+
+
+
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+        <!--END PRODUCT AREA-->
         <!--================Footer Area =================-->
         <footer class="footer_area">
             <div class="container">
@@ -253,14 +349,35 @@
                         <div class="col-lg-4 col-md-4 col-6">
                             <aside class="f_widget f_about_widget">
                                 <img src="img/logo.png" alt="">
-                                <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to enjoy now</p>
+                                <p>Persuit is a Premium PSD Template. Best choice for your online store. Let purchase it to
+                                    enjoy now</p>
                                 <h6>Social:</h6>
                                 <ul>
-                                    <li><a href="#"><i class="social_facebook"></i></a></li>
-                                    <li><a href="#"><i class="social_twitter"></i></a></li>
-                                    <li><a href="#"><i class="social_pinterest"></i></a></li>
-                                    <li><a href="#"><i class="social_instagram"></i></a></li>
-                                    <li><a href="#"><i class="social_youtube"></i></a></li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="social_facebook"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="social_twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="social_pinterest"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="social_instagram"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="social_youtube"></i>
+                                        </a>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
@@ -270,11 +387,21 @@
                                     <h3>Information</h3>
                                 </div>
                                 <ul>
-                                    <li><a href="#">About us</a></li>
-                                    <li><a href="#">Delivery information</a></li>
-                                    <li><a href="#">Terms & Conditions</a></li>
-                                    <li><a href="#">Help Center</a></li>
-                                    <li><a href="#">Returns & Refunds</a></li>
+                                    <li>
+                                        <a href="#">About us</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Delivery information</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Terms & Conditions</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Help Center</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Returns & Refunds</a>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
@@ -284,11 +411,21 @@
                                     <h3>Customer Service</h3>
                                 </div>
                                 <ul>
-                                    <li><a href="#">My account</a></li>
-                                    <li><a href="#">Ordr History</a></li>
-                                    <li><a href="#">Wish List</a></li>
-                                    <li><a href="#">Newsletter</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                                    <li>
+                                        <a href="#">My account</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Ordr History</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Wish List</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Newsletter</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Contact Us</a>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
@@ -298,10 +435,18 @@
                                     <h3>Extras</h3>
                                 </div>
                                 <ul>
-                                    <li><a href="#">Brands</a></li>
-                                    <li><a href="#">Gift Vouchers</a></li>
-                                    <li><a href="#">Affiliates</a></li>
-                                    <li><a href="#">Specials</a></li>
+                                    <li>
+                                        <a href="#">Brands</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Gift Vouchers</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Affiliates</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Specials</a>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
@@ -311,28 +456,41 @@
                                     <h3>My Account</h3>
                                 </div>
                                 <ul>
-                                    <li><a href="#">My account</a></li>
-                                    <li><a href="#">Ordr History</a></li>
-                                    <li><a href="#">Wish List</a></li>
-                                    <li><a href="#">Newsletter</a></li>
+                                    <li>
+                                        <a href="#">My account</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Ordr History</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Wish List</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Newsletter</a>
+                                    </li>
                                 </ul>
                             </aside>
                         </div>
                     </div>
                 </div>
                 <div class="footer_copyright">
-                    <h5>© <script>document.write(new Date().getFullYear());</script> <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-</h5>
+                    <h5>©
+                        <script>document.write(new Date().getFullYear());</script>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        Copyright &copy;
+                        <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with
+                        <i class="fa fa-heart-o" aria-hidden="true"></i> by
+                        <a href="https://colorlib.com" target="_blank">Colorlib</a>
+                        <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                    </h5>
                 </div>
             </div>
         </footer>
         <!--================End Footer Area =================-->
-        
-        
-        
-        
+
+
+
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="js/jquery-3.2.1.min.js"></script>
         <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -359,7 +517,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
         <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
         <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
         <script src="vendors/jquery-ui/jquery-ui.js"></script>
-        
+
         <script src="js/theme.js"></script>
-    </body>
+</body>
+
 </html>

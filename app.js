@@ -180,12 +180,15 @@ app.post("/admin/search", auth.isAdmin, admin.search)
 ////>>>>>>  Beginning of Listings  >>>>>>
 app.get("/itemlisted", itemlist.show); 
 app.get("/editItemListing/:Itemid", itemlist.editItemRecord);
-app.post("/editItemListing/:Itemid", itemlist.update);
+app.post("/editItemListing/:Itemid", itemlist.hasAuthorization, upload.single('image'), itemlist.update);
+app.get("/delItemListing/:Itemid", itemlist.hasAuthorization, itemlist.delete);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
     
 app.get("/servicelisted", servicelist.show);
-app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord, servicelist.update)
+app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord)
+app.post("/editServiceListing/:serviceid", servicelist.hasAuthorization, upload.single('imageName'), servicelist.update);
+app.get("/delServiceListing/:serviceid", servicelist.hasAuthorization, servicelist.delete);
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
 app.get("/service/:serviceid", servicelist.showDetails)
 
