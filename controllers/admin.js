@@ -74,3 +74,29 @@ exports.showMessages = function(req, res) {
         })
     })
 }
+
+exports.delete = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT il.visible, il.Itemid
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+
+                        itemid = instance[0].Itemid;
+
+                        var private = {
+                            visible : false
+                        }
+
+                        itemlists.update(private, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactions/' + transaction_id);
+                        });
+                    
+    })
+}

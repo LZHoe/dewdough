@@ -116,7 +116,7 @@ exports.showAll = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query(`SELECT transactionId, ItemName, u.username, status, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt, t.updatedAt  
+    sequelize.query(`SELECT transactionId, ItemName, u.username, status,visible, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt, t.updatedAt  
     FROM Transactions t 
     INNER JOIN itemlists il ON il.Itemid = t.listingId 
     INNER JOIN Users u ON u.id = il.user_id  
@@ -139,6 +139,7 @@ exports.showDetails = function (req, res) {
             },
             type: sequelize.QueryTypes.SELECT
         }).then((TransactionLogs) => {
+            console.log(Transactions)
             // formatting dates
             for (var i=0; i<TransactionLogs.length; i++) {
                 TransactionLogs[i].updatedAt = convertDate(TransactionLogs[i].updatedAt);
@@ -146,7 +147,8 @@ exports.showDetails = function (req, res) {
             res.render('transactionsDetails', {
                 title: 'Transaction Details',
                 data: Transactions[0],
-                logData: TransactionLogs
+                logData: TransactionLogs,
+
             })
         }).catch((err) => {
             return res.status(400).send({

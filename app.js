@@ -166,7 +166,7 @@ app.get('/cancel', (req, res) => {
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
 app.post("/transactions", transaction.create);
 app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.afterPayment);
+app.post("/transactions/:transaction_id", transaction.afterPayment);    
 
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
@@ -175,6 +175,7 @@ app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 app.get("/admin", auth.isAdmin, admin.show);
 app.post("/admin/search", auth.isAdmin, admin.search);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
+app.post("/delete/:transaction_id", auth.isAdmin, admin.delete);
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
