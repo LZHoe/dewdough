@@ -217,7 +217,6 @@ app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), iteml
 app.get("/item/:Itemid", itemlist.showDetails);
 
 /////////////////Category////////////////////
-app.get("/items/dogs" , itemlist.showDog);
 app.get("/items/dogs/toy",itemlist.dogtoy);
 app.get("/items/dogs/accessory", itemlist.dogaccessory);
 app.get("/items/dogs/grooming" , itemlist.doggrooming);

@@ -49,8 +49,8 @@ exports.showDetails = function (req, res) {
     INNER JOIN Users u ON il.user_id = u.id WHERE il.Itemid = ' + Itemid,
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
-                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+                itempage[i].createdAt = convertDate(itempage[i].createdAt);
+                itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
             res.render('itemPage', {
                 title: 'Item Details',
@@ -70,9 +70,10 @@ exports.showCat = function (req, res) {
     INNER JOIN Users u ON il.user_id = u.id \
     WHERE il.category LIKE \'%Cat%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
-            for (var i = 0; i < itemlist.length; i++) {
+            for (var i = 0; i < itempage.length; i++) {
                 itempage[i].createdAt = convertDate(itempage[i].createdAt);
                 itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
+                console.log("owsn\n\n\n\n\n\n\n\n" + itempage[i].updatedAt);
             }
             console.log(itempage)
             res.render('allItems', {
@@ -92,7 +93,7 @@ exports.showDog = function (req, res) {
     INNER JOIN Users u ON il.user_id = u.id \
     WHERE il.category LIKE  \'%Dog%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
-            for (var i = 0; i < itemlist.length; i++) {
+            for (var i = 0; i < itempage.length; i++) {
                 itempage[i].createdAt = convertDate(itempage[i].createdAt);
                 itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
@@ -302,8 +303,9 @@ exports.uploadImage = function (req, res) {
 //Dog Toy Items Category
 exports.dogtoy = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Toy'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
@@ -313,8 +315,9 @@ exports.dogtoy = function(req,res){
 //Dog Toy Items Category
 exports.doggrooming = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Grooming Tools'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
@@ -323,8 +326,9 @@ exports.doggrooming = function(req,res){
 
 exports.cattoy = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Toy'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
@@ -333,8 +337,9 @@ exports.cattoy = function(req,res){
 
 exports.cataccessory = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Accessory'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
@@ -343,8 +348,9 @@ exports.cataccessory = function(req,res){
 
 exports.catgrooming = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat GroomGrooming Toolsing'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
@@ -354,8 +360,9 @@ exports.catgrooming = function(req,res){
 
 exports.dogaccessory = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Accessory'}, model:itemlist}).then((Categorydata)=>{
-        console.log("Helloa");
-        console.log(Categorydata)
+        for (var i = 0; i < Categorydata.length; i++) {
+            Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
+        }
         res.render("allitems",{
             itemlist : Categorydata,
         })
