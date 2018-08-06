@@ -194,8 +194,19 @@ app.get("/delItemListing/:Itemid", itemlist.hasAuthorization, itemlist.delete);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
 
-/////////////////Category//////////////
-app.get("/itemlisted/dogtoy",itemlist.dogtoy);
+/////////////////Category////////////////////
+app.get("/items/dogs/toy",itemlist.dogtoy);
+app.get("/items/dogs/accessory", itemlist.dogaccessory);
+app.get("/items/dogs/grooming" , itemlist.doggrooming);
+app.get("/items/cats/toy", itemlist.cattoy);
+app.get("/items/cats/accessory", itemlist.cataccessory);
+app.get("/items/cats/grooming", itemlist.catgrooming);
+app.get("/services/dogs/grooming", servicelist.doggrooming );
+app.get("/services/dogs/daycare", servicelist.dogdaycare);
+app.get("/services/dogs/boarding", servicelist.dogboarding);
+app.get("/services/cats/grooming", servicelist.catgrooming);
+app.get("/services/cats/daycare", servicelist.catdaycare)
+app.get("/services/cats/boarding", servicelist.catboarding)
 
     
 app.get("/servicelisted", servicelist.show);

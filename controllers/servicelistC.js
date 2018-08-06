@@ -270,6 +270,85 @@ exports.uploadService = function (req, res) {
 };
 
 
+
+exports.doggrooming = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Grooming'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+exports.dogboarding = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Boarding'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+exports.catgrooming = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Grooming'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+exports.catgrooming = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Grooming'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+
+exports.catdaycare = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Daycare'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+exports.catboarding = function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Boarding'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+
+
+
+
+
+exports.dogdaycare= function(req,res){
+    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Daycare'}, model:servicelistM}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allServices",{
+            servicelist : Categorydata,
+        })
+    })
+}
+
+
+
 exports.hasAuthorization = function (req, res, next) {
     console.log("authenticated: " + req.isAuthenticated);
     if (true) {
