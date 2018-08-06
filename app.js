@@ -179,6 +179,8 @@ app.post("/newtransaction/:listing_id", transaction.hasAuthorization, transactio
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
 app.post("/transactions/cancel/:transaction_id", transaction.cancel);
+
+app.get("/transactionss/:transaction_id", transaction.hasAuthorization, transaction.showDetail)
 // services
 app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
 app.post("/newservicestransaction/:listing_id", transaction.hasAuthorization, transaction.validateUniqueService,transaction.createForService);
@@ -193,7 +195,9 @@ app.post("/admin/services/search", auth.isAdmin, admin.searchServices);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
+app.get("/admin/edits/:transaction_id", auth.isAdmin,admin.showeditforms);
 app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
+app.post("/admin/edits/:transaction_id", auth.isAdmin,admin.edits);
 app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);

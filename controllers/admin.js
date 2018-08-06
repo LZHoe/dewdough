@@ -222,12 +222,69 @@ exports.showdetails = function(req,res){
 }
 
 
+exports.showeditforms = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM ServicesTransactions t 
+                    INNER JOIN servicelists il 
+                    ON t.listingId = il.serviceid
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log("aheas");
+                        console.log(instance[0]);
+                        res.render('adminedits',{
+                            item : instance[0]
+                        })
+
+                    })
+                
+}
+
+exports.edits = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM ServicesTransactions t 
+                    INNER JOIN servicelists il 
+                    ON t.listingId = il.serviceid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log(instance[0])
+
+                        
+                        console.log("MOTHER DIE")
+  
+                        
+                        var updateItem = {
+                            servicetitle: req.body.servicetitle,
+                            serviceprice: req.body.serviceprice,
+                            servicecategory: req.body.servicecategory,
+                            servicedescription: req.body.serivcedescription,
+                        }
+
+                        console.log(updateItem)
+                        itemid = instance[0].Itemid;
+
+
+                        servicelists.update(updateItem, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactionss/' + transaction_id);
+                        });
+
+                        
+
+                    })
+                }
+
+
+
 exports.undelete = function(req,res){
     var transaction_id = req.params.transaction_id;
     sequelize.query(`SELECT il.visible, il.Itemid
                     FROM Transactions t 
                     INNER JOIN itemlists il 
-                    ON t.listingId = il.Itemid 
+                    ON t.listingId = il.serviceid 
                     WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
 
                         itemid = instance[0].Itemid;

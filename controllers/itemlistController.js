@@ -74,6 +74,7 @@ exports.showCat = function (req, res) {
                 itempage[i].createdAt = convertDate(itempage[i].createdAt);
                 itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
+            console.log(itempage)
             res.render('allItems', {
                 title: 'Item Details',
                 itemlist: itempage
