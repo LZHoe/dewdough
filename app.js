@@ -157,7 +157,22 @@ app.get('/logout', function (req, res) {
 // app.get('/chat', chat.hasAuthorization, chat.list);
 // app.post('/chat', chat.hasAuthorization, chat.create);
 
-app.get('/messages', function (req,res) {
+// Setup chat
+var io = require('socket.io')(httpServer);
+var chatConnections = 0;
+var ChatMsg = require('./models/chatMsg');
+
+io.on('connection', function(socket) {
+    chatConnections++;
+    console.log("Num of chat users connected: "+chatConnections);
+
+    socket.on('disconnect', function() {
+        chatConnections++;
+        console.log("Num of chat users connected: "+chatConnections);
+    });
+})
+
+app.get('/messages', function (req, res) {
     ChatMsg.findAll().then((chatMessages) => {
         res.render('chatMsg', {
             url: req.protocol + "://" + req.get("host") + req.url,
@@ -166,7 +181,7 @@ app.get('/messages', function (req,res) {
     });
 });
 app.post('/messages', function (req, res) {
-    var chatData = {
+    var chatData ={
         name: req.body.name,
         message: req.body.message
     }
