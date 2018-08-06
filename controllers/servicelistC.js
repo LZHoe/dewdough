@@ -273,7 +273,7 @@ exports.uploadService = function (req, res) {
 
 
 exports.doggrooming = function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Grooming'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Dog Grooming'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -284,7 +284,7 @@ exports.doggrooming = function(req,res){
 }
 
 exports.dogboarding = function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Boarding'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Dog Boarding'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -295,7 +295,7 @@ exports.dogboarding = function(req,res){
 }
 
 exports.catgrooming = function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Grooming'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Cat Grooming'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -307,7 +307,7 @@ exports.catgrooming = function(req,res){
 
 
 exports.catdaycare = function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Daycare'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Cat Daycare'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -318,7 +318,7 @@ exports.catdaycare = function(req,res){
 }
 
 exports.catboarding = function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Cat Boarding'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Cat Boarding'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -334,7 +334,7 @@ exports.catboarding = function(req,res){
 
 
 exports.dogdaycare= function(req,res){
-    sequelize.query("SELECT * from servicelists where servicecategory = :category", {replacements:{category:'Dog Daycare'}, model:servicelistM}).then((Categorydata)=>{
+    sequelize.query("SELECT * from servicelists where servicecategory = :category AND visible = 1", {replacements:{category:'Dog Daycare'}, model:servicelistM}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }

@@ -68,7 +68,7 @@ exports.showCat = function (req, res) {
     var Itemid = req.params.Itemid;
     sequelize.query('select il.*, u.username from itemlists il \
     INNER JOIN Users u ON il.user_id = u.id \
-    WHERE il.category LIKE \'%Cat%\' ',
+    WHERE il.category LIKE \'%Cat%\' AND visible = 1',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itempage.length; i++) {
                 itempage[i].createdAt = convertDate(itempage[i].createdAt);
@@ -91,7 +91,7 @@ exports.showDog = function (req, res) {
     // Show item details
     sequelize.query('select il.*, u.username from itemlists il \
     INNER JOIN Users u ON il.user_id = u.id \
-    WHERE il.category LIKE  \'%Dog%\' ',
+    WHERE il.category LIKE  \'%Dog%\' AND visible = 1',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itempage.length; i++) {
                 itempage[i].createdAt = convertDate(itempage[i].createdAt);
@@ -302,7 +302,7 @@ exports.uploadImage = function (req, res) {
 
 //Dog Toy Items Category
 exports.dogtoy = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Toy'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Dog Toy'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -314,7 +314,7 @@ exports.dogtoy = function(req,res){
 
 //Dog Toy Items Category
 exports.doggrooming = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Grooming Tools'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Dog Grooming Tools'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -325,7 +325,7 @@ exports.doggrooming = function(req,res){
 }
 
 exports.cattoy = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Toy'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Cat Toy'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -336,7 +336,7 @@ exports.cattoy = function(req,res){
 }
 
 exports.cataccessory = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Accessory'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Cat Accessory'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -347,7 +347,7 @@ exports.cataccessory = function(req,res){
 }
 
 exports.catgrooming = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat GroomGrooming Toolsing'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Cat GroomGrooming Toolsing'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
@@ -359,7 +359,7 @@ exports.catgrooming = function(req,res){
 
 
 exports.dogaccessory = function(req,res){
-    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Accessory'}, model:itemlist}).then((Categorydata)=>{
+    sequelize.query("SELECT * from itemlists where category = :category AND visible = 1", {replacements:{category:'Dog Accessory'}, model:itemlist}).then((Categorydata)=>{
         for (var i = 0; i < Categorydata.length; i++) {
             Categorydata[i].dataValues.createdAt = convertDate(Categorydata[i].createdAt);
         }
