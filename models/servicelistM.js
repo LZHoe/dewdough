@@ -53,7 +53,8 @@ const servicelist = sequelize.define('servicelists', {
     
     servicepickup: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue: ""
     }
 });
 
