@@ -260,6 +260,55 @@ exports.showDetails = function (req, res) {
     })
 }
 
+exports.showDetail = function (req, res) {
+    // Show transaction data
+    var transactionId = req.params.transaction_id;
+    sequelize.query(`SELECT * 
+    FROM ServicesTransactions t 
+    INNER JOIN servicelists il ON il.serviceid = t.listingId 
+    INNER JOIN Users u ON u.id = il.user_id  
+    WHERE t.transactionId = :transaction_id `, { 
+        replacements: {
+            transaction_id: transactionId
+        },
+        type: sequelize.QueryTypes.SELECT
+     }).then((Transactions) => {
+        for (var i=0; i<Transactions.length; i++) {
+            Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+            Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+        }
+        sequelize.query(`SELECT *
+        FROM TransactionLogs tl 
+        INNER JOIN Users u ON u.id = tl.commitBy 
+        WHERE transactionId = :transaction_id `, {
+            replacements: {
+                transaction_id: transactionId
+            },
+            type: sequelize.QueryTypes.SELECT
+        }).then((TransactionLogs) => {
+            console.log("Slut")
+            console.log(Transactions[0])
+            // formatting dates
+            for (var i=0; i<TransactionLogs.length; i++) {
+                TransactionLogs[i].updatedAt = convertDate(TransactionLogs[i].updatedAt);
+            }
+            res.render('transactions', {
+                title: 'Transaction Details',
+                data: Transactions[0],
+                logData: TransactionLogs,
+
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
 ////////////////////////////////////////////////
 //// Start a transaction with initial offer ////
 ////////////////////////////////////////////////
