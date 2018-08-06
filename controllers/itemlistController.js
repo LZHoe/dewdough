@@ -303,7 +303,59 @@ exports.dogtoy = function(req,res){
     sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Toy'}, model:itemlist}).then((Categorydata)=>{
         console.log("Helloa");
         console.log(Categorydata)
-        res.render("itemlist",{
+        res.render("allitems",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+//Dog Toy Items Category
+exports.doggrooming = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Grooming Tools'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allitems",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+exports.cattoy = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Toy'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allitems",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+exports.cataccessory = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat Accessory'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allitems",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+exports.catgrooming = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Cat GroomGrooming Toolsing'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allitems",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+
+exports.dogaccessory = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Accessory'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("allitems",{
             itemlist : Categorydata,
         })
     })
