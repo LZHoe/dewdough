@@ -56,7 +56,7 @@
                                             <option>10</option>
                                             <option>10</option>
                                         </select>
-                                    </div> -->
+                                    </div> 
                                     <div class="four_fillter">
                                         <h4>View</h4>
                                         <a class="active" href="#">
@@ -65,7 +65,7 @@
                                         <a href="#">
                                             <i class="icon_grid-3x3"></i>
                                         </a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                             <div class="categories_product_area">
@@ -74,8 +74,9 @@
                                             <div class="col-lg-4 col-sm-6">
                                             <div class="l_product_item">
                                                 <div class="l_p_img">
-                                                    <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= servicelist.imageName %>">
-                                                    <!-- <h5 class="new">New</h5> -->
+                                                        <a href="/service/<%= servicelist.serviceid %>">
+                                                            <img src="/service_img/<%= servicelist.imageName %>" id="itemImage" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %>">
+                                                        </a>                                                    <!-- <h5 class="new">New</h5> -->
                                                 </div>
                                                 <div class="l_p_text">
                                                     <ul>
@@ -83,11 +84,11 @@
                                                         <li>
                                                             <a class="add_cart_btn" href="#">Make an Offer</a>
                                                         </li>
-                                                        <li class="p_icon">
+                                                        <!-- <li class="p_icon">
                                                             <a href="#">
                                                                 <i class="icon_heart_alt"></i>
                                                             </a>
-                                                        </li>
+                                                        </li> -->
                                                     </ul>
                                                     <h4><%= servicelist.servicetitle %></h4>
                                                     <h5>

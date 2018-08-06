@@ -201,22 +201,22 @@
                                         <%= servicelist.servicecategory %>
                                     </a>
                                     <% }
-                                <% if (servicelist.servicecategory == "Dog Grooming") { %>
+                                else if (servicelist.servicecategory == "Dog Grooming") { %>
                                         <a href="/services/dogs/grooming">
                                             <%= servicelist.servicecategory %>
                                         </a>
                                         <% }
-                                <% if (servicelist.servicecategory == "Dog Boarding") { %>
+                                else if (servicelist.servicecategory == "Dog Boarding") { %>
                                             <a href="/services/dogs/boarding">
                                                 <%= servicelist.servicecategory %>
                                             </a>
                                         <% }
-                                 <% if (servicelist.servicecategory == "Cat Daycare") { %>
+                                 else if (servicelist.servicecategory == "Cat Daycare") { %>
                                     <a href="/services/cats/daycare">
                                         <%= servicelist.servicecategory %>
                                     </a>
                                     <% }
-                                <% if (servicelist.servicecategory == "Cat Grooming") { %>
+                                else if (servicelist.servicecategory == "Cat Grooming") { %>
                                         <a href="/services/cats/grooming">
                                             <%= servicelist.servicecategory %>
                                         </a>
@@ -225,10 +225,13 @@
                                     <a href="/services/cats/boarding">
                                         <%= servicelist.servicecategory %>
                                     </a>
-                                <% } 
+                                <% } %>
 
                                     
                                 </div>
+                                <br>
+                                <h6> Uploaded: </h6>
+                                <%= itemlist.createdAt %>
                                 <br>
                         <i>Delivery Options</i>
                         <br><br>
