@@ -331,13 +331,32 @@ exports.validateUniqueService = function (req, res, next) {
     })
 }
 
+// exports.validateNotSelf = function (req, res, next) {
+//     var listId = req.params.listing_id;
+//     sequelize.query("SELECT transactionId FROM itemlists WHERE listingId = :listingid AND buyerId = :currUser AND status NOT IN ('Archived', 'Paid')", 
+//     { replacements: { 
+//         listingid: listId,
+//         currUser: req.user.id
+//     }, 
+//     model: serTransaction 
+//     }).then((results) => {
+//         if (results.length == 0) {
+//             return next();
+//         }
+//         res.redirect('/servicestransactions#transaction_' + results[0].transactionId);
+//     })
+// }
+
 ////////////////////////////////////////////////
 //// Start a transaction with initial offer ////
 ////////////////////////////////////////////////
 exports.create = function (req, res) {
     var listId = req.params.listing_id;
-    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: listId }, model: itemlists }).then((results) => {
-
+    sequelize.query("SELECT price, user_id FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: listId }, model: itemlists }).then((results) => {
+        // return user to my listings if this is their own listing
+        if (req.user.id == results[0].user_id) {
+            return res.redirect("/itemlisted");
+        }
         // retreive user input
         var transactionData = {
             qty: 1,
@@ -369,8 +388,11 @@ exports.create = function (req, res) {
 ////////////////////////////////////////////////
 exports.createForService = function (req, res) {
     var listId = req.params.listing_id;
-    sequelize.query("SELECT serviceprice FROM servicelists WHERE serviceid = :listingid", { replacements: { listingid: listId }, model: servicelists }).then((results) => {
-
+    sequelize.query("SELECT serviceprice, user_id FROM servicelists WHERE serviceid = :listingid", { replacements: { listingid: listId }, model: servicelists }).then((results) => {
+        // return user to my listings if this is their own listing
+        if (req.user.id == results[0].user_id) {
+            return res.redirect("/servicelisted");
+        }
         // retreive user input
         var transactionData = {
             listingId: listId,
