@@ -62,7 +62,7 @@ var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
-var receipt = require('./controllers/receipt')
+var receipt = require('./controllers/receipt');
 var search = require('./controllers/searchController');
 
 
@@ -164,9 +164,10 @@ app.get('/cancel', (req, res) => {
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Transactions  >>>>>>
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
-app.post("/transactions", transaction.create);
+app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
 app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.afterPayment);    
+app.post("/transactions/:transaction_id", transaction.afterPayment);
+app.post("/newtransaction/:listing_id", transaction.create);
 
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);

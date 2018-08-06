@@ -72,8 +72,8 @@
         <h2 class="text-center"><%= title %></h2>
         <nav aria-label="Page navigation example" class="pagination_area">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="/transactions">Items</a></li>
-                <li class="page-item"><a class="page-link" href="/servicestransactions">Services</a></li>
+                <li class="page-item"><a class="page-link" href="/transactions" style="border:0;">Items</a></li>
+                <li class="page-item"><a class="page-link" href="/servicestransactions" style="border:1px solid #000002;">Services</a></li>
             </ul>
         </nav>
         <section class="categories_product_main p_80">
@@ -120,7 +120,7 @@
                                             </div>
                                             <div class="col-lg-8 col-md-6">
                                                 <div class="c_product_text">
-                                                    <h3><%= data.ItemName %></h3>
+                                                    <h3><%= data.servicetitle %></h3>
                                                     <h6 >Sold by: <%= data.sellerUser %></h6>
                                                     <h6>Status: 
                                                         <% if (data.status == "Offering") { %>
@@ -175,11 +175,11 @@
 
                                                     <% if (data.status == 'Offering') { %>
                                                     <button type="button" class="btn btn-primary update_btn" data-toggle="modal" data-target="#changeOfferModal" 
-                                                    data-id="<%= data.transactionId %>" style="cursor:pointer;" data-name="<%= data.ItemName %>">
+                                                    data-id="<%= data.transactionId %>" style="cursor:pointer;" data-name="<%= data.servicetitle %>">
                                                     Change Price
                                                     </button>
 
-                                                    <form onsubmit="return confirm('Do you really want to cancel this transaction?');" 
+                                                    <form onsubmit="return confirm('Do you really want to cancel this service?');" 
                                                     style="display:inline-block;" method="POST" action="/transactions/cancel/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary checkout_btn" style="cursor:pointer;">
                                                         Cancel
@@ -256,13 +256,13 @@
                                         </div>
                                         <ul class="navbar-nav">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/transactions">Currently buying</a>
+                                                <a class="nav-link" href="/servicestransactions">Currently buying</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/transactions?view=selling">Currently selling</a>
+                                                <a class="nav-link" href="/servicestransactions?view=listed">Currently listed</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/transactions?view=archived">Paid & archived</a>
+                                                <a class="nav-link" href="/servicestransactions?view=archived">Paid & archived</a>
                                             </li>
                                         </ul>
                                     </aside>

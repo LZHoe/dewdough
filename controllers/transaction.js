@@ -1,5 +1,5 @@
 var Transaction = require('../models/transaction');
-var TransactionLog = require('../models/transactionLog');
+var serTransaction = require('../models/servicesTransaction');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 var itemlists = require('../models/itemlist')
@@ -110,6 +110,88 @@ exports.showAll = function (req, res) {
     }
 }
 
+////////////////////////////////////////
+//// List all SERVICES transactions ////
+////////////////////////////////////////
+exports.showAllServices = function (req, res) {
+    // Join transactions & item listing table
+    if (req.query.view == 'listed') {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, servicetitle, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, buyerReady, sellerReady 
+                        FROM ServicesTransactions t 
+                        INNER JOIN servicelists sl ON t.listingId = sl.serviceid 
+                        INNER JOIN Users seller ON seller.id = sl.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE sl.user_id = :currUser AND t.status NOT IN ('Archived', 'Paid')  
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allSerTransactions', {
+                title: 'All Selling',
+                uid: req.user.id,
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }
+    else if (req.query.view == 'archived') {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, servicetitle, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, paymentId, paymentMethod, buyerReady, sellerReady 
+                        FROM ServicesTransactions t 
+                        INNER JOIN servicelists sl ON t.listingId = sl.serviceid 
+                        INNER JOIN Users seller ON seller.id = sl.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE (sl.user_id = :currUser OR buyerId = :currUser) AND t.status IN ('Archived', 'Paid') 
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allSerTransactions', {
+                title: 'Order History',
+                uid: req.user.id,
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }
+    else {
+        sequelize.query(`SELECT transactionId, listingId, seller.id sellerId, buyerId, t.createdAt, t.updatedAt, t.status, offer, servicetitle, imageName, 
+                        seller.username sellerUser, buyer.username buyerUser, buyerReady, sellerReady 
+                        FROM ServicesTransactions t 
+                        INNER JOIN servicelists sl ON t.listingId = sl.serviceid 
+                        INNER JOIN Users seller ON seller.id = sl.user_id 
+                        INNER JOIN Users buyer ON buyer.id = buyerId 
+                        WHERE buyerId = :currUser AND t.status NOT IN ('Archived', 'Paid') 
+                        ORDER BY t.createdAt`, { type: sequelize.QueryTypes.SELECT, replacements: { currUser: req.user.id } }).then((Transactions) => {
+            // formatting dates
+            for (var i=0; i<Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            res.render('allSerTransactions', {
+                title: 'All Buying',
+                uid: req.user.id,
+                data: Transactions
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+    }
+}
+
 /////////////////////////////////////////
 //// List details of ONE transaction //// 
 /////////////////////////////////////////
@@ -165,7 +247,7 @@ exports.showDetails = function (req, res) {
 ////////////////////////////////////////////////
 //// Start a transaction with initial offer ////
 ////////////////////////////////////////////////
-exports.create = function (req, res) {
+exports.OLDcreate = function (req, res) {
     var initialPrice = 0;
     sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
 
@@ -173,6 +255,36 @@ exports.create = function (req, res) {
         var transactionData = {
             qty: req.body.qty,
             listingId: req.body.listingId,
+            buyerId: req.user.id,
+            offer: results[0].price
+        };
+
+        // after retreiving, push into db
+        Transaction.create(transactionData).then((newTransaction, created) => {
+            if (!newTransaction) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+
+            console.log("New transaction successful");
+            res.redirect('/transactions');
+        });
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
+
+exports.create = function (req, res) {
+    var listId = req.params.listing_id;
+    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: listId }, model: itemlists }).then((results) => {
+
+        // retreive user input
+        var transactionData = {
+            qty: 1,
+            listingId: listId,
             buyerId: req.user.id,
             offer: results[0].price
         };
