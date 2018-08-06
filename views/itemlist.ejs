@@ -109,28 +109,6 @@
                         </div>
                     </div>
 
-                    <!-- <div class ="col-lg-3">
-                    <div class="form-group">
-                                <label for="serviceimage1">First Name <span>*</span></label>
-                                <input type="file" id="imageName2" name="imageName2">                
-                    </div>
-            </div>
-
-            <div class ="col-lg-3">
-                <div class="form-group">
-                            <label for="serviceimage1">First Name <span>*</span></label>
-                            <input type="file" id="imageName3" name="imageName3">                
-                </div>
-            </div>
-
-            <div class ="col-lg-3">
-                    <div class="form-group">
-                                <label for="serviceimage1">First Name <span>*</span></label>
-                                <input type="file" id="imageName4" name="imageName4">                
-                    </div>
-            </div> -->
-
-
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="ItemName">Listing Title:
@@ -177,7 +155,7 @@
                     </div>
 
 
-                    <div class="col-lg-4">
+                    <!-- <div class="col-lg-4">
                         <div class="form-group">
                             <label for="pickupmethod"> Mailing/Meetup?:
                                 <span>*</span>
@@ -191,10 +169,10 @@
                             <label for="No">MeetUp</label>
 
                         </div>
-                    </div>
+                    </div> -->
 
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <label for="MeetupLocation">Meetup Location:
                                 <span>*</span>
@@ -204,7 +182,7 @@
                     </div>
 
                     <br>
-                    <div class="col-lg-4">
+                    <div class="col-lg-6">
                         <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Submit</button>
 
                     </div>
@@ -234,25 +212,15 @@
                             </figcaption>
                             <p>Uploaded: <%= itemlist.createdAt %></p>
 
-                            <!-- 
-                <p>Category: <%= itemlist.category %></p>
-                <br> -->
-                            <!-- <p>Item Description: <%= itemlist.Description %></p> 
-                <br>
-                <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
-                <br>
-                <p>Upload by: <%= itemlist.username %></p>
-                <br>
-                <p>Date of creation: <%= itemlist.createdAt %> </p> -->
-                
+                           
                 <div class="row">
-                    <div class = "col-lg-6">
-                            <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
+                    <div class = "col-lg-6">                            
+                        <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
                             </form>
                             </div>
-                            <div class = "col-lg-6">
 
+                            <div class = "col-lg-6">
                             <form style="cursor:pointer;" action="/delItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Delete">
                             </form>

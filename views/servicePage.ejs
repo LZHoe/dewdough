@@ -137,17 +137,17 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="product_details_slider">
-                           <div id="product_slider" class="rev_slider" data-version="5.3.1.6">
+                        <!-- <div class="product_details_slider">
+                           <div id="product_slider" class="rev_slider" data-version="5.3.1.6"> -->
                                 <!-- <ul>	 SLIDE  -->
                                     <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
                                         <!-- MAIN IMAGE -->
-                                        <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> ">                                        <!-- LAYERS -->
+                                        <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> " >                                        <!-- LAYERS -->
                                     <!-- </li> -->
                                     
                                 <!-- </ul>  -->
-                             </div>
-                        </div>
+                             <!-- </div>
+                        </div> -->
                     </div>
                     <div class="col-lg-6">
                         <div class="item_details_text">
@@ -161,7 +161,7 @@
                             <p><i><%= servicelist.servicedescription %></i></p>
                            
                             <br><br><br>
-                            <form action="/newtransaction/<%= itemlist.Itemid %>" method="POST">
+                            <form action="/newtransaction/<%= servicelist.serviceid %>" method="POST">
                                 <div class="addcart">
                                     <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
                                 </div>
@@ -188,7 +188,7 @@
                                 <br>
                         <i>Delivery Options</i>
                         <br><br>
-                            <h6 class="servicepickup">Pickup Available?: </h6>
+                            <h6 class="servicepickup">Pet Pickup Available?: </h6>
                                <p> <%= servicelist.servicepickup %> </p>
                                <br>
                                 <h6 class="servicelocation">Location of Service/Pickup point: </h6>

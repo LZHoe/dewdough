@@ -9,7 +9,7 @@
         background-color: black;
         color: white;
         border: 1px solid black;
-        width: 30%;
+        width: 100%;
 
     }
 
@@ -236,13 +236,22 @@
                             <p>Uploaded:
                                 <%= servicelist.createdAt %>
                             </p>
-                            <form style="cursor:pointer; display:inline;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
-                                <input type="submit" class="editBtn " value="Edit">
-                            </form>
-                            <form style="cursor:pointer; display:inline;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
-                                <input type="submit" class="editBtn " value="Delete">
-                            </form>
+                            <div class="row">
+
+                                <div class="col-lg-6">
+                                    <form style="cursor:pointer;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                        <input type="submit" class="editBtn " value="Edit">
+                                    </form>
+                                </div>
+                                <div class="col-lg-6">
+                                <form style="cursor:pointer;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                    <input type="submit" class="editBtn " value="Delete">
+                                </form>
+                            </div>
+                        
                         </figure>
+
+
                     </div>
                 <% }); %>
             </div>

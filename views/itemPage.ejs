@@ -170,16 +170,12 @@
                                     <%= itemlist.Description %>
                                 </i>
                             </p>
-                            <!-- <div class="p_color">
-                                <h4 class="pickupmethod">Delivery Method: <span>*</span></h4>
-                                <ul class="color_list"> 
-                                   <p> Mail/Meetup </p>
-                               </ul> 
-                             </div> -->
-                            <!-- <div class="p_color">
-                                <h4 class="location">MeetUp Location <span>*</span></h4>
-                                <p> <%= itemlist.MeetupLocation %> </p>
-                            </div>  -->
+                            <br><br><br>
+                            <form action="/newtransaction/<%= itemlist.Itemid %>" method="POST">
+                                <div class="addcart">
+                                    <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
+                                </div>
+                           
                             <br>
                             <br>
                             <br>
@@ -214,9 +210,7 @@
                             <i>Delivery Options</i>
                             <br>
                             <br>
-                            <h6 class="pickupmethod">Delivery Method: </h6>
-                            <p> <%= itemlist.pickupmethod %> </p>
-                            <br>
+                            
                             <h6 class="location">MeetUp Location </h6>
                             <p>
                                 <%= itemlist.MeetupLocation %>

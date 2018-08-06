@@ -19,7 +19,6 @@ function convertDate(myDate) {
 }
 //services listed gallery 
 exports.show = function (req, res) {
-
     sequelize.query('select sl.*, u.username from servicelists sl INNER JOIN Users u \
     ON sl.user_id = u.id WHERE sl.user_id = ' + req.user.id + ' AND sl.visible = 1'
         , { type: sequelize.QueryTypes.SELECT }).then((servicelist) => {
@@ -168,7 +167,7 @@ exports.showCat = function (req, res) {
             }
             res.render('allItems', {
                 title: 'Cat Services',
-                itemlist: servicepage
+                servicelist: servicepage
             })
         }).catch((err) => {
             return res.status(400).send({
@@ -189,7 +188,7 @@ exports.showDog = function (req, res) {
             }
             res.render('allItems', {
                 title: 'Dog Services',
-                itemlist: servicepage
+                servicelist: servicepage
             })
         }).catch((err) => {
             return res.status(400).send({

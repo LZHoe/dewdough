@@ -71,8 +71,8 @@ exports.showCat = function (req, res) {
     WHERE il.category LIKE \'%Cat%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
-                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+                itempage[i].createdAt = convertDate(itempage[i].createdAt);
+                itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
             res.render('allItems', {
                 title: 'Item Details',
@@ -92,8 +92,8 @@ exports.showDog = function (req, res) {
     WHERE il.category LIKE  \'%Dog%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
-                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+                itempage[i].createdAt = convertDate(itempage[i].createdAt);
+                itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
             res.render('allItems', {
                 title: 'Item Details',
