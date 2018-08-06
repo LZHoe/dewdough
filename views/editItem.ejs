@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+</head>
+
+<body>
+    <% include partial/header %>
+
+        <!--================Categories Banner Area =================
+        <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>error page</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="404.html">Error Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        ================End Categories Banner Area =================-->
+
+        <!--================editform =================-->
+        <div class="container">
+            <h4> Edit Your Listing </h4>
+
+
+            <br>
+            <br>
+            <form action="/editItemListing/<%= item.Itemid %>" method="post" enctype="multipart/form-data" id="itemform">
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            Current Image:
+                            <img src="/img_uploads/<%= item.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= item.imageName %>" style="max-height: 200px;">
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                            <input type="file" id="image" name="image">
+                        </div>
+                    </div>
+
+                    <!-- <div class ="col-lg-3">
+                <div class="form-group">
+                            <label for="serviceimage1">First Name <span>*</span></label>
+                            <input type="file" id="imageName2" name="imageName2">                
+                </div>
+        </div>
+
+        <div class ="col-lg-3">
+            <div class="form-group">
+                        <label for="serviceimage1">First Name <span>*</span></label>
+                        <input type="file" id="imageName3" name="imageName3">                
+            </div>
+        </div>
+
+        <div class ="col-lg-3">
+                <div class="form-group">
+                            <label for="serviceimage1">First Name <span>*</span></label>
+                            <input type="file" id="imageName4" name="imageName4">                
+                </div>
+        </div> -->
+
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="ItemName">Listing Title:
+                                <span>*</span>
+                            </label>
+                            <input value="<%= item.ItemName %>" type="text" class="form-control" id="ItemName" name="ItemName" aria-describedby="ItemName"
+                                placeholder="Listing Tile">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="servicepriceprice">Price:
+                                <span>*</span>
+                            </label>
+                            <input type="number" value="<%= item.price %>" required name="price" min="0.00" value="0.00" step=".01" class="form-control"
+                                id="price" aria-describedby="price" placeholder="$0.00">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="category">Category:
+                                <span>*</span>
+                            </label>
+                            <br>
+                            <select name="category" value="<%= item.category %>" id="category" placeholder="Category">
+                                <option value="Dog Toy">Dog Toy </option>
+                                <option value="Dog Accessory">Dog Accessory </option>
+                                <option value="Dog Grooming Tools">Dog Grooming Tools </option>
+                                <option value="Cat Toy">Cat Toy </option>
+                                <option value="Cat Accessory">Cat Accessory </option>
+                                <option value="Cat GroomGrooming Toolsing">Cat Grooming Tools </option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="Description">Item Description:
+                                <span>*</span>
+                            </label>
+                            <textarea id="Description" value="<%= item.Description %>" name="Description" rows="3" cols="40" class="form-control" placeholder="Description"><%= item.Description %></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="pickupmethod"> Mailing/Meetup?:
+                                <span>*</span>
+                            </label>
+                            <br>
+
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="Mail" 
+                            <% if (item.pickupmethod == "Mail") { %>
+                            checked
+                            <% } %>
+                            >
+                            <label for="Yes">Mailing</label>
+
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp" 
+                            <% if (item.pickupmethod == "MeetUp") { %>
+                            checked
+                            <% } %>
+                            >
+                            <label for="No">MeetUp</label>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label for="MeetupLocation">Meetup Location:
+                                <span>*</span>
+                            </label>
+                            <input type="text" value="<%= item.MeetupLocation %>" class="form-control" id="MeetupLocation" name="MeetupLocation" aria-describedby="MeetupLocation"
+                                placeholder="Meetup Location">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="col-lg-3">
+                        <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Update</button>
+                    </div>
+            </form>
+            </div>
+
+
+            <!--================end editform =================-->
+
+            <% include partial/footer %>
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Rev slider js -->
+            <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+            <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <!-- Extra plugin css -->
+            <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+            <script src="vendors/counterup/jquery.counterup.min.js"></script>
+            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+            <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+            <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+            <script src="js/smoothscroll.js"></script>
+            <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+            <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+            <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+            <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+            <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+            <script src="js/theme.js"></script>
+            <script>
+                function saveChanges() {
+                    
+                    var url = "/editItemlisting/:Itemid" + req.params.Itemid;
+        
+                    // alert(document.getElementById("image").files[0].name);
+        
+                    var Itemid = $(this).closest("div").data('id');
+        
+                    var newItemValues = {
+                        ItemName: $("#ItemName").val(),
+                        price: $("#price").val(),
+                        category: $("#category").val(),
+                        Description: $("#Description").val(),
+                        MeetupLocation: $("#MeetupLocation").val(),
+                        pickupmethod: $("pickupmethod").val(),
+                        imageName: document.getElementById("image").files[0].name,
+                        // file: document.getElementById("image").files[0].name,
+                    }
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        data: JSON.stringify(newItemValues),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function(result){
+                            alert("Item details updated successfully");
+                            location.href = "/itemlisted";
+                        },
+                        error: function(result){
+                            alert("Error updating item details");
+                            discardChanges();
+                        }
+                    })
+                }
+        
+                function discardChanges() {
+                    location.href = "/itemlisted"
+                }
+            </script>
+</body>
+
+</html>

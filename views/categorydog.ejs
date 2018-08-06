@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+</head>
+<style>
+    .editBtn {
+        background-color: black;
+        color: white;
+        border: 1px solid black;
+        width: 100%;
+    }
+
+    .editBtn:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+
+    #itemImage {
+        position: relative;
+        float: left;
+        width: 250px;
+        height: 250px;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        object-fit: cover;
+    }
+
+    #itembtn {
+        background-color: black;
+        color: white;
+        border: 1px solid black;
+        width: 50%;
+    }
+
+    #itembtn:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+    }
+
+    #category {
+        height: 37px;
+        border: 1px solid #cccccc;
+        border-radius: 0px;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        outline: none;
+        padding: 0px 22px;
+        width: 100%;
+        font-size: 15px;
+    }
+
+    #pickupmethod {
+        background: transparent;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-weight: bold;
+        font-size: 14px;
+        color: #333333;
+        position: relative;
+    }
+</style>
+
+<body>
+    <% include partial/header %>
+
+        <!--================Categories Banner Area =================-->
+        <!-- <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>error page</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="404.html">Error Page</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section> -->
+        <!--================End Categories Banner Area =================-->
+        <!--service listing form-->
+        <div class="container">
+
+            <h4> My Item Listing</h4>
+            <div class="row">
+                <div class="col-lg-10">
+                    <h4 class="text-muted">Items you have listed!</h4>
+                </div>
+                <div class="col-lg-2">
+                    <button type="button" id="add-item">Add Item Listing</button>
+                </div>
+            </div>
+
+            <br>
+            <br>
+
+            <!-- service listing form -->
+
+            <form action="/itemlisted" method="post" enctype="multipart/form-data" id="itemform">
+                <div class="row">
+
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <!-- <label for="serviceimage1">First Name <span>*</span></label> -->
+                            <input type="file" id="image" name="image" required>
+                        </div>
+                    </div>
+
+                    <!-- <div class ="col-lg-3">
+                    <div class="form-group">
+                                <label for="serviceimage1">First Name <span>*</span></label>
+                                <input type="file" id="imageName2" name="imageName2">                
+                    </div>
+            </div>
+
+            <div class ="col-lg-3">
+                <div class="form-group">
+                            <label for="serviceimage1">First Name <span>*</span></label>
+                            <input type="file" id="imageName3" name="imageName3">                
+                </div>
+            </div>
+
+            <div class ="col-lg-3">
+                    <div class="form-group">
+                                <label for="serviceimage1">First Name <span>*</span></label>
+                                <input type="file" id="imageName4" name="imageName4">                
+                    </div>
+            </div> -->
+
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="ItemName">Listing Title:
+                                <span>*</span>
+                            </label>
+                            <input type="text" class="form-control" id="ItemName" name="ItemName" aria-describedby="ItemName" placeholder="Listing Tile">
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                        <div class="form-group">
+                            <label for="servicepriceprice">Price:
+                                <span>*</span>
+                            </label>
+                            <input type="number" required name="price" min="0.00" value="0.00" step=".01" class="form-control" id="price" aria-describedby="price"
+                                placeholder="$0.00">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="category">Category:
+                                <span>*</span>
+                            </label>
+                            <br>
+                            <select name="category" id="category" placeholder="Category">
+                                <option value="Dog Toy">Dog Toy </option>
+                                <option value="Dog Accessory">Dog Accessory </option>
+                                <option value="Dog Grooming Tools">Dog Grooming Tools </option>
+                                <option value="Cat Toy">Cat Toy </option>
+                                <option value="Cat Accessory">Cat Accessory </option>
+                                <option value="Cat GroomGrooming Toolsing">Cat Grooming Tools </option>
+
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="Description">Item Description:
+                                <span>*</span>
+                            </label>
+                            <textarea id="Description" name="Description" rows="3" cols="40" class="form-control" placeholder="Description" required=""></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="pickupmethod"> Mailing/Meetup?:
+                                <span>*</span>
+                            </label>
+                            <br>
+
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="Mail">
+                            <label for="Yes">Mailing</label>
+
+                            <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp">
+                            <label for="No">MeetUp</label>
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="MeetupLocation">Meetup Location:
+                                <span>*</span>
+                            </label>
+                            <input type="text" class="form-control" id="MeetupLocation" name="MeetupLocation" aria-describedby="MeetupLocation" placeholder="Meetup Location">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="col-lg-4">
+                        <button type="submit" id="itembtn" value="submit" class="btn subs_btn form-control">Submit</button>
+
+                    </div>
+            </form>
+            </div>
+        </div>
+        <!-- </th>
+   
+    </tr>
+
+</table> -->
+        <!-- service listing show -->
+        <div class="container">
+            <hr>
+            <div class="row">
+                <% itemlist.forEach(function(itemlist){ %>
+                    <div class="col-lg-4">
+                        <figure class="figure">
+                            <a href="/item/<%= itemlist.Itemid %>">
+                                <img src="/img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= itemlist.imageName %>">
+                            </a>
+                            <h6>
+                                <%= itemlist.ItemName %>
+                            </h6>
+                            <figcaption class="figure-caption" >
+                                S$<%= itemlist.price %>
+                            </figcaption>
+                            <p>Uploaded: <%= itemlist.createdAt %></p>
+
+                <div class="row">
+                    <div class = "col-lg-6">
+                            <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Edit">
+                            </form>
+                            </div>
+                            <div class = "col-lg-6">
+
+                            <form style="cursor:pointer;" action="/delItemListing/<%= itemlist.Itemid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Delete">
+                            </form>
+                            </div>
+                            
+                </div>
+                
+                        </figure>
+
+                    </div>
+                    <% }); %>
+            </div>
+        </div>
+        </div>
+
+
+        <% include partial/footer %>
+
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Rev slider js -->
+        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <!-- Extra plugin css -->
+        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+        <script src="vendors/counterup/jquery.counterup.min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+        <script src="js/theme.js"></script>
+        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <script> 
+            $(document).ready(function () {
+                $("#itemform").hide();
+                $("#add-item").click(function () {
+                    $("#itemform").toggle();
+                });
+            });
+            $('.editBtn').click(function () {
+                var Itemid = $(this).closest("tr").data('id');
+            });
+
+        </script>
+        <!-- <script>
+                $('.editBtn').click(function () {
+                  var Itemid = $(this).closest("tr").data('id');
+                  location.href = "<%#urlPath %>editItemListing/"+Itemid;
+                });
+            
+                $('.deleteBtn').click(function () {
+                  var Itemid = $(this).closest("tr").data('id');
+                  $.ajax({
+                    url: '<#% urlPath%>' + record_num,
+                    type: 'DELETE',
+                    success: function (result) {
+                      console.log(result.message);
+                      var itemToRemove = '.rowRecord[data-id=' + Itemid + ']';
+                      $(itemToRemove).remove();
+                    },
+                    error: function (result) {
+                      alert("Unable to delete student record.");
+                      console.log(result.message);
+                    }
+                  });
+                });
+              </script> -->
+</body>
+
+</html>

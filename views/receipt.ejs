@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+        <% include partial/header %>
+</head>
+
+<body>
+
+    <script>
+        function close_window() {
+            close();
+
+        }
+    </script>
+    <div class="container">
+        <br>
+        <img style="float:left; size:500px"></img>
+        <div style="float:left">
+            <h4>Item name:
+                <%=data.ItemName%>
+            </h4>
+            <h4>
+                Buyer's Name: 
+                <%=data.buyerUser%>
+            </h4>
+            <h4>Seller's Name:
+                <%= data.sellerUser%>
+            </h4>
+            <h4>Offer:
+                $<%=data.offer%>
+            </h4>
+            <h4>Status:
+                <%= data.status%>
+            </h4>
+            <h4>Payment Method:
+                <%= data.paymentMethod%>
+            </h4>
+            <h4>
+                Payment ID:
+                <%= data.paymentId %>
+            </h4>
+
+
+                    <br>
+                    <a class="btn btn-primary update_btn" href="/itemlist/<%= data.transactionId%>">View Item Page
+                        <a>
+                            <a class="btn btn-primary update_btn" href="javascript:close_window();">close</a>
+        </div>
+
+    </div>
+
+    <% include partial/footer %>
+</body>
+
+</html>

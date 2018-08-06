@@ -1,5 +1,14 @@
 // models/transaction.js
 
+//                                                         ______________
+                                                          //// STATUS \\\\
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// 1. Offering: Transaction is initiated by a user. Seller will also see pending transactions.                                     //
+//    Can have new offer. Cannot make payment yet. Either user can completely close the transaction.                               //
+// 2. Awaiting payment: Both users confirm the current offer, offer cannot be changed any longer. Allow the buyer to make payment. //
+// 3. Paid: Buyer has made payment. Transaction is now read only. Seller should deliver item.                                      //
+// 4. Archived: Transaction was closed in the Offering stage.                                                                      //
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
@@ -18,24 +27,12 @@ const Transaction = sequelize.define('Transaction', {
         defaultValue: 1
     },
     offer: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(6,2),
         allowNull: false
-    },
-    pendingOffer: {
-        type: Sequelize.DECIMAL,
-        allowNull: true
-    },
-    pendingOfferBy: {
-        type: Sequelize.INTEGER,
-        allowNull: true,
-        references: {
-            model: 'Users',
-            key: 'id'
-        }
     },
     status: {
         type: Sequelize.STRING,
-        defaultValue: "Pending",
+        defaultValue: "Offering",
         allowNull: false
     },
     listingId: {
@@ -73,6 +70,16 @@ const Transaction = sequelize.define('Transaction', {
     bankDetails: {
         type: Sequelize.STRING,
         allowNull: true
+    }, 
+    buyerReady: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true
+    }, 
+    sellerReady: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 });
 
@@ -95,7 +102,9 @@ Transaction.beforeBulkUpdate((updateData) => {
             bankDetails: crrTransaction.bankDetails,
             action: updateData.action,
             commitBy: updateData.id,
-            createdAt: crrTransaction.updatedAt
+            createdAt: crrTransaction.updatedAt,
+            buyerReady: crrTransaction.buyerReady, 
+            sellerReady: crrTransaction.sellerReady
         }
 
         TransactionLog.create(newLog).then((loggedData) => {

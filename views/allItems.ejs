@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+</head>
+
+<body>
+    <% include partial/header %>
+
+
+        <!--================Categories Banner Area =================-->
+        <section class="categories_banner_area">
+            <div class="container">
+                <div class="c_banner_inner">
+                    <h3>Items</h3>
+                    <ul>
+                        <li>
+                            <a href="#">Home</a>
+                        </li>
+                        <li>
+                            <a href="#">Shop</a>
+                        </li>
+                        <li class="current">
+                            <a href="#">Items</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        <!--================End Categories Banner Area =================-->
+
+        <!--================Categories Product Area =================-->
+        <section class="categories_product_main p_80">
+            <div class="container">
+                <div class="categories_main_inner">
+                    <div class="row row_disable">
+                        <div class="col-lg-9 float-md-right">
+                            <div class="showing_fillter">
+                                <div class="row m0">
+                                    <!-- <div class="first_fillter">
+                                        <h4>Showing 1 to 12 of 30 total</h4>
+                                    </div>
+                                    <div class="secand_fillter">
+                                        <h4>SORT BY :</h4>
+                                        <select class="selectpicker">
+                                            <option>Name</option>
+                                            <option>Name 2</option>
+                                            <option>Name 3</option>
+                                        </select>
+                                    </div>
+                                    <div class="third_fillter">
+                                        <h4>Show : </h4>
+                                        <select class="selectpicker">
+                                            <option>09</option>
+                                            <option>10</option>
+                                            <option>10</option>
+                                        </select>
+                                    </div> -->
+                                    <div class="four_fillter">
+                                        <h4>View</h4>
+                                        <a class="active" href="#">
+                                            <i class="icon_grid-2x2"></i>
+                                        </a>
+                                        <a href="#">
+                                            <i class="icon_grid-3x3"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="categories_product_area">
+                                <div class="row">
+                                        <% itemlist.forEach(function(itemlist){ %>
+                                            <div class="col-lg-4 col-sm-6">
+                                            <div class="l_product_item">
+                                                <div class="l_p_img">
+                                                    <a href="/item/<%=itemlist.Itemid%>">
+                                                    <img src="/img_uploads/<%= itemlist.imageName %>" class="figure-img img-fluid img-rounded" id="itemImage" alt=" <%= itemlist.imageName %>">
+                                                    </a>
+                                                    <!-- <h5 class="new">New</h5> -->
+                                                </div>
+                                                <div class="l_p_text">
+                                                    <ul>
+                                                        <!-- <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li> -->
+                                                        <li>
+                                                            <% if (itemlist.Itemid != null) { %>
+                                                            <form action="/newtransaction/<%= itemlist.Itemid %>" method="POST">
+                                                            <% } else { %>
+                                                            <form action="/newservicestransaction/<%= itemlist.serviceid %>" method="POST">
+                                                            <% } %>
+                                                                <div class="addcart">
+                                                                    <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
+                                                                </div>
+                                                            </form>
+                                                        </li>
+                                                    </ul>
+                                                    <h4><%= itemlist.ItemName %></h4>
+                                                    <h5>
+                                                        $<%= itemlist.price %>
+                                                    </h5>
+                                                    <a href="#">
+                                                        <%= itemlist.username %>
+                                                    </a>
+                                                    <small>
+                                                        <%= itemlist.createdAt %>
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% }); %>
+
+
+                                </div>
+                                <!-- <nav aria-label="Page navigation example" class="pagination_area">
+                                    <ul class="pagination">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">1</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">2</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">3</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">4</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">5</a>
+                                        </li>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#">6</a>
+                                        </li>
+                                        <li class="page-item next">
+                                            <a class="page-link" href="#">
+                                                <i class="fa fa-angle-right" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-3 float-md-right">
+                            <div class="categories_sidebar">
+                                <aside class="l_widgest l_p_categories_widget">
+                                    <div class="l_w_title">
+                                        <h3>Categories</h3>
+                                    </div>
+                                    <ul class="navbar-nav">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Doggo
+                                                <i class="icon_plus" aria-hidden="true"></i>
+                                                <i class="icon_minus-06" aria-hidden="true"></i>
+                                            </a>
+                                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                ITEMS
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/items/dogs/toy">Dog Toys</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/items/dogs/accessory">Dog Accessories</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/items/dogs/grooming">Dog Grooming tools</a>
+                                                    </li>
+                                                    SERVICES
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/dogs/boarding">Dog Boarding</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/dogs/daycare">Dog Daycare</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/dogs/grooming">Dog Grooming</a>
+                                                    </li>
+
+
+                                            </ul>
+                                            </li>
+
+                                            <li class="nav-item dropdown">
+                                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                                    aria-expanded="false">
+                                                    Kitty
+                                                    <i class="icon_plus" aria-hidden="true"></i>
+                                                    <i class="icon_minus-06" aria-hidden="true"></i>
+                                                </a>
+                                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                    ITEMS
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/items/cats/toy">Cat Toys</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/items/cats/accessory">Cat Accessories</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/items/cats/grooming">Cat Grooming tools</a>
+                                                    </li>
+                                                    SERVICES
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/cats/boarding">Cat Boarding</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/cats/daycare">Cat Daycare</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" href="/services/cats/grooming">Cat Grooming</a>
+                                                    </li>
+                                                </ul>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Categories Product Area =================-->
+
+
+        <% include partial/footer %>
+
+
+
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="js/jquery-3.2.1.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/popper.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <!-- Rev slider js -->
+        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+        <!-- Extra plugin css -->
+        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+        <script src="vendors/counterup/jquery.counterup.min.js"></script>
+        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+        <script src="js/smoothscroll.js"></script>
+        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+        <script src="js/theme.js"></script>
+</body>
+
+</html>

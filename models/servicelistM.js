@@ -18,24 +18,24 @@ const servicelist = sequelize.define('servicelists', {
         trim: true
     },
     imageName: {
-        type: Sequelize.STRING
-        // allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false
     },
     user_id:{
         type: Sequelize.INTEGER,
-        allowNull: false
-        // references: {
-        //     model: 'Users',
-        //     key: 'id'
-        // }
+        allowNull: false,
+        references: {
+            model: 'Users',
+            key: 'id'
+        }
     },
     serviceprice: {
         type: Sequelize.DECIMAL(10,2),
         allowNull: false
     },
     servicecategory: {
-        type: Sequelize.STRING
-        // allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false
 
     },
     visible: {
@@ -46,21 +46,15 @@ const servicelist = sequelize.define('servicelists', {
         type: Sequelize.STRING,
         allowNull: true
     },
-    location: {
+    servicelocation: {
         type: Sequelize.STRING,
         allowNull: false
     }, 
-    // createdAt: {
-    //     type: Sequelize.DATE,
-    //     allowNull: false
-    // },
-    // updatedAt:{
-    //     type: Sequelize.DATE,
-    //     allowNull: false
-    // }
+    
     servicepickup: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue:""
     }
 });
 

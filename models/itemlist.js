@@ -52,14 +52,18 @@ const itemlist = sequelize.define('itemlist', {
     }, 
     pickupmethod: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true,
+        defaultValue:""
     }
+    
+
 });
 
 
 // force: true will drop the table if it already exists
 itemlist.sync({ force: false, logging: console.log}).then(() => {
     // Table created
+    
     console.log("item table synced");
 });
 

@@ -31,8 +31,8 @@ io.on('connection', function(socket) {
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
-    'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
+    'client_id': 'AbUV860wWXlP-pMI8HW5iJ25Eu2-GHgJAIFjYsN4pS8S3As7nPXTwAjcB3qsPGzTJqDucLeewSadKFVI',
+    'client_secret': 'EItAFrEZbj8dE1_I3pE3jhVNPlFDx6vLAi_6vnmRf_-xVVPm7yJWieZCuz3M6C_8RNCIwdiJXtk94bwW',
   });
 
 //modules to store function
@@ -77,6 +77,10 @@ var itemlist= require('./controllers/itemlistController');
 var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
+var contact = require('./controllers/contact');
+var receipt = require('./controllers/receipt');
+var search = require('./controllers/search'); 
+var userController = require("./controllers/userController")
 
 
 app.use(logger('dev'));
@@ -124,6 +128,9 @@ app.use((req, res, next) => {
         req.user.id == 101 ? res.locals.login = 2 : res.locals.login = 1;
     }
     else { res.locals.login = 0; }
+    
+    if (res.locals.login != 0)
+        res.locals.username = req.user.username;
     next();
 })
 
@@ -186,6 +193,9 @@ app.post('/messages', function (req, res) {
     })
 });
 
+// app.post("/products/search", search)
+app.get("/editprofile", userController.editProfile)
+app.post("/edit/:id", userController.updateProfile)
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 
@@ -201,38 +211,110 @@ app.post("/savecard", checkoutcard.create);
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
+app.get('/checkouts/:transaction_id', checkout.showDetail)
+app.post('/pays/:transaction_id',paypal.shows)
+app.get('/successs/:transaction_id', paypal.successs)
 ////<<<<<< End of Payment <<<<<<
 /////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Transactions  >>>>>>
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
-app.post("/transactions", transaction.create);
-app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.afterPayment);
+// items
+app.get("/transactions/:transaction_id", transaction.hasAuthorization, transaction.showDetails);
+app.post("/transactions/:transaction_id", transaction.hasAuthorization, transaction.afterPayment);
+app.post("/newtransaction/:listing_id", transaction.hasAuthorization, transaction.validateUnique, transaction.create);
+app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
+app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
+app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 
+app.get("/transactionss/:transaction_id", transaction.hasAuthorization, transaction.showDetail)
+// services
+app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
+app.post("/newservicestransaction/:listing_id", transaction.hasAuthorization, transaction.validateUniqueService,transaction.createForService);
+app.post("/servicestransactions/newoffer/:transaction_id", transaction.isBuyerServices, transaction.changeOfferServices);
+app.post("/servicestransactions/confirm_price/:transaction_id", transaction.isBuyerServices, transaction.confirmPriceServices);
+app.post("/servicestransactions/cancel/:transaction_id", transaction.cancelService);
 // Admin
-app.get("/admin", auth.isAdmin, admin.show);
-app.post("/admin/search", auth.isAdmin, admin.search)
+app.get("/admin/items", auth.isAdmin, admin.show);
+app.post("/admin/items/search", auth.isAdmin, admin.search);
+app.get("/admin/services", auth.isAdmin, admin.showServices);
+app.post("/admin/services/search", auth.isAdmin, admin.searchServices);
+app.get("/admin/messages", auth.isAdmin, admin.showMessages);
+app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
+app.get("/admin/edits/:transaction_id", auth.isAdmin,admin.showeditforms);
+app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
+app.post("/admin/edits/:transaction_id", auth.isAdmin,admin.edits);
+app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
+app.get("/admin/users", auth.isAdmin,admin.showUsers);
+app.post("/admin/modifyuser/:id",auth.isAdmin, admin.modifyuser);
+app.post("/admin/modifyinguser/:id", auth.isAdmin,admin.modifyinguser)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Listings  >>>>>>
 app.get("/itemlisted", itemlist.show); 
+app.get("/editItemListing/:Itemid", itemlist.editItemRecord);
+app.post("/editItemListing/:Itemid", itemlist.hasAuthorization, upload.single('image'), itemlist.update);
+app.get("/delItemListing/:Itemid", itemlist.hasAuthorization, itemlist.delete);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
 
+/////////////////Category////////////////////
+app.get("/items/dogs/toy",itemlist.dogtoy);
+app.get("/items/dogs/accessory", itemlist.dogaccessory);
+app.get("/items/dogs/grooming" , itemlist.doggrooming);
+app.get("/items/cats/toy", itemlist.cattoy);
+app.get("/items/cats/accessory", itemlist.cataccessory);
+app.get("/items/cats/grooming", itemlist.catgrooming);
+app.get("/services/dogs/grooming", servicelist.doggrooming );
+app.get("/services/dogs/daycare", servicelist.dogdaycare);
+app.get("/services/dogs/boarding", servicelist.dogboarding);
+app.get("/services/cats/grooming", servicelist.catgrooming);
+app.get("/services/cats/daycare", servicelist.catdaycare)
+app.get("/services/cats/boarding", servicelist.catboarding)
+
+    
 app.get("/servicelisted", servicelist.show);
+app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord)
+app.post("/editServiceListing/:serviceid", servicelist.hasAuthorization, upload.single('imageName'), servicelist.update);
+app.get("/delServiceListing/:serviceid", servicelist.hasAuthorization, servicelist.delete);
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
+app.get("/service/:serviceid", servicelist.showDetails)
+
+
+
+// app.get("/:category", search.showcategory);
+// app.get("/itemoverview", search.showAll).
+app.get("/items/cats", itemlist.showCat)
+app.get("/items/dogs", itemlist.showDog)
+app.get("/services/cats", servicelist.showCat)
+app.get("/services/dogs", servicelist.showDog)
+// app.get("/listoverview/:category", search.showCat);
+// app.get("/listioverview/:servicecategory", search.showCat); 
 
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 
+app.get("/contact" , exports.show = (req, res) => {
+    res.render('contact');
+}
+)
+
+
+app.post('/ask', contact.create);
+
+//Receipt Shit
+app.get('/receipt/:transaction_id',receipt.show)
+app.get('/receipts/:transaction_id', receipt.shows)
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
-
+app.post("/charges/:transaction_id" , checkoutcard.charges);
 
 // Listening
 var server = app.listen(3000, () => {
