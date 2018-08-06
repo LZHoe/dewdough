@@ -13,7 +13,20 @@ var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, fi
 var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
 var exphbs = require('express-handlebars');
 
+//Setup chat
+var io = require('socket.io')(httpServer);
+var chatConnections = 0;
+var ChatMsg = require('./models/chatMsg');
 
+io.on('connection', function(socket) {
+    chatConnections++;
+    console.log("Num of chat users connected: "+chatConnections);
+    
+    socket.on('disconnect', function() {
+        chatConnections++;
+        console.log("Num of chat users connected: "+chatConnections);
+    });
+})
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -141,8 +154,31 @@ app.get('/logout', function (req, res) {
 });
 
 //Routes for chat
-app.get('/chat', chat.hasAuthorization, chat.list);
-app.post('/chat', chat.hasAuthorization, chat.create);
+// app.get('/chat', chat.hasAuthorization, chat.list);
+// app.post('/chat', chat.hasAuthorization, chat.create);
+
+app.get('/messages', function (req,res) {
+    ChatMsg.findAll().then((chatMessages) => {
+        res.render('chatMsg', {
+            url: req.protocol + "://" + req.get("host") + req.url,
+            data: chatMessages
+        });
+    });
+});
+app.post('/messages', function (req, res) {
+    var chatData = {
+        name: req.body.name,
+        message: req.body.message
+    }
+    //Save into database
+    ChatMsg.create(chatData).then((newMessage) => {
+        if (!newMessage) {
+            sendStatus(500);
+        }
+        io.emit('message', req.body)
+        res.sendStatus(200)
+    })
+});
 
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
