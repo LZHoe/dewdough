@@ -186,7 +186,7 @@ app.post("/servicestransactions/cancel/:transaction_id", transaction.cancelServi
 app.get("/admin/items", auth.isAdmin, admin.show);
 app.post("/admin/items/search", auth.isAdmin, admin.search);
 app.get("/admin/services", auth.isAdmin, admin.showServices);
-app.post("/admin/services/search", auth.isAdmin);
+app.post("/admin/services/search", auth.isAdmin, admin.searchServices);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);

@@ -16,8 +16,7 @@ function convertDate(myDate) {
 
 exports.show = function (req, res) {
     res.render('admin', {
-        title: 'Admin Page',
-        hostPath: req.protocol + "://" + req.get("host")
+        title: 'Admin Page'
     })
 }
 
@@ -44,6 +43,45 @@ exports.search = function (req, res) {
         WHERE buyer.username LIKE :inputBuyer  
         AND transactionId LIKE :inputTransId 
         AND ItemName LIKE :inputList 
+        ORDER BY t.createdAt;`, {
+            replacements: {
+                inputBuyer: '%' + byUser + '%',
+                inputTransId: byTransNo,
+                inputList: '%' + byListing + '%'
+            },
+            type: sequelize.QueryTypes.SELECT
+        }).then((Transactions) => {
+            var reply = {}
+            for (var i = 0; i < Transactions.length; i++) {
+                Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
+                Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
+            }
+            reply = Transactions;
+            res.send(reply);
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+}
+
+exports.searchServices = function (req, res) {
+    var byListing = req.body.byListing;
+    var byUser = req.body.byUser;
+    var byTransNo = req.body.byTransNo;
+    if (byListing == "") byListing = "%";
+    if (byUser == "") byUser = "%";
+    if (byTransNo == "") byTransNo = "%";
+
+    sequelize.query(
+        `SELECT transactionId, listingId, t.createdAt, t.updatedAt, offer, buyer.username buyerUser, seller.username sellerUser, servicetitle, status 
+        FROM ServicesTransactions t 
+        INNER JOIN servicelists sl ON t.listingId = sl.serviceid 
+        INNER JOIN Users buyer ON buyer.id = t.buyerId 
+        INNER JOIN Users seller ON seller.id = sl.user_id 
+        WHERE buyer.username LIKE :inputBuyer  
+        AND transactionId LIKE :inputTransId 
+        AND servicetitle LIKE :inputList 
         ORDER BY t.createdAt;`, {
             replacements: {
                 inputBuyer: '%' + byUser + '%',
