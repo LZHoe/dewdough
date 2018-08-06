@@ -163,6 +163,9 @@ app.post("/savecard", checkoutcard.create);
 app.get('/cancel', (req, res) => {
     res.render('cancel')
 });
+app.get('/checkouts/:transaction_id', checkout.showDetail)
+app.post('/pays/:transaction_id',paypal.shows)
+app.get('/successs/:transaction_id', paypal.successs)
 ////<<<<<< End of Payment <<<<<<
 /////////////////////////////////////////////////
 
@@ -210,6 +213,7 @@ app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), iteml
 app.get("/item/:Itemid", itemlist.showDetails);
 
 /////////////////Category////////////////////
+app.get("/items/dogs" , itemlist.showDog);
 app.get("/items/dogs/toy",itemlist.dogtoy);
 app.get("/items/dogs/accessory", itemlist.dogaccessory);
 app.get("/items/dogs/grooming" , itemlist.doggrooming);
@@ -255,9 +259,11 @@ app.post('/ask', contact.create);
 
 //Receipt Shit
 app.get('/receipt/:transaction_id',receipt.show)
+app.get('/receipts/:transaction_id', receipt.shows)
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);
+app.post("/charges/:transaction_id" , checkoutcard.charges);
 
 // Listening
 var server = app.listen(3000, () => {

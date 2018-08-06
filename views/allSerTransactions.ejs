@@ -188,7 +188,7 @@
                                                     <% } %>
 
                                                     <% if (data.status == 'Awaiting payment' && data.buyerId == uid) { %>
-                                                    <form style="display:inline-block;" method="GET" action="/checkout/<%= data.transactionId %>">
+                                                    <form style="display:inline-block;" method="GET" action="/checkouts/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
                                                         Make Payment
                                                         </button>
@@ -199,7 +199,7 @@
                                                         <span class="font-weight-bold"><%= data.paymentMethod %>: </span>
                                                         <%= data.paymentId %>
                                                         <br>
-                                                        <form style="display:inline-block;" target="_blank" method="GET" action="/receipt/<%= data.transactionId %>">
+                                                        <form style="display:inline-block;" target="_blank" method="GET" action="/receipts/<%= data.transactionId %>">
                                                             <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
                                                             View Receipt
                                                             </button>
