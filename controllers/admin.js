@@ -224,6 +224,7 @@ exports.modifyinguser=function(req,res){
     var userid = req.params.id;
     var userdata= {
         name :req.body.name,
+        username :req.body.username,
         email : req.body.email,
         phone:req.body.phone,
     }

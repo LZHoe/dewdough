@@ -19,6 +19,16 @@
                     placeholder="Listing Tile">
             </div>
         </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="ItemName">Username:
+                    <span>*</span>
+                </label>
+                <input value="<%= user.username %>" type="text" class="form-control" id="username" name="username" aria-describedby="username"
+                    placeholder="Listing Tile">
+            </div>
+        </div>
+
 
         <div class="col-lg-6">
             <div class="form-group">
@@ -37,8 +47,6 @@
             </div>
         </div>
 
-
-       
         <div class="col-lg-3">
             <button type="submit" action="/admin/modifyinguser/<%= user.id %>" id="itembtn" value="submit" class="btn subs_btn form-control">Update</button>
 
