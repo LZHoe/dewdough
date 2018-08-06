@@ -39,8 +39,8 @@ const serTransaction = sequelize.define('ServicesTransaction', {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-            model: 'itemlists',
-            key: 'Itemid'
+            model: 'servicelists',
+            key: 'serviceid'
         }
     },
     buyerId: {

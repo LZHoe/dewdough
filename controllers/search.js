@@ -1,3 +1,13 @@
+var myDatabase = require('./database');
+var sequelize = myDatabase.sequelize;
+var moment = require('moment');
+
+// function to convert date from sql to more readable format using moment js
+function convertDate (myDate) {
+    var dateObj = moment(myDate);
+    var newDate = moment(dateObj).calendar();
+    return newDate;
+}
 exports.search = function (req, res) {
     var search = req.query.search;
 
