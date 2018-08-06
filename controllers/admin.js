@@ -4,6 +4,7 @@ var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
 var itemlists = require('../models/itemlist');
 var moment = require('moment');
+var User = require('../models/users')
 
 // function to convert date from sql to more readable format
 // requires moment js!!!
@@ -75,6 +76,19 @@ exports.showMessages = function(req, res) {
     })
 }
 
+exports.showUsers = function(req, res) {
+    sequelize.query(
+        `SELECT * FROM Users`, 
+        { type: sequelize.QueryTypes.SELECT }
+    ).then((messages) => {
+       
+        res.render('adminusers', {
+            title: 'Admin Support',
+            user: messages
+        })
+    })
+}
+
 exports.delete = function(req,res){
     var transaction_id = req.params.transaction_id;
     sequelize.query(`SELECT il.visible, il.Itemid
@@ -108,7 +122,8 @@ exports.showeditform = function(req,res){
                     INNER JOIN itemlists il 
                     ON t.listingId = il.Itemid 
                     WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
-                        console.log(instance[0])
+                        console.log("aheas");
+                        console.log(instance[0]);
                         res.render('adminedit',{
                             item : instance[0]
                         })
@@ -156,3 +171,69 @@ exports.edit = function(req,res){
 
                     })
                 }
+
+exports.showdetails = function(req,res){
+    var id = req.body.inputlistingid;
+    res.redirect('/transactions/'+id)
+}
+
+
+exports.undelete = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT il.visible, il.Itemid
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+
+                        itemid = instance[0].Itemid;
+
+                        var private = {
+                            visible : true
+                        }
+
+                        itemlists.update(private, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactions/' + transaction_id);
+                        });
+                    
+    })
+}
+
+
+
+exports.modifyuser=function(req,res){
+    var user_id = req.params.id;
+    sequelize.query(`select * from Users where id= `+user_id,{type:sequelize.QueryTypes.SELECT}).then((instance)=>{
+        user = instance[0];
+        res.render("adminmodifyuser",{
+            user : instance[0]
+        }
+    )
+
+}
+       
+
+    )}
+
+exports.modifyinguser=function(req,res){
+    var userid = req.params.id;
+    var userdata= {
+        name :req.body.name,
+        username :req.body.username,
+        email : req.body.email,
+        phone:req.body.phone,
+    }
+
+    User.update(userdata, { where: {id:userid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.redirect('/admin/users');
+    });}

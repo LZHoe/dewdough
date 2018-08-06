@@ -26,11 +26,10 @@
             <h3>Admin Support</h3>
             <nav aria-label="Page navigation example" class="pagination_area">
                 <ul class="pagination">
+                   
                     <li class="page-item"><a class="page-link" href="/admin" style="border:0;">Transaction Logs</a></li>
-                    <li class="page-item"><a class="page-link" href="/admin/messages" style="border:1px solid #000002;">Support Tickets</a></li>
-                    <li class="page-item"><a class="page-link" href="/admin/users">Users</a></li>   </ul>
-
-                </ul>
+                    <li class="page-item"><a class="page-link" href="/admin/messages">Messages</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/users"style="border:1px solid #000002;">Users</a></li>   </ul>
             </nav>
             <hr/>
             <section class="shopping_cart_area p_100">
@@ -43,20 +42,25 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
-                                                <th scope="col" style="text-align: center">E-mail</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Question</th>
-                                                <th scope="col">Date</th>
+                                                <th scope="col" style="text-align: center">Name</th>
+                                                <th scope="col">E-Mail</th>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">User ID</th>
+                                                <th scope="col">Details</th>
                                             </tr>
                                         </thead>
                                         <tbody id="viewTable">
-                                            <% messages.forEach(function(message) { %>
+                                            <% user.forEach(function(user) { %>
                                             <tr>
                                                 <th scope="row"></th>
-                                                <td><a href="mailto:<%= message.email %>"><%= message.email %></a></td>
-                                                <td><%= message.name %></td>
-                                                <td><%= message.question %></td>
-                                                <td><%= message.createdAt %></td>
+                                                <td><%=user.name%></td>
+                                                <td><%= user.email %></td>
+                                                <td><%= user.username %></td>
+                                                <td><%= user.id %></td>
+                                                <td><form action="/admin/modifyuser/<%=user.id%>" method="POST">
+                                                    <button style="width:50%"class="btn subs_btn form-control">Modify User</button>
+                                                </form>
+                                                </td>
                                             </tr>
                                             <% }); %>
                                         </tbody>

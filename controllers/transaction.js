@@ -199,7 +199,7 @@ exports.showAllServices = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query(`SELECT transactionId, ItemName, u.username, status,visible, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt, t.updatedAt  
+    sequelize.query(`SELECT * 
     FROM Transactions t 
     INNER JOIN itemlists il ON il.Itemid = t.listingId 
     INNER JOIN Users u ON u.id = il.user_id  
@@ -213,7 +213,7 @@ exports.showDetails = function (req, res) {
             Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
             Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
         }
-        sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
+        sequelize.query(`SELECT *
         FROM TransactionLogs tl 
         INNER JOIN Users u ON u.id = tl.commitBy 
         WHERE transactionId = :transaction_id `, {
@@ -222,7 +222,8 @@ exports.showDetails = function (req, res) {
             },
             type: sequelize.QueryTypes.SELECT
         }).then((TransactionLogs) => {
-            console.log(Transactions)
+            console.log("Slut")
+            console.log(Transactions[0])
             // formatting dates
             for (var i=0; i<TransactionLogs.length; i++) {
                 TransactionLogs[i].updatedAt = convertDate(TransactionLogs[i].updatedAt);
