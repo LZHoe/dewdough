@@ -142,7 +142,7 @@
                                 <!-- <ul>	 SLIDE  -->
                                     <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
                                         <!-- MAIN IMAGE -->
-                                        <img src="public/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> ">                                        <!-- LAYERS -->
+                                        <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> ">                                        <!-- LAYERS -->
                                     <!-- </li> -->
                                     
                                 <!-- </ul>  -->
@@ -161,10 +161,11 @@
                             <p><i><%= servicelist.servicedescription %></i></p>
                            
                             <br><br><br>
-                            <div class="addcart">
-                                
-                                <a class="add_cart_btn" href="#">Make an Offer</a>
-                            </div>
+                            <form action="/newtransaction/<%= itemlist.Itemid %>" method="POST">
+                                <div class="addcart">
+                                    <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
+                                </div>
+                            </form>
                             <!-- <div class="shareing_icon">
                                 <h5>share :</h5>
                                 <ul>
@@ -194,7 +195,7 @@
                                 <p> <%= servicelist.servicelocation %> </p>
                                 <br>
                                 <h6>Sold by:</h6> 
-                                <a href="#"> <%= servicelist.username %></a>
+                                <a href="#"><%= servicelist.username %></a>
 
                             </div>
                          

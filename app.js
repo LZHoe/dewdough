@@ -63,7 +63,7 @@ var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
 var receipt = require('./controllers/receipt');
-var search = require('./controllers/searchController');
+var search = require('./controllers/search'); 
 
 
 app.use(logger('dev'));
@@ -143,6 +143,8 @@ app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+
+// app.post("/products/search", search)
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 
@@ -168,6 +170,7 @@ app.get("/servicestransactions", transaction.hasAuthorization, transaction.showA
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.afterPayment);
 app.post("/newtransaction/:listing_id", transaction.create);
+app.post("/newservicetransaction/:listing_id", transaction.createForService);
 
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
@@ -186,20 +189,32 @@ app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit)
 ////>>>>>>  Beginning of Listings  >>>>>>
 app.get("/itemlisted", itemlist.show); 
 app.get("/editItemListing/:Itemid", itemlist.editItemRecord);
-app.post("/editItemListing/:Itemid", itemlist.update);
+app.post("/editItemListing/:Itemid", itemlist.hasAuthorization, upload.single('image'), itemlist.update);
+app.get("/delItemListing/:Itemid", itemlist.hasAuthorization, itemlist.delete);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
     
 app.get("/servicelisted", servicelist.show);
-app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord, servicelist.update)
+app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord)
+app.post("/editServiceListing/:serviceid", servicelist.hasAuthorization, upload.single('imageName'), servicelist.update);
+app.get("/delServiceListing/:serviceid", servicelist.hasAuthorization, servicelist.delete);
 app.post("/servicelisted", servicelist.hasAuthorization, upload.single('imageName'), servicelist.uploadService);
 app.get("/service/:serviceid", servicelist.showDetails)
 
 
 
 // app.get("/:category", search.showcategory);
-app.get("/listoverview", search.show);
+// app.get("/itemoverview", search.showAll).
+app.get("/items/cats", itemlist.showCat)
+app.get("/items/dogs", itemlist.showDog)
+app.get("/services/cats", servicelist.showCat)
+app.get("/services/dogs", servicelist.showDog)
+// app.get("/listoverview/:category", search.showCat);
+// app.get("/listioverview/:servicecategory", search.showCat); 
 // var query = req.query.search;
+
+app.post('/:search', search.search);
+
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 

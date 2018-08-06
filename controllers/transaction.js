@@ -2,7 +2,8 @@ var Transaction = require('../models/transaction');
 var serTransaction = require('../models/servicesTransaction');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
-var itemlists = require('../models/itemlist')
+var itemlists = require('../models/itemlist');
+var servicelists = require('../models/servicelistM');
 var moment = require('moment');
 
 // function to convert date from sql to more readable format using moment js
@@ -247,36 +248,39 @@ exports.showDetails = function (req, res) {
 ////////////////////////////////////////////////
 //// Start a transaction with initial offer ////
 ////////////////////////////////////////////////
-exports.OLDcreate = function (req, res) {
-    var initialPrice = 0;
-    sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
+// exports.OLDcreate = function (req, res) {
+//     var initialPrice = 0;
+//     sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: req.body.listingId }, model: itemlists }).then((results) => {
 
-        // retreive user input
-        var transactionData = {
-            qty: req.body.qty,
-            listingId: req.body.listingId,
-            buyerId: req.user.id,
-            offer: results[0].price
-        };
+//         // retreive user input
+//         var transactionData = {
+//             qty: req.body.qty,
+//             listingId: req.body.listingId,
+//             buyerId: req.user.id,
+//             offer: results[0].price
+//         };
 
-        // after retreiving, push into db
-        Transaction.create(transactionData).then((newTransaction, created) => {
-            if (!newTransaction) {
-                return res.send(400, {
-                    message: "error"
-                });
-            }
+//         // after retreiving, push into db
+//         Transaction.create(transactionData).then((newTransaction, created) => {
+//             if (!newTransaction) {
+//                 return res.send(400, {
+//                     message: "error"
+//                 });
+//             }
 
-            console.log("New transaction successful");
-            res.redirect('/transactions');
-        });
-    }).catch((err) => {
-        return res.status(400).send({
-            message: err
-        })
-    })
-}
+//             console.log("New transaction successful");
+//             res.redirect('/transactions');
+//         });
+//     }).catch((err) => {
+//         return res.status(400).send({
+//             message: err
+//         })
+//     })
+// }
 
+////////////////////////////////////////////////
+//// Start a transaction with initial offer ////
+////////////////////////////////////////////////
 exports.create = function (req, res) {
     var listId = req.params.listing_id;
     sequelize.query("SELECT price FROM itemlists WHERE Itemid = :listingid", { replacements: { listingid: listId }, model: itemlists }).then((results) => {
@@ -299,6 +303,38 @@ exports.create = function (req, res) {
 
             console.log("New transaction successful");
             res.redirect('/transactions');
+        });
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
+
+////////////////////////////////////////////////
+//// Start a transaction with initial offer ////
+////////////////////////////////////////////////
+exports.createForService = function (req, res) {
+    var listId = req.params.listing_id;
+    sequelize.query("SELECT serviceprice FROM servicelists WHERE serviceid = :listingid", { replacements: { listingid: listId }, model: servicelists }).then((results) => {
+
+        // retreive user input
+        var transactionData = {
+            listingId: listId,
+            buyerId: req.user.id,
+            offer: results[0].serviceprice
+        };
+
+        // after retreiving, push into db
+        serTransaction.create(transactionData).then((newTransaction, created) => {
+            if (!newTransaction) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+
+            console.log("New transaction successful");
+            res.redirect('/servicestransactions');
         });
     }).catch((err) => {
         return res.status(400).send({

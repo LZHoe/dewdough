@@ -170,7 +170,7 @@
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="servicedescription">Item Description:
+                            <label for="servicedescription">Service Description:
                                 <span>*</span>
                             </label>
                             <textarea id="servicedescription" name="servicedescription" rows="3" cols="40" class="form-control" placeholder="Service Description"
@@ -227,35 +227,24 @@
                             <a href="/service/<%= servicelist.serviceid %>">
                                 <img src="service_img/<%= servicelist.imageName %>" id="itemImage" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %>">
                             </a>
-                            <p>
+                            <h6>
                                 <%= servicelist.servicetitle %>
-                            </p>
-                            <figcaption class="figure-caption">$
+                            </h6>
+                            <figcaption class="figure-caption">S$
                                 <%= servicelist.serviceprice %>
                             </figcaption>
-                            <!-- <small>$<%= servicelist.servicetitle %></small> -->
-                            <!-- <br>
-                        <small>PickUp: <%= servicelist.servicepickup %></small>
-                        <br>
-                        <small>Category: <%= servicelist.servicecategory %></small>
-                        <br>
-                        <small>Item Description: <%= servicelist.servicedescription %></small>
-                        <br>
-                        <small>MeetUp location: <%= servicelist.servicelocation %> </small>
-                        <br>
-                        <small>Upload by: <%= servicelist.user_id %></small>
-                        <br>
-                        <small>Date of creation: <%= servicelist.createdAt %> </small> -->
-
-                            <form style="cursor:pointer;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
+                            <p>Uploaded:
+                                <%= servicelist.createdAt %>
+                            </p>
+                            <form style="cursor:pointer; display:inline;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
                             </form>
-                            <!-- <input type="button" class="editBtn" value="Delete"> -->
+                            <form style="cursor:pointer; display:inline;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                <input type="submit" class="editBtn " value="Delete">
+                            </form>
                         </figure>
-
-
                     </div>
-                    <% }); %>
+                <% }); %>
             </div>
         </div>
         </div>
@@ -266,43 +255,43 @@
 
 
 
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Rev slider js -->
-        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
-        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <!-- Extra plugin css -->
-        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
-        <script src="vendors/counterup/jquery.counterup.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
-        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
-        <script src="js/smoothscroll.js"></script>
-        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
-        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
-        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
-        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
-        <script src="vendors/jquery-ui/jquery-ui.js"></script>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Rev slider js -->
+            <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+            <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <!-- Extra plugin css -->
+            <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+            <script src="vendors/counterup/jquery.counterup.min.js"></script>
+            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+            <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+            <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+            <script src="js/smoothscroll.js"></script>
+            <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+            <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+            <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+            <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+            <script src="vendors/jquery-ui/jquery-ui.js"></script>
 
-        <script src="js/theme.js"></script>
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script> 
-            $(document).ready(function () {
-                $("#serviceform").hide();
-                $("#add-service").click(function () {
-                    $("#serviceform").toggle();
+            <script src="js/theme.js"></script>
+            <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+            <script> 
+                $(document).ready(function () {
+                    $("#serviceform").hide();
+                    $("#add-service").click(function () {
+                        $("#serviceform").toggle();
+                    });
                 });
-            });
-        </script>
+            </script>
 </body>
 
 </html>
