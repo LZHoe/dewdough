@@ -181,6 +181,9 @@ app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
 app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
+app.get("/admin/users", auth.isAdmin,admin.showUsers);
+app.post("/admin/modifyuser/:id",auth.isAdmin, admin.modifyuser);
+app.post("/admin/modifyinguser/:id", auth.isAdmin,admin.modifyinguser)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
