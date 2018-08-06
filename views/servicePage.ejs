@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <% include partial/head %>
 
-    </head>
-    <style>
-    .extrainfo{
-        background: #f4f3f3;  
+<head>
+    <% include partial/head %>
+
+</head>
+<style>
+    .extrainfo {
+        background: #f4f3f3;
         padding: 40px;
     }
-    </style>
-    <body>
-            <% include partial/header %>
+</style>
 
-        
+<body>
+    <% include partial/header %>
+
+
         <!-- ================Menu Area =================
         <header class="shop_header_area carousel_menu_area">
             <div class="carousel_top_header row m0">
@@ -116,7 +118,7 @@
             </div>
         </header> -->
         <!--================End Menu Area =================-->
-        
+
         <!--================Categories Banner Area =================-->
         <!-- <section class="categories_banner_area">
             <div class="container">
@@ -131,7 +133,7 @@
             </div>
         </section> -->
         <!--================End Categories Banner Area =================-->
-        
+
         <!--================Product Details Area =================-->
         <section class="product_details_area">
             <div class="container">
@@ -139,28 +141,39 @@
                     <div class="col-lg-4">
                         <!-- <div class="product_details_slider">
                            <div id="product_slider" class="rev_slider" data-version="5.3.1.6"> -->
-                                <!-- <ul>	 SLIDE  -->
-                                    <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
-                                        <!-- MAIN IMAGE -->
-                                        <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> " >                                        <!-- LAYERS -->
-                                    <!-- </li> -->
-                                    
-                                <!-- </ul>  -->
-                             <!-- </div>
+                        <!-- <ul>	 SLIDE  -->
+                        <!-- <li data-index="rs-137221490" data-transition="scaledownfrombottom" data-slotamount="7"  data-easein="Power3.easeInOut" data-easeout="Power3.easeInOut" data-masterspeed="1500"  data-thumb="img/product/product-details/p-details-tab-1.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Ishtar X Tussilago" data-param1="25/08/2015" data-description=""> -->
+                        <!-- MAIN IMAGE -->
+                        <img src="/service_img/<%= servicelist.imageName %>" class="figure-img img-fluid img-rounded" alt=" <%= servicelist.imageName %> ">
+                        <!-- LAYERS -->
+                        <!-- </li> -->
+
+                        <!-- </ul>  -->
+                        <!-- </div>
                         </div> -->
                     </div>
                     <div class="col-lg-6">
                         <div class="item_details_text">
-                            <h3><%= servicelist.servicetitle %></h3>
+                            <h3>
+                                <%= servicelist.servicetitle %>
+                            </h3>
                             <br>
-                            <h4>$<%= servicelist.serviceprice %></h4>
-                           
+                            <h4>$
+                                <%= servicelist.serviceprice %>
+                            </h4>
+
                             <hr>
-                            
+
                             <br>
-                            <p><i><%= servicelist.servicedescription %></i></p>
-                           
-                            <br><br><br>
+                            <p>
+                                <i>
+                                    <%= servicelist.servicedescription %>
+                                </i>
+                            </p>
+
+                            <br>
+                            <br>
+                            <br>
                             <form action="/newtransaction/<%= servicelist.serviceid %>" method="POST">
                                 <div class="addcart">
                                     <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
@@ -178,26 +191,59 @@
                             </div> -->
                         </div>
                     </div>
-                    <div class="col-lg-2" > 
+                    <div class="col-lg-2">
                         <div class="extrainfo">
-                        
+
                             <h6 class="cat">Found In: </h6>
                             <div class="servicecategory">
-                                
-                                    <a href="#"><%= servicelist.servicecategory %></a>
+                                <% if (servicelist.servicecategory == "Dog Daycare") { %>
+                                    <a href="/services/dogs/daycare">
+                                        <%= servicelist.servicecategory %>
+                                    </a>
+                                    <% }
+                                <% if (servicelist.servicecategory == "Dog Grooming") { %>
+                                        <a href="/services/dogs/grooming">
+                                            <%= servicelist.servicecategory %>
+                                        </a>
+                                        <% }
+                                <% if (servicelist.servicecategory == "Dog Boarding") { %>
+                                            <a href="/services/dogs/boarding">
+                                                <%= servicelist.servicecategory %>
+                                            </a>
+                                        <% }
+                                 <% if (servicelist.servicecategory == "Cat Daycare") { %>
+                                    <a href="/services/cats/daycare">
+                                        <%= servicelist.servicecategory %>
+                                    </a>
+                                    <% }
+                                <% if (servicelist.servicecategory == "Cat Grooming") { %>
+                                        <a href="/services/cats/grooming">
+                                            <%= servicelist.servicecategory %>
+                                        </a>
+                                        <% }
+                                else { %>
+                                    <a href="/services/cats/boarding">
+                                        <%= servicelist.servicecategory %>
+                                    </a>
+                                <% } 
+
+                                    
                                 </div>
                                 <br>
                         <i>Delivery Options</i>
                         <br><br>
                             
                                 <h6 class="servicelocation">Location of Service: </h6>
-                                <p> <%= servicelist.servicelocation %> </p>
-                                <br>
-                                <h6>Sold by:</h6> 
-                                <a href="#"><%= servicelist.username %></a>
+                                <p> <%= servicelist.servicelocation %>
+                                                </p>
+                                                <br>
+                                                <h6>Sold by:</h6>
+                                                <a href="#">
+                                                    <%= servicelist.username %>
+                                                </a>
 
                             </div>
-                         
+
                         </div>
 
                     </div>
@@ -209,7 +255,7 @@
         <br>
 
         <!--================End Product Details Area =================-->
-        
+
         <!--================Product Description Area =================-->
         <!-- <section class="product_description_area">
             <div class="container">
@@ -249,7 +295,7 @@
             </div>
         </section> -->
         <!--================End Product Details Area =================-->
-        
+
         <!--================End Related Product Area =================-->
         <!-- <section class="related_product_area">
             <div class="container">
@@ -338,39 +384,40 @@
             </div>
         </section> -->
         <!--================End Related Product Area =================-->
-        
+
         <% include partial/footer %>
-        
-        
-        
-        
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="js/jquery-3.2.1.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="js/popper.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <!-- Rev slider js -->
-        <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
-        <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
-        <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
-        <!-- Extra plugin css -->
-        <script src="vendors/counterup/jquery.waypoints.min.js"></script>
-        <script src="vendors/counterup/jquery.counterup.min.js"></script>
-        <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
-        <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
-        <script src="js/smoothscroll.js"></script>
-        <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
-        <script src="vendors/isotope/isotope.pkgd.min.js"></script>
-        <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
-        <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
-        <script src="vendors/jquery-ui/jquery-ui.js"></script>
-        
-        <script src="js/theme.js"></script>
-    </body>
+
+
+
+
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <script src="js/jquery-3.2.1.min.js"></script>
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            <script src="js/popper.min.js"></script>
+            <script src="js/bootstrap.min.js"></script>
+            <!-- Rev slider js -->
+            <script src="vendors/revolution/js/jquery.themepunch.tools.min.js"></script>
+            <script src="vendors/revolution/js/jquery.themepunch.revolution.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.actions.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.video.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+            <script src="vendors/revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+            <!-- Extra plugin css -->
+            <script src="vendors/counterup/jquery.waypoints.min.js"></script>
+            <script src="vendors/counterup/jquery.counterup.min.js"></script>
+            <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+            <script src="vendors/bootstrap-selector/js/bootstrap-select.min.js"></script>
+            <script src="vendors/image-dropdown/jquery.dd.min.js"></script>
+            <script src="js/smoothscroll.js"></script>
+            <script src="vendors/isotope/imagesloaded.pkgd.min.js"></script>
+            <script src="vendors/isotope/isotope.pkgd.min.js"></script>
+            <script src="vendors/magnify-popup/jquery.magnific-popup.min.js"></script>
+            <script src="vendors/vertical-slider/js/jQuery.verticalCarousel.js"></script>
+            <script src="vendors/jquery-ui/jquery-ui.js"></script>
+
+            <script src="js/theme.js"></script>
+</body>
+
 </html>
