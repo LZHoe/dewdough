@@ -296,6 +296,20 @@ exports.uploadImage = function (req, res) {
     });
 };
 
+
+
+//Dog Toy Items Category
+exports.dogtoy = function(req,res){
+    sequelize.query("SELECT * from itemlists where category = :category", {replacements:{category:'Dog Toy'}, model:itemlist}).then((Categorydata)=>{
+        console.log("Helloa");
+        console.log(Categorydata)
+        res.render("itemlist",{
+            itemlist : Categorydata,
+        })
+    })
+}
+
+
 // //test data 
 // var sql = "INSERT INTO responses (user, response) VALUES ('test_user', 'A')";
 // connection.query(sql, function (err, result) {
@@ -304,6 +318,10 @@ exports.uploadImage = function (req, res) {
 
 // });
 // connection.end();
+
+
+
+
 
 
 // Images authorization middleware
@@ -315,3 +333,5 @@ exports.hasAuthorization = function (req, res, next) {
     }
     res.redirect('/login');
 };
+
+

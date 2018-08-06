@@ -60,6 +60,7 @@ const itemlist = sequelize.define('itemlist', {
 // force: true will drop the table if it already exists
 itemlist.sync({ force: false, logging: console.log}).then(() => {
     // Table created
+    
     console.log("item table synced");
 });
 

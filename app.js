@@ -193,6 +193,10 @@ app.post("/editItemListing/:Itemid", itemlist.hasAuthorization, upload.single('i
 app.get("/delItemListing/:Itemid", itemlist.hasAuthorization, itemlist.delete);
 app.post("/itemlisted", itemlist.hasAuthorization, upload.single('image'), itemlist.uploadImage);
 app.get("/item/:Itemid", itemlist.showDetails);
+
+/////////////////Category//////////////
+app.get("/itemlisted/dogtoy",itemlist.dogtoy);
+
     
 app.get("/servicelisted", servicelist.show);
 app.get("/editServiceListing/:serviceid", servicelist.editServiceRecord)
