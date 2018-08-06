@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include partial/head %>
+        <script src = "/public/js/socket.io.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.css">
+
+        <style>
+            img{
+                width: 50%
+            }
+            .main-section small{
+                font-size: 12px;
+            }
+            .main-section h3, .main-section h5{
+                margin: 0px;
+            }
+            .main-section{
+                width: 960px;
+                background-color: #fff;
+                margin: auto;
+            }
+            .head-section{
+                border-bottom:1px solid #E6E6E6;
+                clear: both;
+                overflow: hidden;
+                width: 100%;
+            }
+            .headLeft-section{
+                width: calc(30% - 1px);
+                float: left;
+                border-right:1px solid #E6E6E6;
+            }
+            .headLeft-sub{
+                padding: 15px;
+                text-align: center;
+            }
+            .headLeft-sub input{
+                width: 60%;
+                border-radius: 0px;
+                border:1px solid #E6E6E6;
+                padding: 7px;
+            }
+            .headLeft-sub button{
+                background: #ff633c;
+                color: #fff;
+                border:1px solid #ff633c;
+                padding: 7px 15px;
+            }
+            .headRight-section{
+                width: 70%;
+                float: left;
+            }
+            .headRight-sub{
+                padding: 10px 15px 0px 15px;
+            }
+
+            .body-section{
+                clear: both;
+                overflow: hidden;
+                width: 100%;
+            }
+
+            .left-section{
+                width: calc(30% - 1px);
+                float: left;
+                height: 500px;
+                border-right:1px solid #E6E6E6;
+                background-color: #FFF;
+                z-index: 1;
+                position: relative;
+            }
+            .left-section ul{
+                padding: 0px;
+                margin: 0px;
+                list-style: none;
+            }
+            .left-section ul li{
+                padding: 15px 0px;
+                cursor: pointer;
+            }
+            .left-section ul li.active{
+                background: #ff633c;
+                color: #fff;
+                position: relative;
+            }
+            .mCustomScrollBox, .mCSB_container{
+                overflow: hidden !important;
+            }
+            .left-section ul li.active .desc .time{
+                color: #fff;
+            }
+            .left-section ul li.active:before{
+                position: absolute;
+                content: '';
+                right: -10px;
+                border:5px solid #ff633c;
+                top: 0px;
+                bottom: 0px;
+                border-radius: 0px 3px 3px 0px;
+            }
+            .left-section ul li.active:after{
+            position: absolute;
+            content: "";
+            bottom: 0px;
+            right: 0px;
+            left: auto;
+            width: 100%;
+            top: 0px;
+            -webkit-box-shadow: -8px 4px 10px #a1a1a1;
+            -moz-box-shadow: -8px 4px 10px #a1a1a1;
+            box-shadow: -8px 4px 10px #a1a1a1;
+            }
+
+            .left-section .chatList{
+                overflow: auto;
+            }
+            .left-section .chatList .img{
+                width: 60px;
+                float: left;
+                text-align: center;
+                position: relative;
+            }
+            .left-section .chatList .img img{
+                width: 30px;
+                border-radius: 50%;
+            }
+            .left-section .chatList .img i{
+                position: absolute;
+                font-size: 10px;
+                color: #ff633c;
+                border:1px solid #fff;
+                border-radius: 50%;
+                left: 10px;
+            }
+            .left-section .chatList .desc{
+                width: calc(100% - 60px);
+                float: left;
+                position: relative;
+            }
+            .left-section .chatList .desc h5{
+                margin-top: 6px;
+                line-height: 5px;
+            }
+            .left-section .chatList .desc .time{
+                position: absolute;
+                right: 15px;
+                color: #c1c1c1;
+            }
+            .right-section{
+                width: 70%;
+                float: left;
+                height: 500px;
+                background-color: #F6F6F6;
+                position: relative;
+            }
+            .message{
+                height: calc(100% - 68px);
+                font-family: sans-serif;
+            }
+            .message ul{
+                padding: 0px;
+                list-style: none;
+                margin: 0px auto;
+                width: 90%;
+                overflow:hidden;
+            }
+            .message ul li{
+                position: relative;
+                width: 80%;
+                padding: 15px 0px;
+                clear: both;
+            }
+            .message ul li.msg-left{
+                float: left;
+            }
+            .message ul li.msg-left img{
+                position: absolute;
+                width: 40px;
+                bottom: 30px;
+            }
+            .message ul li.msg-left .msg-desc{
+                margin-left: 70px;
+                font-size: 12px;
+                background: #E8E8E8;
+                padding:5px 10px;
+                border-radius: 5px 5px 5px 0px;
+                position: relative;
+            }
+            .message ul li.msg-left .msg-desc:before{
+                position: absolute;
+                content: '';
+                border:10px solid transparent;
+                border-bottom-color: #E8E8E8;
+                bottom: 0px;
+                left: -10px;
+            }
+            .message ul li.msg-left small{
+                float: right;
+                color: #c1c1c1;
+            }
+
+            .message ul li.msg-right{
+                float: right;
+            }
+            .message ul li.msg-right img{
+                position: absolute;
+                width: 40px;
+                right: 0px;
+                bottom: 30px;
+            }
+            .message ul li.msg-right .msg-desc{
+                margin-right: 70px;
+                font-size: 12px;
+                background: #ff8979;
+                color: #000000;
+                padding:5px 10px;
+                border-radius: 5px 5px 5px 0px;
+                position: relative;
+            }
+            .message ul li.msg-right .msg-desc:before{
+                position: absolute;
+                content: '';
+                border:10px solid transparent;
+                border-bottom-color: #ff8979;
+                bottom: 0px;
+                right: -10px;
+            }
+            .message ul li.msg-right small{
+                float: right;
+                color: #ff8979;
+                margin-right: 70px;
+            }
+            .message ul li.msg-day{
+                border-top:1px solid #EBEBEB;
+                width: 100%;
+                padding: 0px;
+                margin: 15px 0px;
+            }
+            .message ul li.msg-day small{
+                position: absolute;
+                top: -10px;
+                background: #F6F6F6;
+                color: #c1c1c1;
+                padding: 3px 10px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .right-section-bottom{
+                background: #fff;
+                width: 100%;
+                padding: 15px;
+                position: absolute;
+                bottom: 0px;
+                border-top:1px solid #E6E6E6;
+                text-align: center;
+            }
+            .right-section-bottom input{
+                border:0px;
+                padding:8px 5px;
+                width:calc(100% - 150px);
+            }
+            .right-section-bottom .btn-send{
+                border:0px;
+                padding: 8px 10px;
+                float: right;
+                margin-right: 30px;
+                color: #ff633c;
+                font-size: 18px;
+                background: #fff;
+                cursor: pointer;
+            }
+            .upload-btn{
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            float: left;
+            }
+            .upload-btn .btn{
+                border:0px;
+                padding: 8px 10px;
+                color: #ff633c;
+                font-size: 18px;
+                background: #fff;
+                cursor: pointer;
+            }
+            .upload-btn input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            }
+        </style>
+    </head>
+    <body>     
+        <% include partial/header %>
+        
+        <!-- ================Categories Banner Area =================-->
+        <!-- <section class="solid_banner_area">
+            <div class="container">
+                <div class="solid_banner_inner">
+                    <h3>chat</h3>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="/chat">Chat</a></li>
+                    </ul>
+                </div>
+            </div>
+        </section> -->
+        <!--================End Categories Banner Area ================= -->
+
+        <!-- <div class="container">
+            <br>
+            <div class="jumbotron">
+                <h1 class="display-4">Send Message</h1>
+                <br>
+                <input id="name" class="form-control" placeholder="Name">
+                <br>
+                <textarea id="message" class="form-control" placeholder="Message"></textarea>
+                <br>
+                <button id="send" class="btn btn-success">Send</button>
+            </div>
+            <div id="messages">
+            <%data.forEach(function(msg){%>
+                <h4> <%=msg.name%> </h4> <p> <%=msg.message%> </p>
+            <%})%>
+            </div>
+        </div> -->
+        <script>
+            var socket = io()
+            $(() => {
+                $("#send").click(()=>{
+                    var message = { name: $("#name").val(), message: $("#message").val()}
+                    postMessage(message)
+                    $.post("http://localhost:3000/messages", message)
+                })
+            })
+
+            socket.on('message', addMessage)
+
+            function addMessage(msg){
+                $("#messages").append(`<h4> ${msg.name} </h4> <p> ${msg.message} </p>`)
+            }
+
+            function postMessage(message) {
+                $.post(`<%-url%>`, message)
+            }
+
+            socket.on('myEventName', function(receivedMsg){
+                console.log("Message sent: "+receivedMsg);
+            });
+
+        </script>
+
+		<div class="head-section">
+			<div class="headLeft-section">
+				<div class="headLeft-sub">
+				</div>
+			</div>
+			<div class="headRight-section">
+				<div class="headRight-sub">
+					<h4 align="center">jamestan234</h4>
+                    <hr>
+                    <h6><img src="/public/img//product/c-product-1.jpg">        Dog Leash</h6>
+                    <small>       You made an offer</small>
+                </div>
+			</div>
+		</div>
+		<div class="body-section">
+			<div class="left-section mCustomScrollbar" data-mcs-theme="minimal-dark">
+				<ul>
+					<li class="active">
+						<div class="chatList">
+							<div class="img">
+								<img src="/public/img/a_cat.jpg">
+							</div>
+							<div class="desc">
+                                <small class="time">Aug 7, 2018</small>
+                                <h5>jamestan234</h5>
+                                <hr>
+                                <h8>Dog Leash</h8>
+                                <img src="/public/img/product/c-product-1.jpg" align="headRight-section">
+							</div>
+						</div>
+                    </li>
+				</ul>
+			</div>
+			<div class="right-section">
+				<div class="message mCustomScrollbar" data-mcs-theme="minimal-dark">
+					<ul>
+						<li class="msg-right">
+							<div class="msg-left-sub">
+								<div class="msg-desc">
+									Hi I am interested to buy
+								</div>
+								<small>05:25 pm</small>
+							</div>
+						</li>
+						<li class="msg-left">
+							<div class="msg-left-sub">
+								<div class="msg-desc">
+									Okay. How much are you offering?
+								</div>
+								<small>05:25 pm</small>
+							</div>
+						</li>
+						<li class="msg-day"><small>Tuesday</small></li>
+						<li class="msg-right">
+							<div class="msg-left-sub">
+								<div class="msg-desc">
+									I offer $20
+								</div>
+								<small>09:25 am</small>
+							</div>
+                        </li>
+                        <li class="msg-right">
+                                <div class="msg-left-sub">
+                                    <div class="msg-desc">
+                                        Will add to my cart
+                                    </div>
+                                    <small>09:25 am</small>
+                                </div>
+                            </li>
+						<li class="msg-left">
+							<div class="msg-left-sub">
+								<div class="msg-desc">
+									Okay
+								</div>
+								<small>09:25 am</small>
+							</div>
+                        </li>
+                        <li class="msg">
+                            <div class="msg-left-sub">
+                                <a link href="/transactions"><span>Proceed to cart</span></a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+				<div class="right-section-bottom">
+					<div class="upload-btn">
+					  	<button class="btn"><i class="fa fa-photo"></i></button>
+					  	<input type="file" name="myfile" />
+					</div>
+					<input type="text" name="" placeholder="type here...">
+					<button id="send" class="btn btn-success" return><i class="fa fa-send"></i></button>
+                </div>
+                <div id="messages">
+                    <%data.forEach(function(msg){%>
+                        <h4> <%=msg.name%> </h4> <p> <%=msg.message%> </p>
+                    <%})%>
+                </div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<!-- custom scrollbar plugin -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    </body>
+</html>

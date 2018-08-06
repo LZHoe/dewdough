@@ -13,6 +13,21 @@ var upload = multer({ dest: './public/uploads/', limits: { filesize: 1500000, fi
 var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
 var exphbs = require('express-handlebars');
 
+//Setup chat
+var httpServer = require('http').Server(app);
+var io = require('socket.io')(httpServer);
+var chatConnections = 0;
+var ChatMsg = require('./models/chatMsg');
+
+io.on('connection', function(socket) {
+    chatConnections++;
+    console.log("Num of chat users connected: "+chatConnections);
+    
+    socket.on('disconnect', function() {
+        chatConnections++;
+        console.log("Num of chat users connected: "+chatConnections);
+    });
+})
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
@@ -55,6 +70,7 @@ var transaction = require('./controllers/transaction');
 // Import controllers
 var home = require('./controllers/home');
 var cart = require('./controllers/cart');
+var chat = require('./controllers/chat');
 var cancel = require('./controllers/cancel');
 var paypal = require('./controllers/paypal');
 var checkout = require('./controllers/checkout');
@@ -178,6 +194,38 @@ app.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+//Routes for chat
+// app.get('/chat', chat.hasAuthorization, chat.list);
+// app.post('/chat', chat.hasAuthorization, chat.create);
+
+// Setup chat
+var io = require('socket.io')(httpServer);
+var chatConnections = 0;
+var ChatMsg = require('./models/chatMsg');
+
+app.get('/messages', function (req, res) {
+    ChatMsg.findAll().then((chatMessages) => {
+        res.render('chatMsg', {
+            url: req.protocol + "://" + req.get("host") + req.url,
+            data: chatMessages
+        });
+    });
+});
+app.post('/messages', function (req, res) {
+    var chatData ={
+        name: req.body.name,
+        message: req.body.message
+    }
+    //Save into database
+    ChatMsg.create(chatData).then((newMessage) => {
+        if (!newMessage) {
+            sendStatus(500);
+        }
+        io.emit('message', req.body)
+        res.sendStatus(200)
+    })
+});
+
 // app.post("/products/search", search)
 app.get("/editprofile", userController.editProfile)
 app.post("/edit/:id", userController.updateProfile)
@@ -227,6 +275,7 @@ app.get("/admin/services", auth.isAdmin, admin.showServices);
 app.post("/admin/services/search", auth.isAdmin, admin.searchServices);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.post("/admin/deletes/:transaction_id", auth.isAdmin, admin.deletes);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
 app.get("/admin/edits/:transaction_id", auth.isAdmin,admin.showeditforms);
 app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
@@ -234,6 +283,7 @@ app.post("/admin/edits/:transaction_id", auth.isAdmin,admin.edits);
 app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
+app.post("/admin/undeletes/:transaction_id",auth.isAdmin,admin.undeletes);
 app.get("/admin/users", auth.isAdmin,admin.showUsers);
 app.post("/admin/modifyuser/:id",auth.isAdmin, admin.modifyuser);
 app.post("/admin/modifyinguser/:id", auth.isAdmin,admin.modifyinguser)

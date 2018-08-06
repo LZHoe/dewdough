@@ -7,85 +7,57 @@
 </head>
 
 <body>
-    <form action="/admin/edit/<%= item.transactionId %>" method="post">
-        <div style="margin:auto;padding:30px" class="row">
-
-
-            <div class="col-lg-6">
-                <div class="form-group">
-                    <label for="ItemName">Listing Title:
-                        <span>*</span>
-                    </label>
-                    <input value="<%= item.servicetitle %>" type="text" class="form-control" id="ItemName" name="ItemName" aria-describedby="ItemName"
-                        placeholder="Listing Tile">
-                </div>
+    <form action="/admin/edits/<%= item.transactionId %>" method="post">
+        <div class="col-lg-5">
+            <div class="form-group">
+                <label for="servicetitle">Listing Title:
+                    <span>*</span>
+                </label>
+                <input type="text" class="form-control" value="<%= item.servicetitle %>" name="servicetitle" id="servicetitle" aria-describedby="name"
+                    placeholder="Listing Tile">
             </div>
-
-            <div class="col-lg-2">
-                <div class="form-group">
-                    <label for="servicepriceprice">Price:
-                        <span>*</span>
-                    </label>
-                    <input type="number" value="<%= item.serviceprice %>" required name="price" min="0.00" value="0.00" step=".01" class="form-control"
-                        id="price" aria-describedby="price" placeholder="$0.00">
-                </div>
+        </div>
+        <div class="col-lg-2">
+            <div class="form-group">
+                <label for="serviceprice">Price:
+                    <span>*</span>
+                </label>
+                <input type="number" required name="serviceprice" min="0.00" step=".01" class="form-control" id="serviceprice"
+                    value="<%= item.serviceprice %>" aria-describedby="serviceprice" placeholder="$0.00">
             </div>
-            <div class="col-lg-4">
-                <div class="form-group">
-                    <label for="category">Category:
-                        <span>*</span>
-                    </label>
-                    <br>
-                    <select name="category" value="<%= item.servicecategory %>" id="category" placeholder="Category">
-                        <option value="Dog Toy">Dog Toy </option>
-                        <option value="Dog Accessory">Dog Accessory </option>
-                        <option value="Dog Grooming Tools">Dog Grooming Tools </option>
-                        <option value="Cat Toy">Cat Toy </option>
-                        <option value="Cat Accessory">Cat Accessory </option>
-                        <option value="Cat GroomGrooming Toolsing">Cat Grooming Tools </option>
+        </div>
+        <div class="col-lg-4">
+            <div class="form-group">
+                <label for="servicecategory">Category:
+                    <span>*</span>
+                </label>
+                <br>
+                <select name="servicecategory" value="<%= item.servicecategory %>" id="servicecategory" placeholder="Category">
+                    <option value="Dog Grooming">Dog Grooming </option>
+                    <option value="Dog Daycare">Dog Daycare </option>
+                    <option value="Dog Boarding">Dog Boarding </option>
+                    <option value="Cat Grooming">Cat Grooming </option>
+                    <option value="Cat Daycare">Cat Daycare </option>
+                    <option value="Cat Boarding">Cat Boarding </option>
 
 
-                    </select>
-                </div>
+                </select>
             </div>
-            <div class="col-lg-10">
-                <div class="form-group">
-                    <label for="Description">Item Description:
-                        <span>*</span>
-                    </label>
-                    <textarea id="Description"  placeholder="<%= item.servicedescription%>" value="<%= item.Description %>" name="Description" rows="3" cols="40" class="form-control" ></textarea>
-                </div>
-            </div>
-
-
-            <div class="col-lg-3">
-                <div class="form-group">
-                    <label for="pickupmethod"> Service Pickup?:
-                        <span>*</span>
-                    </label>
-                    <br>
-                    
-                    <input type="radio" value="<%= item.servicepickup %>" id="servicepickup" name="servicepickup" value="Mail">
-                    <label for="Yes">Yes</label>
-
-                    <input type="radio" id="servicepickup" name="servicepickup" value="MeetUp">
-                    <label for="No">Yes</label>
-
-                </div>
-            </div>
-
-
-            <div class="col-lg-3">
-                <div class="form-group">
-                   
-                </div>
-            </div>
-
-            <br>
-            <div class="col-lg-3">
-                <button type="submit" action="/admin/edits/<%= item.transactionId %>" method="POST" value="submit" class="btn subs_btn form-control">Update</button>
-            </div>
+        </div>
+        <div class="col-lg-12">
             
+                <label for="servicedescription">Service Description:
+                    <span>*</span>
+                </label>
+                <textarea id="serivcedescription" value="<%= item.servicedescription %>" name="serivcedescription" rows="3" cols="40"
+                    class="form-control" placeholder="Service Description" required=""><%= item.servicedescription %></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="col-lg-4">
+            <button type="submit" id="servicebutton" value="submit" class="btn subs_btn form-control">Update</button>
+
+        </div>
     </form>
 
 </body>
