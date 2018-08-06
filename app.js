@@ -242,6 +242,7 @@ app.get("/admin/services", auth.isAdmin, admin.showServices);
 app.post("/admin/services/search", auth.isAdmin, admin.searchServices);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.post("/admin/deletes/:transaction_id", auth.isAdmin, admin.deletes);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
 app.get("/admin/edits/:transaction_id", auth.isAdmin,admin.showeditforms);
 app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
@@ -249,6 +250,7 @@ app.post("/admin/edits/:transaction_id", auth.isAdmin,admin.edits);
 app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
 app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
+app.post("/admin/undeletes/:transaction_id",auth.isAdmin,admin.undeletes);
 app.get("/admin/users", auth.isAdmin,admin.showUsers);
 app.post("/admin/modifyuser/:id",auth.isAdmin, admin.modifyuser);
 app.post("/admin/modifyinguser/:id", auth.isAdmin,admin.modifyinguser)

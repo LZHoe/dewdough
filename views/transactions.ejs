@@ -94,11 +94,11 @@
                     <a class="add_cart_btn continue" href="/transactions">Return to All Transactions</a>
                     <% } %>
                     <% if (login == 2){%>
-                    <form action="/admin/delete/<%= data.transactionId %>" method="POST">
+                    <form action="/admin/deletes/<%= data.transactionId %>" method="POST">
                         <button class="btn btn-primary update_btn" >Delete</button>
                     </form>
                     <br>
-                    <form action="/admin/undelete/<%= data.transactionId %>" method="POST">
+                    <form action="/admin/undeletes/<%= data.transactionId %>" method="POST">
                         <button class="btn btn-primary update_btn" >Undelete</button>
                     </form>
                     <br>

@@ -5,6 +5,7 @@ var sequelize = myDatabase.sequelize;
 var itemlists = require('../models/itemlist');
 var moment = require('moment');
 var User = require('../models/users')
+var servicelists = require('../models/servicelistM')
 
 // function to convert date from sql to more readable format
 // requires moment js!!!
@@ -133,7 +134,7 @@ exports.showUsers = function(req, res) {
     })
 }
 
-exports.delete = function(req,res){
+exports.delete= function(req,res){
     var transaction_id = req.params.transaction_id;
     sequelize.query(`SELECT il.visible, il.Itemid
                     FROM Transactions t 
@@ -154,6 +155,32 @@ exports.delete = function(req,res){
                                 });
                             }
                             res.redirect('/transactions/' + transaction_id);
+                        });
+                    
+    })
+}
+
+exports.deletes = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT il.visible, il.serviceid
+                    FROM ServicesTransactions t 
+                    INNER JOIN servicelists il 
+                    ON t.listingId = il.serviceid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+
+                        serviceid = instance[0].serviceid
+
+                        var private = {
+                            visible : false
+                        }
+
+                        servicelists.update(private, { where: { serviceid : serviceid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactionss/' + transaction_id);
                         });
                     
     })
@@ -260,10 +287,10 @@ exports.edits = function(req,res){
                         }
 
                         console.log(updateItem)
-                        itemid = instance[0].Itemid;
+                        itemid = instance[0].serviceid;
 
 
-                        servicelists.update(updateItem, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                        servicelists.update(updateItem, { where: { serviceid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
                             if (!updatedRecord || updatedRecord == 0) {
                                 return res.send(400, {
                                     message: "error"
@@ -284,7 +311,7 @@ exports.undelete = function(req,res){
     sequelize.query(`SELECT il.visible, il.Itemid
                     FROM Transactions t 
                     INNER JOIN itemlists il 
-                    ON t.listingId = il.serviceid 
+                    ON t.listingId = il.Itemid 
                     WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
 
                         itemid = instance[0].Itemid;
@@ -303,7 +330,36 @@ exports.undelete = function(req,res){
                         });
                     
     })
+
 }
+
+
+exports.undeletes = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT il.visible, il.serviceid
+                    FROM ServicesTransactions t 
+                    INNER JOIN servicelists il 
+                    ON t.listingId = il.serviceid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+
+                        serviceId = instance[0].serviceid
+
+                        var private = {
+                            visible : true
+                        }
+
+                        servicelists.update(private, { where: { serviceid : serviceId }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactionss/' + transaction_id);
+                        });
+                    
+    })
+}
+
 
 
 
