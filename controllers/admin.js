@@ -58,3 +58,101 @@ exports.search = function (req, res) {
             })
         })
 }
+
+exports.showMessages = function(req, res) {
+    sequelize.query(
+        `SELECT * FROM Question`, 
+        { type: sequelize.QueryTypes.SELECT }
+    ).then((messages) => {
+        for (var i = 0; i < messages.length; i++) {
+            messages[i].createdAt = convertDate(messages[i].createdAt);
+            messages[i].updatedAt = convertDate(messages[i].updatedAt);
+        }
+        res.render('adminMessages', {
+            title: 'Admin Support',
+            messages: messages
+        })
+    })
+}
+
+exports.delete = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT il.visible, il.Itemid
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+
+                        itemid = instance[0].Itemid;
+
+                        var private = {
+                            visible : false
+                        }
+
+                        itemlists.update(private, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactions/' + transaction_id);
+                        });
+                    
+    })
+}
+
+exports.showeditform = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log(instance[0])
+                        res.render('adminedit',{
+                            item : instance[0]
+                        })
+
+                    })
+                
+}
+
+exports.edit = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log(instance[0])
+
+                        
+                        console.log("MOTHER DIE")
+  
+                        
+                        var updateItem = {
+                            ItemName: req.body.ItemName,
+                            price: req.body.price,
+                            category: req.body.category,
+                            Description: req.body.Description,
+                            MeetupLocation: req.body.MeetupLocation,
+
+                        }
+
+                        console.log(updateItem)
+                        itemid = instance[0].Itemid;
+
+
+                        itemlists.update(updateItem, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactions/' + transaction_id);
+                        });
+
+                        
+
+                    })
+                }

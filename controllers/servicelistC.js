@@ -19,7 +19,6 @@ function convertDate(myDate) {
 }
 //services listed gallery 
 exports.show = function (req, res) {
-
     sequelize.query('select sl.*, u.username from servicelists sl INNER JOIN Users u \
     ON sl.user_id = u.id WHERE sl.user_id = ' + req.user.id + ' AND sl.visible = 1'
         , { type: sequelize.QueryTypes.SELECT }).then((servicelist) => {
@@ -160,15 +159,15 @@ exports.showCat = function (req, res) {
     // Show item details
     sequelize.query('select sl.*, u.username from servicelists sl \
     INNER JOIN Users u ON sl.user_id = u.id \
-    WHERE sl.servicecategory LIKE \'%\Cat%\' ',
+    WHERE sl.servicecategory LIKE \'%Cat%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((servicepage) => {
-            for (var i = 0; i < itemlist.length; i++) {
-                servicelist[i].createdAt = convertDate(servicelist[i].createdAt);
-                servicelist[i].updatedAt = convertDate(servicelist[i].updatedAt);
+            for (var i = 0; i < servicepage.length; i++) {
+                servicepage[i].createdAt = convertDate(servicepage[i].createdAt);
+                servicepage[i].updatedAt = convertDate(servicepage[i].updatedAt);
             }
             res.render('allItems', {
-                title: 'Item Details',
-                servicelist: servicepage[0]
+                title: 'Cat Services',
+                servicelist: servicepage
             })
         }).catch((err) => {
             return res.status(400).send({
@@ -181,15 +180,15 @@ exports.showDog = function (req, res) {
     // Show item details
     sequelize.query('select sl.*, u.username from servicelists sl \
     INNER JOIN Users u ON sl.user_id = u.id \
-    WHERE sl.servicecategory LIKE  \'%\Dog%\' ',
+    WHERE sl.servicecategory LIKE  \'%Dog%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((servicepage) => {
-            for (var i = 0; i < itemlist.length; i++) {
-                servicelist[i].createdAt = convertDate(servicelist[i].createdAt);
-                servicelist[i].updatedAt = convertDate(servicelist[i].updatedAt);
+            for (var i = 0; i < servicepage.length; i++) {
+                servicepage[i].createdAt = convertDate(servicepage[i].createdAt);
+                servicepage[i].updatedAt = convertDate(servicepage[i].updatedAt);
             }
             res.render('allItems', {
-                title: 'Item Details',
-                servicelist: servicepage[0]
+                title: 'Dog Services',
+                servicelist: servicepage
             })
         }).catch((err) => {
             return res.status(400).send({

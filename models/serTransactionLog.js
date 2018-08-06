@@ -1,11 +1,11 @@
-// models/transactionLog.js
+// models/serTransactionLog.js
 
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
 // var Transaction = require('../models/transaction')
 
-const TransactionLog = sequelize.define('TransactionLog', {
+const serTransactionLog = sequelize.define('ServicesTransactionLog', {
     logId: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -88,7 +88,7 @@ const TransactionLog = sequelize.define('TransactionLog', {
 });
 
 // force: true will drop the table if it already exists
-TransactionLog.sync({ force: false, logging: console.log}).then(() => {
+serTransactionLog.sync({ force: false, logging: console.log}).then(() => {
     // Table created
     console.log("Transaction table synced");
 
@@ -102,4 +102,4 @@ TransactionLog.sync({ force: false, logging: console.log}).then(() => {
     // });
 });
 
-module.exports = sequelize.model('TransactionLog', TransactionLog);
+module.exports = sequelize.model('ServicesTransactionLog', serTransactionLog);

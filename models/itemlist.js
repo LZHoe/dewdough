@@ -52,8 +52,10 @@ const itemlist = sequelize.define('itemlist', {
     }, 
     pickupmethod: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
     }
+    
+
 });
 
 

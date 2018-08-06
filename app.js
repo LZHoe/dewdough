@@ -16,8 +16,8 @@ var exphbs = require('express-handlebars');
 
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
-    'client_id': 'AXLNohjxp86UfQQ3DD11Ah6kMQ8i3ZTuprLYshS8nc_OhS8M1Ot1W57jbwjz140-3pRA6KhbAgq5_AcD',
-    'client_secret': 'EC8xYilzzi9A5ndaAOIGMEOv_VtMX-gcdadzShjoP4HmdioYG0tFJOq9U7WGAyxze6cj41A84a8JYQmC',
+    'client_id': 'AbUV860wWXlP-pMI8HW5iJ25Eu2-GHgJAIFjYsN4pS8S3As7nPXTwAjcB3qsPGzTJqDucLeewSadKFVI',
+    'client_secret': 'EItAFrEZbj8dE1_I3pE3jhVNPlFDx6vLAi_6vnmRf_-xVVPm7yJWieZCuz3M6C_8RNCIwdiJXtk94bwW',
   });
 
 //modules to store function
@@ -62,6 +62,7 @@ var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
+var receipt = require('./controllers/receipt');
 var search = require('./controllers/search'); 
 
 
@@ -165,16 +166,22 @@ app.get('/cancel', (req, res) => {
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Transactions  >>>>>>
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
-app.post("/transactions", transaction.create);
+app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
 app.get("/transactions/:transaction_id", transaction.showDetails);
 app.post("/transactions/:transaction_id", transaction.afterPayment);
+app.post("/newtransaction/:listing_id", transaction.create);
+app.post("/newservicetransaction/:listing_id", transaction.createForService);
 
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
 app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 // Admin
 app.get("/admin", auth.isAdmin, admin.show);
-app.post("/admin/search", auth.isAdmin, admin.search)
+app.post("/admin/search", auth.isAdmin, admin.search);
+app.get("/admin/messages", auth.isAdmin, admin.showMessages);
+app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
+app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
@@ -219,6 +226,8 @@ app.get("/contact" , exports.show = (req, res) => {
 
 app.post('/ask', contact.create);
 
+//Receipt Shit
+app.get('/receipt/:transaction_id',receipt.show)
 
 //Charge route
 app.post("/charge/:transaction_id", checkoutcard.charge);

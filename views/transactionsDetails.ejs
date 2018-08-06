@@ -37,10 +37,7 @@
                                     <th scope="row"><span>Status</span></th>
                                     <td><h5><%= data.status %></h5></td>
                                 </tr>
-                                <tr>
-                                    <th scope="row"><span>Quantity(Hidden)</span></th>
-                                    <td><h5><%= data.qty %></h5></td>
-                                </tr>
+
                                 <tr>
                                     <th scope="row"><span>Price</span></th>
                                     <td><h5>$<%= data.offer %></h5></td>
@@ -53,9 +50,10 @@
                                     <th scope="row"><span>Payment Method</span></th>
                                     <td><h5><%= data.paymentMethod %></h5></td>
                                 </tr>
+                                
                                 <tr>
-                                    <th scope="row"><span>Bank Details</span></th>
-                                    <td><h5><%= data.bankDetails %></h5></td>
+                                    <th scope="row"><span>Public</span></th>
+                                    <td><h5><%= data.visible %></h5></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -81,16 +79,20 @@
                         </tr>
                         <% }) %>
                     </table>
+                    <br>
                     <% } %>
                     <% if (login == 1) { %>
                     <a class="add_cart_btn continue" href="/transactions">Return to All Transactions</a>
                     <% } %>
-                    <a href="/checkout/<%= data.transactionId %>" >
-                        <button class="add_cart_btn continue"  style="background-color: blue; cursor: pointer;">Simulate payment</button>
-                    </a>
-                    <form action="/transactions/<%= data.transactionId %>" method="post">
-                        <button class="add_cart_btn continue" style="background-color: blue; cursor: pointer;">Simulate payment(Direct)</a>
+                    <% if (login == 2){%>
+                    <form action="/admin/delete/<%= data.transactionId %>" method="POST">
+                        <button class="btn btn-primary update_btn" >Delete</button>
                     </form>
+                    <br>
+                    <form action="/admin/edit/<%= data.transactionId %>" method="GET">
+                        <button class="btn btn-primary update_btn" >Edit</button>
+                    </form>
+                    <% } %>
                 </div>
             </div>
         </section>

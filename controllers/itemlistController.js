@@ -68,15 +68,15 @@ exports.showCat = function (req, res) {
     var Itemid = req.params.Itemid;
     sequelize.query('select il.*, u.username from itemlists il \
     INNER JOIN Users u ON il.user_id = u.id \
-    WHERE il.category LIKE \'%\Cat%\' ',
+    WHERE il.category LIKE \'%Cat%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
-                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+                itempage[i].createdAt = convertDate(itempage[i].createdAt);
+                itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
             res.render('allItems', {
                 title: 'Item Details',
-                itemlist: itempage[0]
+                itemlist: itempage
             })
         }).catch((err) => {
             return res.status(400).send({
@@ -89,15 +89,15 @@ exports.showDog = function (req, res) {
     // Show item details
     sequelize.query('select il.*, u.username from itemlists il \
     INNER JOIN Users u ON il.user_id = u.id \
-    WHERE il.category LIKE  \'%\Dog%\' ',
+    WHERE il.category LIKE  \'%Dog%\' ',
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
-                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
-                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+                itempage[i].createdAt = convertDate(itempage[i].createdAt);
+                itempage[i].updatedAt = convertDate(itempage[i].updatedAt);
             }
             res.render('allItems', {
                 title: 'Item Details',
-                itemlist: itempage[0]
+                itemlist: itempage
             })
         }).catch((err) => {
             return res.status(400).send({
