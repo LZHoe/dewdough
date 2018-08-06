@@ -1,4 +1,3 @@
-// models/transaction.js
 var myDatabase = require('../controllers/database');
 var sequelize = myDatabase.sequelize;
 var Sequelize = myDatabase.Sequelize;
@@ -10,6 +9,9 @@ const ChatMsg = sequelize.define('ChatMsg', {
         primaryKey: true
     },
     name: {
+        type: Sequelize.STRING
+    },
+    username: {
         type: Sequelize.STRING
     },
     message: {

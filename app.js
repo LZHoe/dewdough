@@ -14,6 +14,7 @@ var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
 var exphbs = require('express-handlebars');
 
 //Setup chat
+var httpServer = require('http').Server(app);
 var io = require('socket.io')(httpServer);
 var chatConnections = 0;
 var ChatMsg = require('./models/chatMsg');
@@ -161,16 +162,6 @@ app.get('/logout', function (req, res) {
 var io = require('socket.io')(httpServer);
 var chatConnections = 0;
 var ChatMsg = require('./models/chatMsg');
-
-io.on('connection', function(socket) {
-    chatConnections++;
-    console.log("Num of chat users connected: "+chatConnections);
-
-    socket.on('disconnect', function() {
-        chatConnections++;
-        console.log("Num of chat users connected: "+chatConnections);
-    });
-})
 
 app.get('/messages', function (req, res) {
     ChatMsg.findAll().then((chatMessages) => {
