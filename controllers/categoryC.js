@@ -5,13 +5,14 @@ var sequelize = myDatabase.sequelize;
 
 
 exports.show = function (req, res) {
-    var userID = req.user.id;
-    sequelize.query('select * from itemlists'
+    sequelize.query('select il.*, sl.* from itemlists il \
+    inner join servicelists sl on il.user_id = sl.user_id \
+    inner join users u on il.user_id = u.id'
     , { model: itemlists }).then((listOverview) => {
 
             res.render('listingOverview', {
                 title: 'CUTE ITEMS HEHE',
-                listingOverview: listingoverview,
+                list: listingoverview,
 
             });
 
@@ -23,16 +24,19 @@ exports.show = function (req, res) {
         });
 };
 
-exports.showDetails = function (req, res) {
+exports.showCat = function (req, res) {
     // Show item details
     var Itemid = req.params.Itemid;
-    sequelize.query('select itemid, u.username, ItemName, imageName, category, \
-    price, Description, pickupmethod, visible, MeetupLocation, createdAt, updatedAt \
-    from itemlists t inner join users u on t.user_id = u.id WHERE Itemid = '
-        + Itemid, { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
-            res.render('itemPage', {
-                title: 'Item Details',
-                itemlist: itempage[0]
+    var itemcat = req.params.category;
+    var servicecat = req.params.servicecategory
+    sequelize.query('select il.*, sl.* from itemlists il \
+    inner join servicelists sl on il.user_id = sl.user_id \
+    inner join users u on il.user_id = u.id  \
+    where il.category =' + itemcat + 'OR sl.servicecategory =' +servicecat, 
+    { type: sequelize.QueryTypes.SELECT }).then((category) => {
+            res.render('listingOverview', {
+                title: 'List all',
+                data: category
             })
         }).catch((err) => {
             return res.status(400).send({

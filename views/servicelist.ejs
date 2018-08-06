@@ -230,28 +230,25 @@
                             <h6>
                                 <%= servicelist.servicetitle %>
                             </h6>
-                            <figcaption class="figure-caption" >S$<%= servicelist.serviceprice %>
+                            <figcaption class="figure-caption">S$
+                                <%= servicelist.serviceprice %>
                             </figcaption>
-                            <p>Uploaded: <%= servicelist.createdAt %></p>
-                            <!-- <br>
-                        <small>PickUp: <%= servicelist.servicepickup %></small>
-                        <br>
-                        <small>Category: <%= servicelist.servicecategory %></small>
-                        <br>
-                        <small>Item Description: <%= servicelist.servicedescription %></small>
-                        <br>
-                        <small>MeetUp location: <%= servicelist.servicelocation %> </small>
-                        <br>
-                        <small>Upload by: <%= servicelist.user_id %></small>
-                        <br>
-                        <small>Date of creation: <%= servicelist.createdAt %> </small> -->
+                            <p>Uploaded:
+                                <%= servicelist.createdAt %>
+                            </p>
+                            <div class="row">
 
-                            <form style="cursor:pointer;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
-                                <input type="submit" class="editBtn " value="Edit">
-                            </form>
-                            <form style="cursor:pointer;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
-                                <input type="submit" class="editBtn " value="Delete">
-                            </form>
+                                <div class="col-lg-6">
+                                    <form style="cursor:pointer;" action="/editServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                        <input type="submit" class="editBtn " value="Edit">
+                                    </form>
+                                </div>
+                                <div class="col-lg-6"></div>
+                                <form style="cursor:pointer;" action="/delServiceListing/<%= servicelist.serviceid %>" method="GET">
+                                    <input type="submit" class="editBtn " value="Delete">
+                                </form>
+                            </div>
+                        </figure>
                         </figure>
 
 

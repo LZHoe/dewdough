@@ -156,6 +156,48 @@ exports.delete = function (req, res){
 
 }
 
+exports.showCat = function (req, res) {
+    // Show item details
+    sequelize.query('select sl.*, u.username from servicelists sl \
+    INNER JOIN Users u ON sl.user_id = u.id \
+    WHERE sl.servicecategory LIKE \'%\Cat%\' ',
+         { type: sequelize.QueryTypes.SELECT }).then((servicepage) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                servicelist[i].createdAt = convertDate(servicelist[i].createdAt);
+                servicelist[i].updatedAt = convertDate(servicelist[i].updatedAt);
+            }
+            res.render('allItems', {
+                title: 'Item Details',
+                servicelist: servicepage[0]
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+}
+
+exports.showDog = function (req, res) {
+    // Show item details
+    sequelize.query('select sl.*, u.username from servicelists sl \
+    INNER JOIN Users u ON sl.user_id = u.id \
+    WHERE sl.servicecategory LIKE  \'%\Dog%\' ',
+         { type: sequelize.QueryTypes.SELECT }).then((servicepage) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                servicelist[i].createdAt = convertDate(servicelist[i].createdAt);
+                servicelist[i].updatedAt = convertDate(servicelist[i].updatedAt);
+            }
+            res.render('allItems', {
+                title: 'Item Details',
+                servicelist: servicepage[0]
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+}
+
 //image upload
 exports.uploadService = function (req, res) {
 

@@ -9,7 +9,7 @@
         background-color: black;
         color: white;
         border: 1px solid black;
-        width: 30%;
+        width: 100%;
     }
 
     .editBtn:hover {
@@ -244,14 +244,22 @@
                 <p>Upload by: <%= itemlist.username %></p>
                 <br>
                 <p>Date of creation: <%= itemlist.createdAt %> </p> -->
+                
+                <div class="row">
+                    <div class = "col-lg-6">
                             <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
                             </form>
+                            </div>
+                            <div class = "col-lg-6">
+
                             <form style="cursor:pointer;" action="/delItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Delete">
                             </form>
-                            <!-- <input type="button" class="editBtn" value="Delete"> -->
-
+                            </div>
+                            
+                </div>
+                
                         </figure>
 
 
@@ -263,6 +271,7 @@
             </div>
         </div>
         </div>
+
 
 
         <!--================Footer Area =================-->

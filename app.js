@@ -62,7 +62,7 @@ var servicelist = require('./controllers/servicelistC');
 var admin = require('./controllers/admin');
 var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
-var search = require('./controllers/searchController');
+var search = require('./controllers/search'); 
 
 
 app.use(logger('dev'));
@@ -142,6 +142,8 @@ app.get('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
+
+// app.post("/products/search", search)
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 
@@ -195,8 +197,17 @@ app.get("/service/:serviceid", servicelist.showDetails)
 
 
 // app.get("/:category", search.showcategory);
-app.get("/listoverview", search.show);
+// app.get("/itemoverview", search.showAll).
+app.get("/items/cats", itemlist.showCat)
+app.get("/items/dogs", itemlist.showDog)
+app.get("/services/cats", servicelist.showCat)
+app.get("/services/dogs", servicelist.showDog)
+// app.get("/listoverview/:category", search.showCat);
+// app.get("/listioverview/:servicecategory", search.showCat); 
 // var query = req.query.search;
+
+app.post('/:search', search.search);
+
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////
 

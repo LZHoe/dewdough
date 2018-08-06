@@ -45,13 +45,57 @@ exports.show = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show item details
     var Itemid = req.params.Itemid;
-    sequelize.query('select il.*, u.username from itemlists il INNER JOIN Users u ON il.user_id = u.id WHERE il.Itemid = ' + Itemid,
+    sequelize.query('select il.*, u.username from itemlists il \
+    INNER JOIN Users u ON il.user_id = u.id WHERE il.Itemid = ' + Itemid,
          { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
             for (var i = 0; i < itemlist.length; i++) {
                 itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
                 itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
             }
             res.render('itemPage', {
+                title: 'Item Details',
+                itemlist: itempage[0]
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+}
+
+exports.showCat = function (req, res) {
+    // Show item details
+    var Itemid = req.params.Itemid;
+    sequelize.query('select il.*, u.username from itemlists il \
+    INNER JOIN Users u ON il.user_id = u.id \
+    WHERE il.category LIKE \'%\Cat%\' ',
+         { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
+                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+            }
+            res.render('allItems', {
+                title: 'Item Details',
+                itemlist: itempage[0]
+            })
+        }).catch((err) => {
+            return res.status(400).send({
+                message: err
+            })
+        })
+}
+
+exports.showDog = function (req, res) {
+    // Show item details
+    sequelize.query('select il.*, u.username from itemlists il \
+    INNER JOIN Users u ON il.user_id = u.id \
+    WHERE il.category LIKE  \'%\Dog%\' ',
+         { type: sequelize.QueryTypes.SELECT }).then((itempage) => {
+            for (var i = 0; i < itemlist.length; i++) {
+                itemlist[i].createdAt = convertDate(itemlist[i].createdAt);
+                itemlist[i].updatedAt = convertDate(itemlist[i].updatedAt);
+            }
+            res.render('allItems', {
                 title: 'Item Details',
                 itemlist: itempage[0]
             })
