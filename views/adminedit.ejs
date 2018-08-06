@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+        <% include partial/header %>
+</head>
+
+<body>
+    <form action="/admin/edit/<%= item.transactionId %>" method="post">
+        <div style="margin:auto;padding:30px" class="row">
+
+
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label for="ItemName">Listing Title:
+                        <span>*</span>
+                    </label>
+                    <input value="<%= item.ItemName %>" type="text" class="form-control" id="ItemName" name="ItemName" aria-describedby="ItemName"
+                        placeholder="Listing Tile">
+                </div>
+            </div>
+
+            <div class="col-lg-2">
+                <div class="form-group">
+                    <label for="servicepriceprice">Price:
+                        <span>*</span>
+                    </label>
+                    <input type="number" value="<%= item.price %>" required name="price" min="0.00" value="0.00" step=".01" class="form-control"
+                        id="price" aria-describedby="price" placeholder="$0.00">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-group">
+                    <label for="category">Category:
+                        <span>*</span>
+                    </label>
+                    <br>
+                    <select name="category" value="<%= item.category %>" id="category" placeholder="Category">
+                        <option value="Dog Toy">Dog Toy </option>
+                        <option value="Dog Accessory">Dog Accessory </option>
+                        <option value="Dog Grooming Tools">Dog Grooming Tools </option>
+                        <option value="Cat Toy">Cat Toy </option>
+                        <option value="Cat Accessory">Cat Accessory </option>
+                        <option value="Cat GroomGrooming Toolsing">Cat Grooming Tools </option>
+
+
+                    </select>
+                </div>
+            </div>
+            <div class="col-lg-10">
+                <div class="form-group">
+                    <label for="Description">Item Description:
+                        <span>*</span>
+                    </label>
+                    <textarea id="Description" value="<%= item.Description %>" name="Description" rows="3" cols="40" class="form-control" placeholder="Description"></textarea>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="pickupmethod"> Mailing/Meetup?:
+                        <span>*</span>
+                    </label>
+                    <br>
+
+                    <input type="radio" value="<%= item.pickupmethod %>" id="pickupmethod" name="pickupmethod" value="Mail">
+                    <label for="Yes">Mailing</label>
+
+                    <input type="radio" id="pickupmethod" name="pickupmethod" value="MeetUp">
+                    <label for="No">MeetUp</label>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="form-group">
+                    <label for="MeetupLocation">Meetup Location:
+                        <span>*</span>
+                    </label>
+                    <input type="text" value="<%= item.MeetupLocation %>" class="form-control" id="MeetupLocation" name="MeetupLocation" aria-describedby="MeetupLocation"
+                        placeholder="Meetup Location">
+                </div>
+            </div>
+
+            <br>
+            <div class="col-lg-3">
+                <button type="submit" action="/admin/edit/<%= item.transactionId %>" method="POST" value="submit" class="btn subs_btn form-control">Update</button>
+            </div>
+            
+    </form>
+
+</body>
+
+</html>

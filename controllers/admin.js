@@ -100,3 +100,59 @@ exports.delete = function(req,res){
                     
     })
 }
+
+exports.showeditform = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log(instance[0])
+                        res.render('adminedit',{
+                            item : instance[0]
+                        })
+
+                    })
+                
+}
+
+exports.edit = function(req,res){
+    var transaction_id = req.params.transaction_id;
+    sequelize.query(`SELECT *
+                    FROM Transactions t 
+                    INNER JOIN itemlists il 
+                    ON t.listingId = il.Itemid 
+                    WHERE t.transactionId = ` + transaction_id,{ type: sequelize.QueryTypes.SELECT}).then((instance)=>{
+                        console.log(instance[0])
+
+                        
+                        console.log("MOTHER DIE")
+  
+                        
+                        var updateItem = {
+                            ItemName: req.body.ItemName,
+                            price: req.body.price,
+                            category: req.body.category,
+                            Description: req.body.Description,
+                            MeetupLocation: req.body.MeetupLocation,
+
+                        }
+
+                        console.log(updateItem)
+                        itemid = instance[0].Itemid;
+
+
+                        itemlists.update(updateItem, { where: { Itemid : itemid }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+                            if (!updatedRecord || updatedRecord == 0) {
+                                return res.send(400, {
+                                    message: "error"
+                                });
+                            }
+                            res.redirect('/transactions/' + transaction_id);
+                        });
+
+                        
+
+                    })
+                }

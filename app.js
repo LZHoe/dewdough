@@ -175,7 +175,9 @@ app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 app.get("/admin", auth.isAdmin, admin.show);
 app.post("/admin/search", auth.isAdmin, admin.search);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
-app.post("/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
+app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
+app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
