@@ -234,25 +234,15 @@
                             </figcaption>
                             <p>Uploaded: <%= itemlist.createdAt %></p>
 
-                            <!-- 
-                <p>Category: <%= itemlist.category %></p>
-                <br> -->
-                            <!-- <p>Item Description: <%= itemlist.Description %></p> 
-                <br>
-                <p>MeetUp location: <%= itemlist.MeetupLocation %> </p>
-                <br>
-                <p>Upload by: <%= itemlist.username %></p>
-                <br>
-                <p>Date of creation: <%= itemlist.createdAt %> </p> -->
-                
+                           
                 <div class="row">
-                    <div class = "col-lg-6">
-                            <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
+                    <div class = "col-lg-6">                            
+                        <form style="cursor:pointer;" action="/editItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Edit">
                             </form>
                             </div>
-                            <div class = "col-lg-6">
 
+                            <div class = "col-lg-6">
                             <form style="cursor:pointer;" action="/delItemListing/<%= itemlist.Itemid %>" method="GET">
                                 <input type="submit" class="editBtn " value="Delete">
                             </form>
