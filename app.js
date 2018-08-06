@@ -177,7 +177,10 @@ app.post("/admin/search", auth.isAdmin, admin.search);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
-app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit)
+app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
+app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 

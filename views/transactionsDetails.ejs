@@ -37,9 +37,14 @@
                                     <th scope="row"><span>Status</span></th>
                                     <td><h5><%= data.status %></h5></td>
                                 </tr>
+                                <tr>
+
+                                </tr>
+                                    <th scope="row"><span>Original Price</span></th>
+                                    <td><h5>$<%= data.price %></h5></td>
 
                                 <tr>
-                                    <th scope="row"><span>Price</span></th>
+                                    <th scope="row"><span>Offered Price</span></th>
                                     <td><h5>$<%= data.offer %></h5></td>
                                 </tr>
                                 <tr>
@@ -87,6 +92,10 @@
                     <% if (login == 2){%>
                     <form action="/admin/delete/<%= data.transactionId %>" method="POST">
                         <button class="btn btn-primary update_btn" >Delete</button>
+                    </form>
+                    <br>
+                    <form action="/admin/undelete/<%= data.transactionId %>" method="POST">
+                        <button class="btn btn-primary update_btn" >Undelete</button>
                     </form>
                     <br>
                     <form action="/admin/edit/<%= data.transactionId %>" method="GET">
