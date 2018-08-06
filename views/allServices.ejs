@@ -81,7 +81,11 @@
                                                     <ul>
                                                         <!-- <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li> -->
                                                         <li>
-                                                            <a class="add_cart_btn" href="#">Make an Offer</a>
+                                                            <form action="/newservicestransaction/<%= servicelist.serviceid %>" method="POST">
+                                                                <div class="addcart">
+                                                                    <button style="cursor: pointer;" type="submit" class="add_cart_btn">Make an Offer</button>
+                                                                </div>
+                                                            </form>
                                                         </li>
                                                         <li class="p_icon">
                                                             <a href="#">

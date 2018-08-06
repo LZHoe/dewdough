@@ -182,7 +182,7 @@ app.post("/transactions/cancel/:transaction_id", transaction.cancel);
 // services
 app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
 app.post("/newservicestransaction/:listing_id", transaction.hasAuthorization, transaction.validateUniqueService,transaction.createForService);
-app.post("/servicestransactions/newoffer/:transaction_id", transaction.isBuyerServices, transaction.changeOffer);
+app.post("/servicestransactions/newoffer/:transaction_id", transaction.isBuyerServices, transaction.changeOfferServices);
 app.post("/servicestransactions/confirm_price/:transaction_id", transaction.isBuyerServices, transaction.confirmPriceServices);
 app.post("/servicestransactions/cancel/:transaction_id", transaction.cancelService);
 // Admin

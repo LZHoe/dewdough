@@ -497,7 +497,7 @@ exports.changeOffer = function(req, res) {
 ////////////////////////////////
 //// Change offer(SERVICES) ////
 ////////////////////////////////
-exports.changeOffer = function(req, res) {
+exports.changeOfferServices = function(req, res) {
     var tId = req.params.transaction_id;
     var uId = req.user.id;
     var updateData = {
