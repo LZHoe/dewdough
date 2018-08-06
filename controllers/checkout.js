@@ -1,6 +1,7 @@
 var Transaction = require('../models/transaction');
 var myDatabase = require('./database');
 var sequelize = myDatabase.sequelize;
+var servicesTransactions = require('../models/servicesTransaction');
 
 exports.show = (req, res) => {
     res.render('checkout');
@@ -24,6 +25,27 @@ exports.showDetails = function(req,res) {
         })
     })
 }
+
+
+exports.showDetail = function(req,res) {
+    // Show transaction data
+    var transactionId = req.params.transaction_id;
+    sequelize.query('SELECT * FROM ServicesTransactions t INNER JOIN itemlists il ON t.listingId = il.Itemid  WHERE t.transactionId = ' + transactionId, { model: servicesTransactions }).then((Transactions) => {
+        console.log(Transactions);
+        
+        Transactions[0].offer = Transactions[0].offer * 100;
+        res.render('checkouts', {
+            image : Transaction.imagename,
+            title: 'Transaction Details',
+            data: Transactions[0]
+        })
+    }).catch((err) => {
+        return res.status(400).send({
+            message: err
+        })
+    })
+}
+
 
 
 // Comments authorisation middleware

@@ -4,6 +4,7 @@ var sequelize = myDatabase.sequelize;
 var Transaction = require('../models/transaction');
 var stripe = require("stripe")("sk_test_mjPvQTYjNImEEt3PTQk3KpbZ");
 var itemlist = require('../models/itemlist');
+var servicesTransactions = require('../models/servicesTransaction')
 
 exports.show = function (req,res){
     var transactionId = req.params.transaction_id;
@@ -72,6 +73,52 @@ exports.charge = function(req,res) {
         })
         
         res.redirect('/transactions?view=archived');
+})
+
+   
+}
+
+
+exports.charges = function(req,res) {
+    // Show transaction data
+    var transactionId = req.params.transaction_id;
+    sequelize.query('SELECT offer FROM ServicesTransactions t WHERE t.transactionId = ' + transactionId, { model: servicesTransactions }).then((Transactions) => {
+        Transactions[0].offer = Transactions[0].offer * 100;
+        var amount = Transactions[0].offer;
+        console.log(req.body);
+
+        stripe.customers.create({
+            email : req.body.stripeEmail,
+            source: req.body.stripeToken,
+        })
+        .then(customer => stripe.charges.create({
+            amount,
+            description: "Item Bought from E Pet",
+            currency : "sgd",
+            customer:customer.id
+        }))
+        .then(charge=>{
+            console.log(charge)
+            paymentId = charge.id;
+            console.log(paymentId)
+            var paypaldata = {
+                paymentId : paymentId,
+                paymentMethod : "stripe",
+                status: 'Paid',
+                transactionId: Transactions.transactionId
+            };
+            servicesTransactions.update(paypaldata, { where: { transactionId: transactionId }, action: 'PAID' }).then((updatedRecord) => {
+                if (!updatedRecord || updatedRecord == 0) {
+                    return res.send(400, {
+                        message: "error"
+                    });
+                }
+            });
+            res.redirect('/servicestransactions?view=archived');
+            // database after success charge
+        })
+        
+        res.redirect('/servicestransactions?view=archived');
 })
 
    

@@ -361,6 +361,10 @@ exports.dogaccessory = function(req,res){
     })
 }
 
+exports.cat = function(req,res){
+    sequelize.query("Select * from itemlists where servicecategory =")
+}
+
 
 // //test data 
 // var sql = "INSERT INTO responses (user, response) VALUES ('test_user', 'A')";

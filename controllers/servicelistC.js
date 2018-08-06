@@ -165,7 +165,9 @@ exports.showCat = function (req, res) {
                 servicepage[i].createdAt = convertDate(servicepage[i].createdAt);
                 servicepage[i].updatedAt = convertDate(servicepage[i].updatedAt);
             }
-            res.render('allItems', {
+            console.log("slut")
+            console.log(servicepage);
+            res.render('allservices', {
                 title: 'Cat Services',
                 servicelist: servicepage
             })
@@ -186,7 +188,7 @@ exports.showDog = function (req, res) {
                 servicepage[i].createdAt = convertDate(servicepage[i].createdAt);
                 servicepage[i].updatedAt = convertDate(servicepage[i].updatedAt);
             }
-            res.render('allItems', {
+            res.render('allservices', {
                 title: 'Dog Services',
                 servicelist: servicepage
             })
