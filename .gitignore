@@ -73,3 +73,5 @@ typings/
 .serverless
 public/img_uploads/
 public/service_img/
+public/img_uploads
+node_modules/validator

@@ -64,6 +64,7 @@ var checkoutcard = require('./controllers/checkoutcard');
 var contact = require('./controllers/contact');
 var receipt = require('./controllers/receipt');
 var search = require('./controllers/search'); 
+var userController = require("./controllers/userController")
 
 
 app.use(logger('dev'));
@@ -145,6 +146,8 @@ app.get('/logout', function (req, res) {
 });
 
 // app.post("/products/search", search)
+app.get("/editprofile", userController.editProfile)
+app.post("/edit/:id", userController.updateProfile)
 ////<<<<<< End of Users <<<<<<
 /////////////////////////////////////////////////
 

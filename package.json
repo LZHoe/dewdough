@@ -27,7 +27,8 @@
     "sequelize-cli": "^4.0.0",
     "sequelize-transforms": "^2.0.0",
     "stripe": "^6.3.0",
-    "tedious": "^2.6.3"
+    "tedious": "^2.6.3",
+    "validator": "^10.4.0"
   },
   "devDependencies": {},
   "scripts": {

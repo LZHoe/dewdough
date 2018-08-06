@@ -10,36 +10,72 @@
         <section class="solid_banner_area">
             <div class="container">
                 <div class="solid_banner_inner">
-                    <h3>Welcome, <strong><%= user.name%></strong></h3>
+                    <h3>Welcome, <strong><%= user.name %></strong></h3>
                 </div>
             </div>
         </section>
         <!--================End Categories Banner Area =================-->
         
-        <!--================End Categories Banner Area =================-->
-        <div class="container">
-        <h1>Profile</h1>
-        <div class="datails" style="text-align: center">
-            <div>
-                <a class="btn btn-outline-primary" style="margin-bottom:6px;" href="/editprofile">Edit</a>
+        <!--================Start Area =================-->
+        <form class="login_form row">
+            <div class="col-lg-6 form-group">
+                <input class="form-control" id="inputname" name = 'name' type="text" placeholder="Name"
+                value="<%=user.name%>">
             </div>
+            <div class="col-lg-6 form-group">
+                <input class="form-control" id="inputemail" name = 'email' type="email" placeholder="Email"
+                value="<%=user.email%>">
+            </div>
+            <div class="col-lg-6 form-group">
+                <input class="form-control" id="inputusername" name = 'username' type="text" placeholder="User Name"
+                value="<%=user.username%>">
+            </div>
+            <div class="col-lg-6 form-group">
+                <input class="form-control" id="inputphone" name = 'phone' type="text" placeholder="Phone"
+                value="<%=user.phone%>">
+            </div>
+            <div class="col-lg-6 form-group">
+                <input class="form-control" id="inputpassword" name = 'password' type="password" placeholder="Password"
+                value="<%user.password%>">
+            </div>
+            <div class="col-lg-6 form-group">
+                <button type="submit" onclick=saveChanges()>Save Changes</button>
+                <button type="button" onclick=discardChanges()>Cancel</button>
+            </div>
+            <script>
+                function saveChanges() {
+                    var url = "http://localhost:3000/edit/<%=user.id%>";
+                    var newValues = {
+                        name: $("#inputname").val(),
+                        email: $("#inputemail").val(),
+                        username: $("#inputusername").val(),
+                        phone: $("#inputphone").val(),
+                        password: $("#inputpassword").val()
+                    }
 
-            <div class="card text-xs-center" align="center">
-                <br>
-                <img class="card-img-top" src="<%= avatar %>" alt="Card image cap" style="width: 10%;">
-                <div class="card-block">
-                    <br>
-                    <h3 class="card-title">User Details</h3>
-                    <p class="card-text">
-                        <strong>Name</strong>: <%= user.name %><br>
-                        <strong>Email</strong>: <%= user.email %><br>
-                        <strong>Phone</strong>: <%= user.phone %>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
-        </section>
+                    $.ajax({
+                        url:url,
+                        type: "POST",
+                        data: JSON.stringify(newValues),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function(result){
+                            alert("Profile Updated Successfully");
+                            location.href = "<%=hostPath%>"
+                        },
+                        error: function(result){
+                            alert("Error updating student record");
+                            discardChanges();
+                        }
+                    })
+                }
+
+                function discardChanges() {
+                    location.href = "<%=hostPath%>"
+                }
+                            
+            </script>
+        </form>
         <!--================End Categories Banner Area =================-->
         
         <!--================Footer Area =================-->
