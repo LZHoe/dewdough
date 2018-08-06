@@ -22,7 +22,8 @@ paypal.configure({
 
 //modules to store function
 var myDatabase = require('./controllers/database');
-var expressSession = require('express-session')
+var expressSession = require('express-session');
+var sequelize = myDatabase.sequelize;
 var SessionStore = require('express-session-sequelize')(expressSession.Store);
 var sequelizeSessionStore = new SessionStore({
     db: myDatabase.sequelize,
@@ -117,6 +118,38 @@ app.use((req, res, next) => {
         res.locals.username = req.user.username;
     next();
 })
+
+// app.use((req, res, next) => {
+//     res.locals.notificationCount = 0
+//     if (res.locals.login == 1) {
+//         sequelize.query(`SELECT COUNT(*) notificationCount FROM Transactions t INNER JOIN itemlists il ON il.Itemid = t.listingId 
+//         WHERE (buyerId = :currUser OR user_id = :currUser) AND t.status NOT IN ('Archived', 'Paid')`, 
+//         { replacements: { currUser: req.user.id }, type: sequelize.QueryTypes.SELECT }).then((results) => {
+//             res.locals.notificationCount += results[0].notificationCount;
+//             console.log(res.locals.notificationCount);
+//             next();
+//         })
+//     }
+//     else {
+//         next();
+//     }
+// })
+
+// app.use((req, res, next) => {
+//     res.locals.notificationCount = 0
+//     if (res.locals.login == 1) {
+//         sequelize.query(`SELECT COUNT(*) notificationCount FROM ServicesTransactions t INNER JOIN servicelists sl ON sl.serviceid = t.listingId 
+//         WHERE (buyerId = :currUser OR user_id = :currUser) AND t.status NOT IN ('Archived', 'Paid')`, 
+//         { replacements: { currUser: req.user.id }, type: sequelize.QueryTypes.SELECT }).then((results) => {
+//             res.locals.notificationCount += results[0].notificationCount;
+//             console.log(res.locals.notificationCount);
+//             next();
+//         })
+//     }
+//     else {
+//         next();
+//     }
+// })
 
 //////////////////////////
 ///////// ROUTES /////////
