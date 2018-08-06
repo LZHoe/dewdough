@@ -23,11 +23,11 @@
         ================End Categories Banner Area =================-->
         <br>
         <div class="container">
-            <h3>View Transaction Log - Items</h3>
+            <h3>View Transaction Log - Services</h3>
             <nav aria-label="Page navigation example" class="pagination_area">
                 <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="/admin/items">Logs(Items)</a></li>
-                    <li class="page-item"><a class="page-link" href="/admin/services">Logs(Services)</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/items" style="border:0;">Logs(Items)</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/services" style="border:1px solid #000002;">Logs(Services)</a></li>
                     <li class="page-item"><a class="page-link" href="/admin/messages">Support Tickets</a></li>
                     <li class="page-item"><a class="page-link" href="/admin/users">Users</a></li>
                 </ul>
@@ -65,7 +65,7 @@
                                         <thead>
                                             <tr>
                                                 <th scope="col"></th>
-                                                <th scope="col" style="text-align: center">Product</th>
+                                                <th scope="col" style="text-align: center">Service</th>
                                                 <th scope="col">User</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Status</th>
@@ -127,13 +127,12 @@
                         byUser: user,
                         byTransNo: transNo,
                     }
-
                     sendAjax(criteria);
                 }
 
                 function sendAjax(searchCriteria) {
                     $.ajax({
-                        url: "http://localhost:3000/admin/items/search",
+                        url: "http://localhost:3000/admin/services/search",
                         type: 'POST',
                         data: JSON.stringify(searchCriteria),
                         dataType: "json",
@@ -147,11 +146,13 @@
                                     html += `<tr>
                                                 <th scope="row">
                                                 </th>
-                                                <td>` + result[i].ItemName + `</td>
+                                                <td>` + result[i].servicetitle + `</td>
                                                 <td>Buyer: ` + result[i].buyerUser + `<br>Seller: ` + result[i].sellerUser + `</td>
                                                 <td>First offer: ` + result[i].createdAt + `<br>Last Update: ` + result[i].updatedAt + `</td>
                                                 <td>` + result[i].status + `</td>
+                                                <td>` + result[i].transactionId+ `</td>
                                                 <td><a href="/transactions/`+ result[i].transactionId +`">GO</a></td>
+                                                
                                             </tr>`;
                                     }
                             }
