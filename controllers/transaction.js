@@ -19,7 +19,21 @@ exports.isBuyer = function (req, res, next) {
     var uId = req.user.id;
     sequelize.query('SELECT buyerId FROM Transactions WHERE transactionId = :tId', { model: Transaction, replacements: { tId: tId } }).then((Transactions) => {
         if (Transactions[0].buyerId == uId) {
-            console.log("isbuyer...");
+            res.locals.isBuyer = true;
+        } 
+        else {
+            res.locals.isBuyer = false;
+        }
+        return next();
+    })
+}
+
+// function given user id and transaction id, if user is buyer
+exports.isBuyerServices = function (req, res, next) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    sequelize.query('SELECT buyerId FROM ServicesTransactions WHERE transactionId = :tId', { model: serTransaction, replacements: { tId: tId } }).then((Transactions) => {
+        if (Transactions[0].buyerId == uId) {
             res.locals.isBuyer = true;
         } 
         else {
@@ -199,7 +213,7 @@ exports.showAllServices = function (req, res) {
 exports.showDetails = function (req, res) {
     // Show transaction data
     var transactionId = req.params.transaction_id;
-    sequelize.query(`SELECT transactionId, ItemName, u.username, status,visible, qty, offer, paymentId, paymentMethod, bankDetails, t.createdAt, t.updatedAt  
+    sequelize.query(`SELECT * 
     FROM Transactions t 
     INNER JOIN itemlists il ON il.Itemid = t.listingId 
     INNER JOIN Users u ON u.id = il.user_id  
@@ -213,7 +227,7 @@ exports.showDetails = function (req, res) {
             Transactions[i].createdAt = convertDate(Transactions[i].createdAt);
             Transactions[i].updatedAt = convertDate(Transactions[i].updatedAt);
         }
-        sequelize.query(`SELECT tl.updatedAt, qty, offer, username, action 
+        sequelize.query(`SELECT *
         FROM TransactionLogs tl 
         INNER JOIN Users u ON u.id = tl.commitBy 
         WHERE transactionId = :transaction_id `, {
@@ -222,7 +236,8 @@ exports.showDetails = function (req, res) {
             },
             type: sequelize.QueryTypes.SELECT
         }).then((TransactionLogs) => {
-            console.log(Transactions)
+            console.log("Slut")
+            console.log(Transactions[0])
             // formatting dates
             for (var i=0; i<TransactionLogs.length; i++) {
                 TransactionLogs[i].updatedAt = convertDate(TransactionLogs[i].updatedAt);
@@ -277,6 +292,44 @@ exports.showDetails = function (req, res) {
 //         })
 //     })
 // }
+
+/////////////////////////////////////////////////////
+//// Check that there is no existing transaction ////
+/////////////////////////////////////////////////////
+exports.validateUnique = function (req, res, next) {
+    var listId = req.params.listing_id;
+    sequelize.query("SELECT transactionId FROM Transactions WHERE listingId = :listingid AND buyerId = :currUser AND status NOT IN ('Archived', 'Paid')", 
+    { replacements: { 
+        listingid: listId,
+        currUser: req.user.id
+    }, 
+    model: Transaction 
+    }).then((results) => {
+        if (results.length == 0) {
+            return next();
+        }
+        res.redirect('/transactions#transaction_' + results[0].transactionId);
+    })
+}
+
+//////////////////////////////////////////////////////////////
+//// Check that there is no existing transaction(SERVICE) ////
+//////////////////////////////////////////////////////////////
+exports.validateUniqueService = function (req, res, next) {
+    var listId = req.params.listing_id;
+    sequelize.query("SELECT transactionId FROM ServicesTransactions WHERE listingId = :listingid AND buyerId = :currUser AND status NOT IN ('Archived', 'Paid')", 
+    { replacements: { 
+        listingid: listId,
+        currUser: req.user.id
+    }, 
+    model: serTransaction 
+    }).then((results) => {
+        if (results.length == 0) {
+            return next();
+        }
+        res.redirect('/servicestransactions#transaction_' + results[0].transactionId);
+    })
+}
 
 ////////////////////////////////////////////////
 //// Start a transaction with initial offer ////
@@ -366,7 +419,45 @@ exports.confirmPrice = function(req, res) {
                     message: "error"
                 });
             }
-            res.redirect('/transactions');
+            if (res.locals.isBuyer) {
+                res.redirect('/transactions');
+            }
+            else {
+                res.redirect('/transactions?view=selling');
+            }
+        });
+    })
+}
+
+/////////////////////////////////
+//// Confirm Price(SERVICES) ////
+/////////////////////////////////
+exports.confirmPriceServices = function(req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    sequelize.query("SELECT buyerReady, sellerReady FROM ServicesTransactions WHERE transactionId = :transaction_id", { replacements: { transaction_id: tId }, model: serTransaction }).then((results) => {
+        var updateData = {}
+        if (res.locals.isBuyer) {
+            updateData.buyerReady = true;
+        }
+        else {
+            updateData.sellerReady = true;
+        }
+        if ((results[0].buyerReady || updateData.buyerReady) && (results[0].sellerReady || updateData.sellerReady)) {
+            updateData.status = 'Awaiting payment';
+        }
+        serTransaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CONFIRM_PR' }).then((updatedRecord) => {
+            if (!updatedRecord || updatedRecord == 0) {
+                return res.send(400, {
+                    message: "error"
+                });
+            }
+            if (res.locals.isBuyer) {
+                res.redirect('/servicestransactions');
+            }
+            else {
+                res.redirect('/servicestransactions?view=listed');
+            }
         });
     })
 }
@@ -380,7 +471,6 @@ exports.changeOffer = function(req, res) {
     var updateData = {
         offer: req.body.newOffer,
     }
-    console.log("\n\n\n\n\n\n\n\n\n\n\n\n" + res.locals.isBuyer)
     if (res.locals.isBuyer) {
         updateData.buyerReady = true;
         updateData.sellerReady = false;
@@ -395,7 +485,44 @@ exports.changeOffer = function(req, res) {
                 message: "error"
             });
         }
-        res.redirect('/transactions');
+        if (res.locals.isBuyer) {
+            res.redirect('/transactions');
+        }
+        else {
+            res.redirect('/transactions?view=selling');
+        }
+    });
+}
+
+////////////////////////////////
+//// Change offer(SERVICES) ////
+////////////////////////////////
+exports.changeOffer = function(req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    var updateData = {
+        offer: req.body.newOffer,
+    }
+    if (res.locals.isBuyer) {
+        updateData.buyerReady = true;
+        updateData.sellerReady = false;
+    }
+    else {
+        updateData.buyerReady = false;
+        updateData.sellerReady = true;
+    }
+    serTransaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'NEW_OFFER' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        if (res.locals.isBuyer) {
+            res.redirect('/servicestransactions');
+        }
+        else {
+            res.redirect('/servicestransactions?view=listed');
+        }
     });
 }
 
@@ -415,6 +542,25 @@ exports.cancel = function (req, res) {
             });
         }
         res.redirect('/transactions');
+    });
+}
+
+////////////////////////////////
+//// Cancel Order(SERVICES) ////
+////////////////////////////////
+exports.cancelService = function (req, res) {
+    var tId = req.params.transaction_id;
+    var uId = req.user.id;
+    var updateData = {
+        status: 'Archived'
+    }
+    serTransaction.update(updateData, { where: { transactionId: tId }, id: uId, action: 'CANCEL' }).then((updatedRecord) => {
+        if (!updatedRecord || updatedRecord == 0) {
+            return res.send(400, {
+                message: "error"
+            });
+        }
+        res.redirect('/servicestransactions?view=archived');
     });
 }
 

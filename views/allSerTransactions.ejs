@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="c_product_grid_details">
                                     <% data.forEach(function(data) { %>
-                                    <div class="c_product_item">
+                                    <div class="c_product_item" id="transaction_<%= data.transactionId %>">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-6">
                                                 <div class="c_product_img">
@@ -164,9 +164,9 @@
                                                         </i> <%= data.sellerUser %> 
                                                     </div>
                                                     
-                                                    <% if ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == uid)) { %>
+                                                    <% if (data.status != 'Archived' && ((data.buyerReady == false && data.buyerId == uid) || (data.sellerReady == false & data.sellerId == uid))) { %>
                                                     <form onsubmit="return confirm('Do you really want to confirm this price?');" 
-                                                    style="display:inline-block;" method="POST" action="/transactions/confirm_price/<%= data.transactionId %>">
+                                                    style="display:inline-block;" method="POST" action="/servicestransactions/confirm_price/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary update_btn" style="cursor:pointer;">
                                                         Confirm Price
                                                         </button>
@@ -180,7 +180,7 @@
                                                     </button>
 
                                                     <form onsubmit="return confirm('Do you really want to cancel this service?');" 
-                                                    style="display:inline-block;" method="POST" action="/transactions/cancel/<%= data.transactionId %>">
+                                                    style="display:inline-block;" method="POST" action="/servicestransactions/cancel/<%= data.transactionId %>">
                                                         <button type="submit" class="btn btn-primary checkout_btn" style="cursor:pointer;">
                                                         Cancel
                                                         </button>
@@ -336,6 +336,10 @@
 
             <script>
                 $('#changeOfferModal').on('show.bs.modal', function (event) {
+                //Make sure the modal and backdrop are siblings (changes the DOM)
+                $(this).before($('.modal-backdrop'));
+                //Make sure the z-index is higher than the backdrop
+                $(this).css("z-index", parseInt($('.modal-backdrop').css('z-index')) + 1);
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var tId = button.data('id'); // Extract info from data-* attributes
                 var name = button.data('name');
@@ -343,7 +347,7 @@
                 // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
                 var modal = $(this);
                 modal.find('.modal-title').text(modal.find('.modal-title').text() + name);
-                modal.find('#makeOfferForm').attr('action', "/transactions/newoffer/" + tId);
+                modal.find('#makeOfferForm').attr('action', "/servicestransactions/newoffer/" + tId);
                 })
             </script>
 </body>

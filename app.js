@@ -166,22 +166,32 @@ app.get('/cancel', (req, res) => {
 //////////////////////////////////////////////////////
 ////>>>>>>  Beginning of Transactions  >>>>>>
 app.get("/transactions", transaction.hasAuthorization, transaction.showAll);
-app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
-app.get("/transactions/:transaction_id", transaction.showDetails);
-app.post("/transactions/:transaction_id", transaction.afterPayment);
-app.post("/newtransaction/:listing_id", transaction.create);
-app.post("/newservicetransaction/:listing_id", transaction.createForService);
-
+// items
+app.get("/transactions/:transaction_id", transaction.hasAuthorization, transaction.showDetails);
+app.post("/transactions/:transaction_id", transaction.hasAuthorization, transaction.afterPayment);
+app.post("/newtransaction/:listing_id", transaction.hasAuthorization, transaction.validateUnique, transaction.create);
 app.post("/transactions/newoffer/:transaction_id", transaction.isBuyer, transaction.changeOffer);
 app.post("/transactions/confirm_price/:transaction_id", transaction.isBuyer, transaction.confirmPrice);
 app.post("/transactions/cancel/:transaction_id", transaction.cancel);
+// services
+app.get("/servicestransactions", transaction.hasAuthorization, transaction.showAllServices);
+app.post("/newservicestransaction/:listing_id", transaction.hasAuthorization, transaction.validateUniqueService,transaction.createForService);
+app.post("/servicestransactions/newoffer/:transaction_id", transaction.isBuyerServices, transaction.changeOffer);
+app.post("/servicestransactions/confirm_price/:transaction_id", transaction.isBuyerServices, transaction.confirmPriceServices);
+app.post("/servicestransactions/cancel/:transaction_id", transaction.cancelService);
 // Admin
 app.get("/admin", auth.isAdmin, admin.show);
 app.post("/admin/search", auth.isAdmin, admin.search);
 app.get("/admin/messages", auth.isAdmin, admin.showMessages);
 app.post("/admin/delete/:transaction_id", auth.isAdmin, admin.delete);
 app.get("/admin/edit/:transaction_id", auth.isAdmin,admin.showeditform);
-app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit)
+app.post("/admin/edit/:transaction_id", auth.isAdmin,admin.edit);
+app.post("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.get("/admin/transactions", auth.isAdmin,admin.showdetails);
+app.post("/admin/undelete/:transaction_id",auth.isAdmin,admin.undelete);
+app.get("/admin/users", auth.isAdmin,admin.showUsers);
+app.post("/admin/modifyuser/:id",auth.isAdmin, admin.modifyuser);
+app.post("/admin/modifyinguser/:id", auth.isAdmin,admin.modifyinguser)
 ////<<<<<< End of Transactions <<<<<<
 //////////////////////////////////////////////////////
 
@@ -226,9 +236,6 @@ app.get("/services/cats", servicelist.showCat)
 app.get("/services/dogs", servicelist.showDog)
 // app.get("/listoverview/:category", search.showCat);
 // app.get("/listioverview/:servicecategory", search.showCat); 
-// var query = req.query.search;
-
-app.post('/:search', search.search);
 
 ////<<<<<< End of Listings <<<<<<
 //////////////////////////////////////////////////////

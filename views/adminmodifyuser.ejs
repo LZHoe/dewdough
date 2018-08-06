@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include partial/head %>
+        <% include partial/header %>
+</head>
+
+<body>
+    <form action="/admin/modifyinguser/<%= user.id %>" method="POST">
+        <div class="container">
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="ItemName">Name:
+                    <span>*</span>
+                </label>
+                <input value="<%= user.name %>" type="text" class="form-control" id="name" name="name" aria-describedby="name"
+                    placeholder="Listing Tile">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="ItemName">Username:
+                    <span>*</span>
+                </label>
+                <input value="<%= user.username %>" type="text" class="form-control" id="username" name="username" aria-describedby="username"
+                    placeholder="Listing Tile">
+            </div>
+        </div>
+
+
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="servicepriceprice">Email:
+                    <span>*</span>
+                </label>
+                <input type="text" value="<%= user.email %>" required name="email" class="form-control" id="email" aria-describedby="email" placeholder="<%=user.email%>">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <label for="Description">Phone:
+                    <span>*</span>
+                </label>
+                <input type="number" id="phone" value="<%= user.phone %>" name="phone" rows="3" cols="40" class="form-control" placeholder="phone"></textarea>
+            </div>
+        </div>
+
+        <div class="col-lg-3">
+            <button type="submit" action="/admin/modifyinguser/<%= user.id %>" id="itembtn" value="submit" class="btn subs_btn form-control">Update</button>
+
+        </div>
+        
+    </form>
+</div>
+</body>
+
+</html>

@@ -81,7 +81,11 @@
                                                     <ul>
                                                         <!-- <li class="p_icon"><a href="#"><i class="icon_piechart"></i></a></li> -->
                                                         <li>
+                                                            <% if (itemlist.Itemid != null) { %>
                                                             <form action="/newtransaction/<%= itemlist.Itemid %>" method="POST">
+                                                            <% } else { %>
+                                                            <form action="/newservicestransaction/<%= itemlist.serviceid %>" method="POST">
+                                                            <% } %>
                                                                 <div class="addcart">
                                                                     <button style="cursor: pointer;" type="submit" class="add_cart_btn">Buy/Offer</button>
                                                                 </div>

@@ -28,6 +28,7 @@
                 <ul class="pagination">
                     <li class="page-item"><a class="page-link" href="/admin">Transaction Logs</a></li>
                     <li class="page-item"><a class="page-link" href="/admin/messages">Support Tickets</a></li>
+                    <li class="page-item"><a class="page-link" href="/admin/users">Users</a></li>
                 </ul>
             </nav>
             <hr/>
@@ -67,6 +68,7 @@
                                                 <th scope="col">User</th>
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Status</th>
+                                                <th scope="col">Transaction ID</th>
                                                 <th scope="col">Details</th>
                                             </tr>
                                         </thead>
@@ -81,28 +83,7 @@
                 </div>
             </section>
 
-            <form action="/transactions" method="post">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Example New Listing</h4>
-                </div>
-
-                <div class="modal-body">
-
-                    <fieldset class="form-group">
-                        <label for="inputqty">Quantity</label>
-                        <input type="text" id="inputqty" name="qty" class="form-control" placeholder="Enter quantity" required="">
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label for="inputlistingid">Listing ID</label>
-                        <input type="text" id="inputlistingid" name="listingId" class="form-control" placeholder="Id of item to buy" required="">
-                    </fieldset>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </form>
-        </div>
-
+            
         <% include partial/footer %>
 
             <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -169,7 +150,9 @@
                                                 <td>Buyer: ` + result[i].buyerUser + `<br>Seller: ` + result[i].sellerUser + `</td>
                                                 <td>First offer: ` + result[i].createdAt + `<br>Last Update: ` + result[i].updatedAt + `</td>
                                                 <td>` + result[i].status + `</td>
+                                                <td>` + result[i].transactionId+ `</td>
                                                 <td><a href="/transactions/`+ result[i].transactionId +`">GO</a></td>
+                                                
                                             </tr>`;
                                     }
                             }
