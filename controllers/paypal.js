@@ -201,7 +201,7 @@ exports.success = function(req,res) {
                   transactionId: transRef
               };
     
-              servicesTransactions.update(paypaldata, { where: { transactionId: transRef }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
+              Transactions.update(paypaldata, { where: { transactionId: transRef }, id: req.user.id, action: 'PAID' }).then((updatedRecord) => {
                 if (!updatedRecord || updatedRecord == 0) {
                     return res.send(400, {
                         message: "error"
@@ -222,7 +222,7 @@ exports.success = function(req,res) {
     // Success
 exports.successs = function(req,res) {
     var transaction_id = req.params.transaction_id;
-    sequelize.query('SELECT transactionId,offer FROM ServicesTransactions WHERE transactionId = ' + transaction_id,{model:servicesTransactions}).then((instance)=>{
+    sequelize.query('SELECT transactionId,serviceprice FROM ServicesTransactions WHERE transactionId = ' + transaction_id,{model:servicesTransactions}).then((instance)=>{
         console.log("Hoe")
         instance = instance[0];
         console.log(instance);
@@ -234,7 +234,7 @@ exports.successs = function(req,res) {
             "transactions": [{
                 "amount": {
                     "currency": "SGD",
-                    "total": instance.offer,
+                    "total": instance.serviceprice,
                 }
             }]
         }

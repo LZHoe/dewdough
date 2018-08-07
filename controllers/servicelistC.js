@@ -165,9 +165,7 @@ exports.showCat = function (req, res) {
                 servicepage[i].createdAt = convertDate(servicepage[i].createdAt);
                 servicepage[i].updatedAt = convertDate(servicepage[i].updatedAt);
             }
-            console.log("slut")
-            console.log(servicepage);
-            res.render('allservices', {
+            res.render('allServices', {
                 title: 'Cat Services',
                 servicelist: servicepage
             })

@@ -202,9 +202,36 @@
 
                             <h6 class="cat">Found In: </h6>
                             <div class="itemcategory">
-                                <a href="#">
-                                    <%= itemlist.category %>
-                                </a>
+                                    <% if (itemlist.category == "Dog Daycare") { %>
+                                        <a href="/items/dogs/daycare">
+                                            <%= itemlist.category %>
+                                        </a>
+                                        <% }
+                                    else if (itemlist.category == "Dog Grooming") { %>
+                                            <a href="/items/dogs/grooming">
+                                                <%= itemlist.category %>
+                                            </a>
+                                            <% }
+                                    else if (itemlist.category == "Dog Boarding") { %>
+                                                <a href="/items/dogs/boarding">
+                                                    <%= itemlist.category %>
+                                                </a>
+                                            <% }
+                                     else if (itemlist.category == "Cat Daycare") { %>
+                                        <a href="/items/cats/daycare">
+                                            <%= itemlist.category %>
+                                        </a>
+                                        <% }
+                                    else if (itemlist.category == "Cat Grooming") { %>
+                                            <a href="/items/cats/grooming">
+                                                <%= itemlist.category %>
+                                            </a>
+                                            <% }
+                                    else { %>
+                                        <a href="/items/cats/boarding">
+                                            <%= itemlist.category %>
+                                        </a>
+                                    <% } %>
                             </div>
                             <br>
                             <i>Delivery Options</i>
@@ -217,7 +244,7 @@
                             </p>
                             <br>
                             <h6>Sold by:</h6>
-                            <a href="#">
+                            <a href="">
                                 <%= itemlist.username %>
                             </a>
 
